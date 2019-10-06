@@ -1,9 +1,17 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+const isDev = process.env.NODE_ENV === "development";
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: "./template/index.html",
   filename: "./index.html"
+});
+
+const cssExtractPlugin = new MiniCssExtractPlugin({
+  filename: "./css/[name].[hash].css",
+  chunkFilename: "[id].[hash].css"
 });
 
 const cleanPlugin = new CleanWebpackPlugin({});
@@ -29,8 +37,49 @@ module.exports = {
             options: { minimize: true }
           }
         ]
+      },
+      {
+        test: /\.scss$/,
+        exclude: /\global.scss$/,
+        loader: [
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              sourceMap: isDev
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: isDev
+            }
+          }
+        ]
+      },
+      {
+        test: /\global.scss$/,
+        loader: [
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: isDev
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: isDev
+            }
+          }
+        ]
       }
     ]
   },
-  plugins: [htmlPlugin, cleanPlugin]
+  plugins: [htmlPlugin, cleanPlugin, cssExtractPlugin],
+  resolve: {
+    extensions: [".js", ".jsx", ".scss"]
+  }
 };

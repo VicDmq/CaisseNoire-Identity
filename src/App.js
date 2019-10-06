@@ -1,10 +1,13 @@
 import React from "react";
 import { render } from "react-dom";
+import { Button } from "reactstrap";
+import STYLES from "./app.module";
 
 const App = () => {
   return (
     <div>
-      <p>Hello World!</p>
+      <p className={STYLES.red}>Hello World!</p>
+      <Button color="danger">Danger</Button>
     </div>
   );
 };
