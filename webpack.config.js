@@ -1,5 +1,17 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+const htmlPlugin = new HtmlWebPackPlugin({
+  template: "./template/index.html",
+  filename: "./index.html"
+});
+
+const cleanPlugin = new CleanWebpackPlugin({});
+
 module.exports = {
+  output: {
+    filename: "./js/bundle.js"
+  },
   module: {
     rules: [
       {
@@ -20,10 +32,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html"
-    })
-  ]
+  plugins: [htmlPlugin, cleanPlugin]
 };
