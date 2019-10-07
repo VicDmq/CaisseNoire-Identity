@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const FlowWebpackPlugin = require("flow-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -15,6 +16,8 @@ const cssExtractPlugin = new MiniCssExtractPlugin({
 });
 
 const cleanPlugin = new CleanWebpackPlugin({});
+
+const flowPlugin = new FlowWebpackPlugin();
 
 module.exports = {
   output: {
@@ -78,8 +81,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [htmlPlugin, cleanPlugin, cssExtractPlugin],
-  resolve: {
-    extensions: [".js", ".jsx", ".scss"]
-  }
+  plugins: [htmlPlugin, cleanPlugin, cssExtractPlugin, flowPlugin]
 };

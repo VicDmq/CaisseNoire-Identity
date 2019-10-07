@@ -1,7 +1,9 @@
+/* @flow */
 import React from "react";
-import { render } from "react-dom";
 import { Button } from "reactstrap";
-import STYLES from "./app.module";
+
+import "../global.scss";
+import STYLES from "./app.scss";
 
 const App = () => {
   return (
@@ -12,4 +14,4 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("app"));
+export default App;
