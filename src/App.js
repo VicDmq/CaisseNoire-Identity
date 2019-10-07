@@ -1,8 +1,8 @@
 /* @flow */
 import React from "react";
+import { render } from "react-dom";
 import { Button } from "reactstrap";
 
-import "../global.scss";
 import STYLES from "./app.scss";
 
 const App = () => {
@@ -14,4 +14,5 @@ const App = () => {
   );
 };
 
-export default App;
+// $FlowFixMe
+render(<App />, document.getElementById("app"));

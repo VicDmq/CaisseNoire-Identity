@@ -20,6 +20,9 @@ const cleanPlugin = new CleanWebpackPlugin({});
 const flowPlugin = new FlowWebpackPlugin();
 
 module.exports = {
+  entry: {
+    filename: "./index.js"
+  },
   output: {
     filename: "./js/bundle.js"
   },
@@ -43,7 +46,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /\global.scss$/,
+        exclude: /\app.scss$/,
         loader: [
           isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           {
@@ -62,7 +65,7 @@ module.exports = {
         ]
       },
       {
-        test: /\global.scss$/,
+        test: /\app.scss$/,
         loader: [
           isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           {
