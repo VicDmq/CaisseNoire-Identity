@@ -5,7 +5,7 @@
     "flow-typed": "./node_modules/.bin/flow-typed",
     "flow": "./node_modules/.bin/flow",
     "build": "webpack --config webpack.config.production.js",
-    "start": "cross-env REACT_APP_API_URL=http://localhost:3000 webpack-dev-server --config webpack.config.development.js"
+    "start": "webpack-dev-server --config webpack.config.development.js"
   },
   "engines": {
     "node": "11.5.0",

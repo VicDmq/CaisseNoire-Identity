@@ -1,4 +1,4 @@
-const Dotenv = require("dotenv-webpack");
+const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -71,6 +71,10 @@ module.exports = {
     }),
     new CleanWebpackPlugin({}),
     new FlowWebpackPlugin(),
-    new Dotenv()
+    new webpack.DefinePlugin({
+      "process.env": {
+        REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL)
+      }
+    })
   ]
 };
