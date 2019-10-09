@@ -1,16 +1,17 @@
-/* @flow */
+// @flow
 import React from "react";
 import { render } from "react-dom";
-import { Button } from "reactstrap";
-
-import STYLES from "./app.scss";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import SanctionForm from "./components/SanctionForm";
 
 const App = () => {
   return (
-    <div>
-      <p className={STYLES.red}>Hello World!</p>
-      <Button color="danger">Danger</Button>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" render={() => <div>Hello</div>}></Route>
+        <Route path="/sanctions/:team_id" component={SanctionForm}></Route>
+      </Switch>
+    </BrowserRouter>
   );
 };
 

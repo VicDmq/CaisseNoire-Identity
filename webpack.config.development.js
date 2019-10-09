@@ -1,30 +1,17 @@
+const Dotenv = require("dotenv-webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const FlowWebpackPlugin = require("flow-webpack-plugin");
 
-const isDev = process.env.NODE_ENV === "development";
-
-const htmlPlugin = new HtmlWebPackPlugin({
-  template: "./template/index.html",
-  filename: "./index.html"
-});
-
-const cssExtractPlugin = new MiniCssExtractPlugin({
-  filename: "./css/[name].[hash].css",
-  chunkFilename: "[id].[hash].css"
-});
-
-const cleanPlugin = new CleanWebpackPlugin({});
-
-const flowPlugin = new FlowWebpackPlugin();
-
 module.exports = {
+  mode: "development",
   entry: {
-    filename: "./index.js"
+    filename: "./src/App.js"
   },
   output: {
-    filename: "./js/bundle.js"
+    filename: "./js/bundle.js",
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -40,7 +27,7 @@ module.exports = {
         use: [
           {
             loader: "html-loader",
-            options: { minimize: true }
+            options: { minimize: false }
           }
         ]
       },
@@ -48,18 +35,18 @@ module.exports = {
         test: /\.scss$/,
         exclude: /\app.scss$/,
         loader: [
-          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          "style-loader",
           {
             loader: "css-loader",
             options: {
               modules: true,
-              sourceMap: isDev
+              sourceMap: true
             }
           },
           {
             loader: "sass-loader",
             options: {
-              sourceMap: isDev
+              sourceMap: true
             }
           }
         ]
@@ -67,22 +54,38 @@ module.exports = {
       {
         test: /\app.scss$/,
         loader: [
-          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          "style-loader",
           {
             loader: "css-loader",
             options: {
-              sourceMap: isDev
+              sourceMap: true
             }
           },
           {
             loader: "sass-loader",
             options: {
-              sourceMap: isDev
+              sourceMap: true
             }
           }
         ]
       }
     ]
   },
-  plugins: [htmlPlugin, cleanPlugin, cssExtractPlugin, flowPlugin]
+  devtool: "inline-source-map",
+  devServer: {
+    host: "localhost",
+    port: 8080,
+    historyApiFallback: true
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./template/index.html",
+      filename: "./index.html"
+    }),
+    new MiniCssExtractPlugin({
+      filename: "./css/style.css"
+    }),
+    new FlowWebpackPlugin(),
+    new Dotenv()
+  ]
 };
