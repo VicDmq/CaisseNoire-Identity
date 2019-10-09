@@ -10,7 +10,8 @@ module.exports = {
     filename: "./src/App.js"
   },
   output: {
-    filename: "./js/bundle.[hash].js"
+    filename: "./js/bundle.[hash].js",
+    publicPath: "/"
   },
   module: {
     rules: [
