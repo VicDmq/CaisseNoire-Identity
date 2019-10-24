@@ -1,17 +1,16 @@
-const Dotenv = require("dotenv-webpack");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const FlowWebpackPlugin = require("flow-webpack-plugin");
+const Dotenv = require('dotenv-webpack')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const FlowWebpackPlugin = require('flow-webpack-plugin')
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
   entry: {
-    filename: "./src/App.js"
+    filename: './src/App.js'
   },
   output: {
-    filename: "./js/bundle.js",
-    publicPath: "/"
+    filename: './js/bundle.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -19,14 +18,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'html-loader',
             options: { minimize: false }
           }
         ]
@@ -35,16 +34,16 @@ module.exports = {
         test: /\.scss$/,
         exclude: /\app.scss$/,
         loader: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               modules: true,
               sourceMap: true
             }
           },
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sourceMap: true
             }
@@ -54,15 +53,15 @@ module.exports = {
       {
         test: /\app.scss$/,
         loader: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true
             }
           },
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               sourceMap: true
             }
@@ -71,21 +70,21 @@ module.exports = {
       }
     ]
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   devServer: {
-    host: "localhost",
+    host: 'localhost',
     port: 8080,
     historyApiFallback: true
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./template/index.html",
-      filename: "./index.html"
+      template: './template/index.html',
+      filename: './index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: "./css/style.css"
+      filename: './css/style.css'
     }),
     new FlowWebpackPlugin(),
     new Dotenv()
   ]
-};
+}

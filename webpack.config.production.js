@@ -1,17 +1,17 @@
-const webpack = require("webpack");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const FlowWebpackPlugin = require("flow-webpack-plugin");
+const webpack = require('webpack')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const FlowWebpackPlugin = require('flow-webpack-plugin')
 
 module.exports = {
-  mode: "production",
+  mode: 'production',
   entry: {
-    filename: "./src/App.js"
+    filename: './src/App.js'
   },
   output: {
-    filename: "./js/bundle.[hash].js",
-    publicPath: "/"
+    filename: './js/bundle.[hash].js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -19,14 +19,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'html-loader',
             options: { minimize: true }
           }
         ]
@@ -37,13 +37,13 @@ module.exports = {
         loader: [
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               modules: true
             }
           },
           {
-            loader: "sass-loader"
+            loader: 'sass-loader'
           }
         ]
       },
@@ -52,10 +52,10 @@ module.exports = {
         loader: [
           MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader"
+            loader: 'css-loader'
           },
           {
-            loader: "sass-loader"
+            loader: 'sass-loader'
           }
         ]
       }
@@ -63,18 +63,18 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./template/index.html",
-      filename: "./index.html"
+      template: './template/index.html',
+      filename: './index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: "./css/style.[hash].css"
+      filename: './css/style.[hash].css'
     }),
     new CleanWebpackPlugin({}),
     new FlowWebpackPlugin(),
     new webpack.DefinePlugin({
-      "process.env": {
+      'process.env': {
         REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL)
       }
     })
   ]
-};
+}
