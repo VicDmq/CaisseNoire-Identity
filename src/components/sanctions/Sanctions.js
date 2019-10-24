@@ -2,37 +2,28 @@
 import React, { useState } from 'react'
 import { connect, PromiseState } from 'react-refetch'
 import type { Match } from 'react-router-dom'
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input
-} from 'reactstrap'
+import { Container, Row, Col, Form } from 'reactstrap'
 
-import { FetchComponent, type Response } from '../common/FetchComponent'
+import FetchComponent from '../common/FetchComponent'
 import Select from '../common/Select'
 
 import STYLES from './sanction.scss'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
-type FormProps = {
-  match: Match,
+const SanctionForm = ({
+  teamFetch,
+  usersFetch
+}: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
-}
-
-const SanctionForm = (props: FormProps) => {
+}) => {
   return (
     <Container>
       <Row>
         <Col xs={{ size: 6, offset: 3 }} className={STYLES.form}>
           <FetchComponent
-            response={PromiseState.all([props.teamFetch, props.usersFetch])}
+            response={PromiseState.all([teamFetch, usersFetch])}
             render={([team, users]) => (
               <SanctionFormBody team={team} users={users} />
             )}
@@ -43,39 +34,17 @@ const SanctionForm = (props: FormProps) => {
   )
 }
 
-type FormBodyProps = {
-  team: Team,
-  users: User[],
-}
-
-const SanctionFormBody = (props: FormBodyProps) => {
+const SanctionFormBody = ({ team, users }: { team: Team, users: User[] }) => {
   const [userSelected, setUserSelected] = useState<?string>()
 
   return (
     <Form>
-      <FormGroup>
-        <Label>Choisir le vilain :</Label>
-        <Input
-          type='select'
-          value={userSelected}
-          onChange={v => {
-            console.log(v.target.value)
-            setUserSelected(v.target.value)
-          }}
-        >
-          {props.users.map(user => (
-            <option key={user.id} value={user.id}>{`${user.firstname} ${
-              user.lastname
-            }`}</option>
-          ))}
-        </Input>
-      </FormGroup>
       <Select
-        label={'Hey'}
+        label='Joueur'
         value={userSelected}
         onChange={id => setUserSelected(id)}
       >
-        {[].map(user => (
+        {users.map(user => (
           <option key={user.id} value={user.id}>{`${user.firstname} ${
             user.lastname
           }`}</option>
@@ -85,8 +54,8 @@ const SanctionFormBody = (props: FormBodyProps) => {
   )
 }
 
-export default connect((props: FormProps) => {
-  let team_id = props.match.params.team_id || ''
+export default connect(({ match }: { match: Match }) => {
+  let team_id = match.params.team_id || ''
   let root_url = REACT_APP_API_URL || ''
 
   return {

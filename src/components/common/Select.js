@@ -1,5 +1,4 @@
 // @flow
-
 import React, { type ChildrenArray, type Element, Children } from 'react'
 import { FormGroup, Label, Input } from 'reactstrap'
 
