@@ -1,25 +1,34 @@
 // @flow
-import React, { type ChildrenArray, type Element, Children } from 'react'
+import React from 'react'
 import { FormGroup, Label, Input } from 'reactstrap'
+
+type OptionProps = {
+  value: string,
+  label: string,
+}
 
 type SelectProps = {
   label: string,
   value: ?string,
   onChange: string => void,
-  children: ChildrenArray<Element<'option'>>,
+  options: OptionProps[],
 }
 
-const Select = ({ label, value, onChange, children }: SelectProps) => {
+const Select = ({ label, value, onChange, options }: SelectProps) => {
   return (
     <FormGroup>
       <Label>{label}</Label>
       <Input
         type='select'
         value={value}
-        onChange={v => onChange(v.target.value)}
+        onChange={e => onChange(e.target.value)}
       >
-        <option hidden>{React.Children.count(children)}</option>
-        {children}
+        <option hidden />
+        {options.map((option, i) => (
+          <option value={option.value} key={i}>
+            {option.label}
+          </option>
+        ))}
       </Input>
     </FormGroup>
   )

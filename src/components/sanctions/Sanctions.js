@@ -35,21 +35,29 @@ const SanctionForm = ({
 }
 
 const SanctionFormBody = ({ team, users }: { team: Team, users: User[] }) => {
-  const [userSelected, setUserSelected] = useState<?string>()
+  const [userId, setUserId] = useState<?string>()
+  const [ruleId, setRuleId] = useState<?string>()
 
   return (
     <Form>
       <Select
-        label='Joueur'
-        value={userSelected}
-        onChange={id => setUserSelected(id)}
-      >
-        {users.map(user => (
-          <option key={user.id} value={user.id}>{`${user.firstname} ${
-            user.lastname
-          }`}</option>
-        ))}
-      </Select>
+        label='Joueur sanctionné'
+        value={userId}
+        onChange={id => setUserId(id)}
+        options={users.map(user => ({
+          value: user.id,
+          label: user.firstname + ' ' + user.lastname
+        }))}
+      />
+      <Select
+        label='Sanction à appliquer'
+        value={ruleId}
+        onChange={id => setRuleId(id)}
+        options={team.rules.map(rule => ({
+          value: rule.id,
+          label: rule.name + ' (' + rule.category + ')'
+        }))}
+      />
     </Form>
   )
 }
