@@ -2,11 +2,9 @@
 import React, { useState } from 'react'
 import { connect, PromiseState } from 'react-refetch'
 import type { Match } from 'react-router-dom'
-import { Container, Row, Col, Form, Button } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 
 import FetchComponent from '../common/FetchComponent'
-import Select from '../common/Select'
-import NumericInput from '../common/NumericInput'
 
 import SanctionForm from './SanctionForm'
 
@@ -16,10 +14,12 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const SanctionsController = ({
   teamFetch,
-  usersFetch
+  usersFetch,
+  postSanction
 }: {
   teamFetch: Response<Team>,
-  usersFetch: Response<User[]>
+  usersFetch: Response<User[]>,
+  postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
 }) => {
   return (
     <Container>
@@ -27,7 +27,7 @@ const SanctionsController = ({
         <Col xs={{ size: 6, offset: 3 }} className={STYLES.form}>
           <FetchComponent
             response={PromiseState.all([teamFetch, usersFetch])}
-            render={([team, users]) => <SanctionForm team={team} users={users} />}
+            render={([team, users]) => <SanctionForm team={team} users={users} createSanction={postSanction} />}
           />
         </Col>
       </Row>
@@ -41,6 +41,15 @@ export default connect(({ match }: { match: Match }) => {
 
   return {
     teamFetch: `${root_url}/teams/${team_id}`,
-    usersFetch: `${root_url}/teams/${team_id}/users`
+    usersFetch: `${root_url}/teams/${team_id}/users`,
+    postSanction: (sanction: CreateSanction, cb: Sanction => void, errCb: Reason => void) => ({
+      createSanction: {
+        url: `${root_url}/teams/${team_id}/sanctions`,
+        method: 'POST',
+        body: JSON.stringify(sanction),
+        then: sanction => cb(sanction),
+        catch: reason => errCb(reason)
+      }
+    })
   }
 })(SanctionsController)

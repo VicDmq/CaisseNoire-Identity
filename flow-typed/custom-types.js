@@ -9,12 +9,15 @@ declare type Success<T> = {|
 
 declare type Failed = {|
   rejected: true,
-  reason: {
-    cause: {
-      kind: any
-    }
-  }
+  reason: Reason
 |}
+
+type Reason = {
+  cause: {
+    kind: any,
+    description: string
+  }
+}
 
 declare type Team = {
   id: Uuid,
@@ -27,10 +30,12 @@ declare type Rule = {
   name: string,
   description: string,
   category: RuleCategory,
-  kind: BasicKind | MultiplicationKind | TimeMultiplicationKind | RegularIntervalsKind
+  kind: RuleKind
 }
 
 declare type RuleCategory = 'TRAINING_DAY' | 'GAME_DAY'
+
+declare type RuleKind = BasicKind | MultiplicationKind | TimeMultiplicationKind | RegularIntervalsKind
 
 declare type BasicKind = {
   type: 'BASIC',
@@ -66,29 +71,31 @@ declare type User = {
   email: ?string
 }
 
-declare type CreateSanction = {
+declare type Sanction = {
+  id: Uuid,
   team_id: Uuid,
+  user_id: Uuid,
+  sanction_info: SanctionInfo,
+  price: number
+}
+
+declare type CreateSanction = {
   user_id?: Uuid,
   sanction_info?: SanctionInfo
 }
 
 declare type SanctionInfo = {
   associated_rule: ?Uuid,
-  sanction_data: SanctionData
+  extra_info: ExtraInfo
 }
 
-declare type SanctionData = BasicSanctionData | MultiplicationSanctionData | TimeMultiplicationSanctionData
+declare type ExtraInfo = None | Multiplication
 
-declare type BasicSanctionData = {
-  type: 'BASIC'
+declare type None = {
+  type: 'NONE'
 }
 
-declare type MultiplicationSanctionData = {
+declare type Multiplication = {
   type: 'MULTIPLICATION',
-  multiple: number
-}
-
-declare type TimeMultiplicationSanctionData = {
-  type: 'TIME_MULTIPLICATION',
-  times_unit: number
+  factor: number
 }
