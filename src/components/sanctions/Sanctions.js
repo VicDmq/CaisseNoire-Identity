@@ -4,15 +4,13 @@ import { connect, PromiseState } from 'react-refetch'
 import type { Match } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 
-import FetchComponent from '../common/FetchComponent'
-
-import SanctionForm from './SanctionForm'
+import CreateSanctionForm from './CreateSanction'
 
 import STYLES from './sanction.scss'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
-const SanctionsController = ({
+const Sanctions = ({
   teamFetch,
   usersFetch,
   postSanction
@@ -25,9 +23,13 @@ const SanctionsController = ({
     <Container>
       <Row>
         <Col xs={{ size: 6, offset: 3 }} className={STYLES.form}>
-          <FetchComponent
+          <CreateSanctionForm
             response={PromiseState.all([teamFetch, usersFetch])}
-            render={([team, users]) => <SanctionForm team={team} users={users} createSanction={postSanction} />}
+            mapResponseToProps={([team, users]) => ({
+              team,
+              users
+            })}
+            createSanction={postSanction}
           />
         </Col>
       </Row>
@@ -52,4 +54,4 @@ export default connect(({ match }: { match: Match }) => {
       }
     })
   }
-})(SanctionsController)
+})(Sanctions)

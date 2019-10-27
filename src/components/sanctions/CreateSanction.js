@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { Form, Button, Alert } from 'reactstrap'
 
+import withConnect from '../common/Connect'
+
 import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
@@ -12,15 +14,16 @@ type AlertState = {
   color?: 'success' | 'danger'
 }
 
-const SanctionForm = ({
-  team,
-  users,
-  createSanction
-}: {
+type DataProps = {
   team: Team,
-  users: User[],
+  users: User[]
+}
+
+type OtherProps = {
   createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
-}) => {
+}
+
+const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
   const [alertState, setAlertState] = useState<AlertState>({ visible: false })
   const [creating, setCreating] = useState<boolean>(false)
@@ -131,8 +134,4 @@ const SanctionForm = ({
   )
 }
 
-const withAsyncData = SanctionForm => (props: any) => (
-  <SanctionForm team={props.team} users={props.users} createSanction={props.createSanction} />
-)
-
-export default withAsyncData(SanctionForm)
+export default withConnect<DataProps, OtherProps>(CreateSanctionForm)
