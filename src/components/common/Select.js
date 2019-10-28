@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { FormGroup, Label, Input } from 'reactstrap'
+import { Form, Select } from 'antd'
 
 export type OptionProps = {
   value: Uuid,
@@ -15,26 +15,22 @@ type SelectProps = {
   required: boolean
 }
 
-const Select = ({ label, value, onChange, options, required }: SelectProps) => {
+const CustomSelect = ({ label, value, onChange, options, required }: SelectProps) => {
   const error = required && !value
 
   return (
-    <FormGroup>
-      <Label>
-        {label} {required ? '*' : ''}
-      </Label>
-      <Input type='select' value={value} onChange={e => onChange(e.target.value)} invalid={error}>
-        <option hidden />
+    <Form.Item label={label}>
+      <Select type='select' value={value} onChange={onChange}>
         {options.map((option, i) => (
-          <option value={option.value} key={i}>
+          <Select.Option value={option.value} key={i}>
             {option.label}
-          </option>
+          </Select.Option>
         ))}
-      </Input>
-    </FormGroup>
+      </Select>
+    </Form.Item>
   )
 }
 
-Select.defaultProps = { required: false }
+CustomSelect.defaultProps = { required: false }
 
-export default Select
+export default CustomSelect

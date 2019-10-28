@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { FormGroup, Label, Input } from 'reactstrap'
+import { Form, InputNumber } from 'antd'
 
 type NumericInputProps = {
   label: string,
@@ -11,10 +11,9 @@ type NumericInputProps = {
 
 const Select = ({ label, value, onChange, min }: NumericInputProps) => {
   return (
-    <FormGroup>
-      <Label>{label}</Label>
-      <Input type='number' min={min} value={value} onChange={e => onChange(e.target.value)} />
-    </FormGroup>
+    <Form.Item label={label}>
+      <InputNumber min={min} value={value} onChange={onChange} />
+    </Form.Item>
   )
 }
 

@@ -1,19 +1,12 @@
 // @flow
 import React, { useState } from 'react'
-import { Form, Alert } from 'reactstrap'
-import { message, Button } from 'antd'
+import { Form, message, Button } from 'antd'
 
 import withConnect from '../common/Connect'
 
 import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
-
-type AlertState = {
-  visible: boolean,
-  text?: string,
-  color?: 'success' | 'danger'
-}
 
 type DataProps = {
   team: Team,
@@ -26,7 +19,6 @@ type OtherProps = {
 
 const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
-  const [alertState, setAlertState] = useState<AlertState>({ visible: false })
   const [creating, setCreating] = useState<boolean>(false)
 
   const updateSanction = (sanction: CreateSanction) => {
@@ -53,14 +45,12 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
     createSanction(
       sanction,
       sanction => {
-        message.success('This is a success message')
-        setAlertState({ visible: true, text: getSuccessAlertText(sanction), color: 'success' })
+        message.success(getSuccessAlertText(sanction))
         setSanction({})
         setCreating(false)
       },
       reason => {
-        setAlertState({ visible: true, text: getErrorAlertText(reason), color: 'danger' })
-        setSanction({})
+        message.error(getErrorAlertText(reason))
         setCreating(false)
       }
     )
@@ -85,13 +75,8 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
 
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
-  const dismissAlert = () => setAlertState({ visible: false })
-
   return (
     <div>
-      <Alert isOpen={alertState.visible} toggle={dismissAlert} color={alertState.color && alertState.color}>
-        {alertState.text && alertState.text}
-      </Alert>
       <Form>
         <SelectUser
           users={users}

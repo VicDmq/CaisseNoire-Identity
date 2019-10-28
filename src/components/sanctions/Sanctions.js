@@ -2,11 +2,10 @@
 import React, { useState } from 'react'
 import { connect, PromiseState } from 'react-refetch'
 import type { Match } from 'react-router-dom'
-import { Container, Row, Col } from 'reactstrap'
+import { Row, Col } from 'antd'
 
 import CreateSanctionForm from './CreateSanction'
 
-// // $FlowFixMe: getElementById can return null
 import STYLES from './Sanction.less'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
@@ -21,20 +20,18 @@ const Sanctions = ({
   postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
 }) => {
   return (
-    <Container>
-      <Row>
-        <Col xs={{ size: 6, offset: 3 }} className={STYLES.form}>
-          <CreateSanctionForm
-            response={PromiseState.all([teamFetch, usersFetch])}
-            mapResponseToProps={([team, users]) => ({
-              team,
-              users
-            })}
-            createSanction={postSanction}
-          />
-        </Col>
-      </Row>
-    </Container>
+    <Row>
+      <Col xs={18} offset={3} className={STYLES.form}>
+        <CreateSanctionForm
+          response={PromiseState.all([teamFetch, usersFetch])}
+          mapResponseToProps={([team, users]) => ({
+            team,
+            users
+          })}
+          createSanction={postSanction}
+        />
+      </Col>
+    </Row>
   )
 }
 
