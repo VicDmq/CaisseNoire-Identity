@@ -5,7 +5,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 import Sanctions from './components/sanctions/Sanctions'
 
-import './App.less'
+import './styles/app.less'
 
 const Routes = () => {
   return (

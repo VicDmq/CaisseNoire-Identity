@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import Select from '../common/Select'
+import Select from '../common/Select/Select'
 
 const SelectUser = ({
   users,
@@ -10,7 +10,7 @@ const SelectUser = ({
 }: {
   users: User[],
   userId: ?Uuid,
-  updateSelectedUser: Uuid => void
+  updateSelectedUser: (?Uuid) => void
 }) => {
   return (
     <Select

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import Select from '../common/Select'
+import Select from '../common/Select/Select'
 
 const RuleCategory: { [key: string]: string } = {
   TRAINING_DAY: 'Entrainement',
@@ -15,7 +15,7 @@ const SelectRule = ({
 }: {
   rules: Rule[],
   ruleId: ?Uuid,
-  updateSelectedRule: Uuid => void
+  updateSelectedRule: (?Uuid) => void
 }) => {
   return (
     <div>

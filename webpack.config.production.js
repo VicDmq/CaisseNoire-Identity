@@ -33,7 +33,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        exclude: /\App.less$/,
+        exclude: /\app.less$/,
         loader: [
           MiniCssExtractPlugin.loader,
           {
@@ -47,11 +47,17 @@ module.exports = {
             options: {
               javascriptEnabled: true
             }
+          },
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: ['./src/styles/variables.less']
+            }
           }
         ]
       },
       {
-        test: /\App.less$/,
+        test: /\app.less$/,
         loader: [
           MiniCssExtractPlugin.loader,
           'css-loader',

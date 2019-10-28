@@ -77,7 +77,7 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
 
   return (
     <div>
-      <Form>
+      <Form hideRequiredMark>
         <SelectUser
           users={users}
           userId={sanction.user_id}
@@ -96,7 +96,7 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
               ...sanction,
               sanction_info: {
                 associated_rule,
-                extra_info: initializeExtraInfo(associated_rule)
+                extra_info: associated_rule ? initializeExtraInfo(associated_rule) : undefined
               }
             })
           }

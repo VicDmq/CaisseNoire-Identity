@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        exclude: /\App.less$/,
+        exclude: /\app.less$/,
         loader: [
           'style-loader',
           {
@@ -47,11 +47,17 @@ module.exports = {
               sourceMap: true,
               javascriptEnabled: true
             }
+          },
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: ['./src/styles/variables.less']
+            }
           }
         ]
       },
       {
-        test: /\App.less$/,
+        test: /\app.less$/,
         loader: [
           'style-loader',
           {
