@@ -32,8 +32,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
-        exclude: /\app.scss$/,
+        test: /\.less$/,
+        exclude: /\App.less$/,
         loader: [
           MiniCssExtractPlugin.loader,
           {
@@ -43,19 +43,23 @@ module.exports = {
             }
           },
           {
-            loader: 'sass-loader'
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true
+            }
           }
         ]
       },
       {
-        test: /\app.scss$/,
+        test: /\App.less$/,
         loader: [
           MiniCssExtractPlugin.loader,
+          'css-loader',
           {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'sass-loader'
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true
+            }
           }
         ]
       }
