@@ -6,7 +6,8 @@ import { Container, Row, Col } from 'reactstrap'
 
 import CreateSanctionForm from './CreateSanction'
 
-import STYLES from './sanction.scss'
+// // $FlowFixMe: getElementById can return null
+import STYLES from './Sanction.less'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 

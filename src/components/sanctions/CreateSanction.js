@@ -1,6 +1,7 @@
 // @flow
 import React, { useState } from 'react'
-import { Form, Button, Alert } from 'reactstrap'
+import { Form, Alert } from 'reactstrap'
+import { message, Button } from 'antd'
 
 import withConnect from '../common/Connect'
 
@@ -52,6 +53,7 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
     createSanction(
       sanction,
       sanction => {
+        message.success('This is a success message')
         setAlertState({ visible: true, text: getSuccessAlertText(sanction), color: 'success' })
         setSanction({})
         setCreating(false)
@@ -126,7 +128,7 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
             })
           }
         />
-        <Button onClick={() => saveSanction()} disabled={buttonIsDisabled}>
+        <Button type='primary' onClick={() => saveSanction()} disabled={buttonIsDisabled}>
           Ça paye !
         </Button>
       </Form>

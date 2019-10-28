@@ -11,14 +11,19 @@ type SelectProps = {
   label: string,
   value: ?Uuid,
   onChange: Uuid => void,
-  options: OptionProps[]
+  options: OptionProps[],
+  required: boolean
 }
 
-const Select = ({ label, value, onChange, options }: SelectProps) => {
+const Select = ({ label, value, onChange, options, required }: SelectProps) => {
+  const error = required && !value
+
   return (
     <FormGroup>
-      <Label>{label}</Label>
-      <Input type='select' value={value} onChange={e => onChange(e.target.value)}>
+      <Label>
+        {label} {required ? '*' : ''}
+      </Label>
+      <Input type='select' value={value} onChange={e => onChange(e.target.value)} invalid={error}>
         <option hidden />
         {options.map((option, i) => (
           <option value={option.value} key={i}>
@@ -29,5 +34,7 @@ const Select = ({ label, value, onChange, options }: SelectProps) => {
     </FormGroup>
   )
 }
+
+Select.defaultProps = { required: false }
 
 export default Select

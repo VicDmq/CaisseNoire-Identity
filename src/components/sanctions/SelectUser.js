@@ -21,6 +21,7 @@ const SelectUser = ({
         value: user.id,
         label: user.firstname + ' ' + user.lastname
       }))}
+      required
     />
   )
 }

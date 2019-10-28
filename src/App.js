@@ -5,15 +5,13 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 import Sanctions from './components/sanctions/Sanctions'
 
-import './app.scss'
+// import './app.scss'
+import './App.less'
 
 const Routes = () => {
   return (
     <Switch>
-      <Route
-        path='/:team_id/sanctions'
-        render={({ match }) => <Sanctions match={match} />}
-      />
+      <Route path='/:team_id/sanctions' render={({ match }) => <Sanctions match={match} />} />
     </Switch>
   )
 }

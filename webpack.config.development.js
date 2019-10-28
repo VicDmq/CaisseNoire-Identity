@@ -1,6 +1,5 @@
 const Dotenv = require('dotenv-webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const FlowWebpackPlugin = require('flow-webpack-plugin')
 
 module.exports = {
@@ -31,8 +30,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
-        exclude: /\app.scss$/,
+        test: /\.less$/,
+        exclude: /\App.less$/,
         loader: [
           'style-loader',
           {
@@ -43,15 +42,16 @@ module.exports = {
             }
           },
           {
-            loader: 'sass-loader',
+            loader: 'less-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
+              javascriptEnabled: true
             }
           }
         ]
       },
       {
-        test: /\app.scss$/,
+        test: /\App.less$/,
         loader: [
           'style-loader',
           {
@@ -61,9 +61,10 @@ module.exports = {
             }
           },
           {
-            loader: 'sass-loader',
+            loader: 'less-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
+              javascriptEnabled: true
             }
           }
         ]
@@ -80,9 +81,6 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './template/index.html',
       filename: './index.html'
-    }),
-    new MiniCssExtractPlugin({
-      filename: './css/style.css'
     }),
     new FlowWebpackPlugin(),
     new Dotenv()
