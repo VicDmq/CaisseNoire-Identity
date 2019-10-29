@@ -1,12 +1,14 @@
 // @flow
 import React, { useState } from 'react'
-import { Form, message, Button } from 'antd'
+import { Row, Form, message, Button } from 'antd'
 
-import withConnect from '../common/Connect'
+import withConnect from '../../utils/Connect'
 
 import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
+
+import STYLES from './styles.less'
 
 type DataProps = {
   team: Team,
@@ -76,8 +78,8 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
   return (
-    <div>
-      <Form hideRequiredMark>
+    <Row type='flex' justify='center'>
+      <Form hideRequiredMark colon={false} className={STYLES.form}>
         <SelectUser
           users={users}
           userId={sanction.user_id}
@@ -117,7 +119,7 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
           Ça paye !
         </Button>
       </Form>
-    </div>
+    </Row>
   )
 }
 

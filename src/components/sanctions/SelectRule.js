@@ -27,6 +27,7 @@ const SelectRule = ({
           value: rule.id,
           label: rule.name + ' (' + RuleCategory[rule.category] + ')'
         }))}
+        required
       />
     </div>
   )

@@ -2,7 +2,7 @@
 import React from 'react'
 import { Form, Select, type FormItemProps } from 'antd'
 
-import STYLES from './Select.less'
+import STYLES from './styles.less'
 
 export type OptionProps = {
   value: Uuid,
@@ -22,10 +22,13 @@ const CustomSelect = ({ label, value, onChange, options, required }: SelectProps
 
   const getFormItemProps = (): FormItemProps => {
     const error = required && !value
-    return {
-      validateStatus: error ? 'error' : 'success',
-      extra: <div className={STYLES.error}>Ce champs est requis Biatch</div>
-    }
+
+    return error
+      ? {
+        validateStatus: 'error',
+        help: <div className={STYLES.error}>Ce champs est requis Biatch</div>
+      }
+      : {}
   }
 
   const clearSelect = () => {

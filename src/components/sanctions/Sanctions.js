@@ -6,7 +6,7 @@ import { Row, Col } from 'antd'
 
 import CreateSanctionForm from './CreateSanction'
 
-import STYLES from './Sanction.less'
+import STYLES from './styles.less'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
@@ -21,7 +21,7 @@ const Sanctions = ({
 }) => {
   return (
     <Row>
-      <Col xs={18} offset={3} className={STYLES.form}>
+      <Col xs={{ span: 18, offset: 3 }} lg={{ span: 12, offset: 6 }} className={STYLES.formContainer}>
         <CreateSanctionForm
           response={PromiseState.all([teamFetch, usersFetch])}
           mapResponseToProps={([team, users]) => ({
