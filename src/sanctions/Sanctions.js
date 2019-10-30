@@ -4,7 +4,7 @@ import { connect, PromiseState } from 'react-refetch'
 import type { Match } from 'react-router-dom'
 import { Row, Col } from 'antd'
 
-import CreateSanctionForm from './CreateSanction/CreateSanction.js'
+import CreateSanctionForm from './CreateSanction/CreateSanction'
 
 import STYLES from './sanctions.less'
 
