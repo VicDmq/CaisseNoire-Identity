@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import Select from '../common/Select/Select'
+import Select from '../common/Select'
 
 const SelectUser = ({
   users,

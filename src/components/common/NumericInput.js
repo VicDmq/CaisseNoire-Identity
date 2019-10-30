@@ -1,20 +1,23 @@
 // @flow
 import React from 'react'
-import { Form, InputNumber } from 'antd'
+import { InputNumber } from 'antd'
+
+import FormItem from './FormItem/FormItem'
 
 type NumericInputProps = {
   label: string,
   value: ?number,
   onChange: number => void,
-  min?: number
+  min?: number,
+  required?: boolean
 }
 
-const Select = ({ label, value, onChange, min }: NumericInputProps) => {
+const NumericInput = (props: NumericInputProps) => {
   return (
-    <Form.Item label={label}>
-      <InputNumber min={min} value={value} onChange={onChange} />
-    </Form.Item>
+    <FormItem label={props.label} error={props.required && !props.value}>
+      <InputNumber min={props.min} value={props.value} onChange={props.onChange} />
+    </FormItem>
   )
 }
 
-export default Select
+export default NumericInput

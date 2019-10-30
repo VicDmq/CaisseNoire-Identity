@@ -26,6 +26,7 @@ const ExtraInfoInput = ({
               })
             }
             min={1}
+            required
           />
         )
       }
