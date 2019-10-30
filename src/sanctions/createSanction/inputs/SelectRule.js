@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import Select from '../common/Select'
+import Select from '../../../components/common/Select'
 
 const RuleCategory: { [key: string]: string } = {
   TRAINING_DAY: 'Entrainement',

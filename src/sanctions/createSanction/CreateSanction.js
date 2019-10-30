@@ -2,13 +2,13 @@
 import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
-import withConnect from '../utils/Connect'
+import withConnect from '../../components/utils/Connect'
 
-import SelectUser from './SelectUser'
-import SelectRule from './SelectRule'
-import ExtraInfoInput from './ExtraInfoInput'
+import SelectUser from './inputs/SelectUser'
+import SelectRule from './inputs/SelectRule'
+import ExtraInfoInput from './inputs/ExtraInfoInput'
 
-import STYLES from './styles.less'
+import STYLES from '../styles.less'
 
 type DataProps = {
   team: Team,
@@ -19,7 +19,9 @@ type OtherProps = {
   createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
 }
 
-const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherProps) => {
+type CreateSanctionProps = DataProps & OtherProps
+
+const CreateSanctionComponent = ({ team, users, createSanction }: CreateSanctionProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
   const [creating, setCreating] = useState<boolean>(false)
 
@@ -123,4 +125,4 @@ const CreateSanctionForm = ({ team, users, createSanction }: DataProps & OtherPr
   )
 }
 
-export default withConnect<DataProps, OtherProps>(CreateSanctionForm)
+export default withConnect<DataProps, OtherProps>(CreateSanctionComponent)
