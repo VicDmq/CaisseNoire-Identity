@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 
-import NumericInput from '../../../components/common/NumericInput'
+import NumericInput from '../../components/common/NumericInput'
 
 const label = 'Information supplémentaires'
 

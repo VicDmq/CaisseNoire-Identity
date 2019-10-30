@@ -4,11 +4,11 @@ import { Row, Form, message, Button } from 'antd'
 
 import withConnect from '../../components/utils/Connect'
 
-import SelectUser from './inputs/SelectUser'
-import SelectRule from './inputs/SelectRule'
-import ExtraInfoInput from './inputs/ExtraInfoInput'
+import SelectUser from './SelectUser'
+import SelectRule from './SelectRule'
+import ExtraInfoInput from './ExtraInfoInput'
 
-import STYLES from '../styles.less'
+import STYLES from '../sanctions.less'
 
 type DataProps = {
   team: Team,
@@ -92,48 +92,56 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
   return (
-    <Row type='flex' justify='center'>
-      <Form hideRequiredMark colon={false} className={STYLES.form}>
-        <SelectUser
-          users={users}
-          userId={sanction.user_id}
-          updateSelectedUser={user_id =>
-            updateSanction({
-              ...sanction,
-              user_id
-            })
-          }
-        />
-        <SelectRule
-          rules={team.rules.filter(rule => rule.kind.type !== 'REGULAR_INTERVALS')}
-          ruleId={sanction.sanction_info && sanction.sanction_info.associated_rule}
-          updateSelectedRule={associated_rule =>
-            updateSanction({
-              ...sanction,
-              sanction_info: {
+    <Form hideRequiredMark colon={false} className={STYLES.form}>
+      <SelectUser
+        users={users}
+        userId={sanction.user_id}
+        updateSelectedUser={user_id =>
+          updateSanction({
+            ...sanction,
+            user_id
+          })
+        }
+      />
+      <SelectRule
+        rules={team.rules.filter(rule => rule.kind.type !== 'REGULAR_INTERVALS')}
+        ruleId={sanction.sanction_info && sanction.sanction_info.associated_rule}
+        updateSelectedRule={associated_rule =>
+          updateSanction({
+            ...sanction,
+            sanction_info: associated_rule
+              ? {
                 associated_rule,
-                extra_info: associated_rule ? initializeExtraInfo(associated_rule) : undefined
+                extra_info: initializeExtraInfo(associated_rule)
               }
-            })
-          }
-        />
-        <ExtraInfoInput
-          extraInfo={sanction.sanction_info && sanction.sanction_info.extra_info}
-          updateExtraInfo={extra_info =>
-            updateSanction({
-              ...sanction,
-              sanction_info: {
-                ...sanction.sanction_info,
-                extra_info
-              }
-            })
-          }
-        />
-        <Button type='primary' onClick={saveSanction} disabled={buttonIsDisabled} loading={creatingSanction}>
+              : undefined
+          })
+        }
+      />
+      <ExtraInfoInput
+        extraInfo={sanction.sanction_info && sanction.sanction_info.extra_info}
+        updateExtraInfo={extra_info =>
+          updateSanction({
+            ...sanction,
+            sanction_info: {
+              ...sanction.sanction_info,
+              extra_info
+            }
+          })
+        }
+      />
+      <Row type='flex' justify='center'>
+        <Button
+          type='primary'
+          onClick={saveSanction}
+          disabled={buttonIsDisabled}
+          loading={creatingSanction}
+          className={STYLES.saveButton}
+        >
           {creatingSanction ? '' : 'Ça paye !'}
         </Button>
-      </Form>
-    </Row>
+      </Row>
+    </Form>
   )
 }
 

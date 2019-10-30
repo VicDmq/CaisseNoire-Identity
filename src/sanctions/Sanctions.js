@@ -4,9 +4,9 @@ import { connect, PromiseState } from 'react-refetch'
 import type { Match } from 'react-router-dom'
 import { Row, Col } from 'antd'
 
-import CreateSanctionForm from './createSanction/CreateSanction'
+import CreateSanctionForm from './CreateSanction/CreateSanction'
 
-import STYLES from './styles.less'
+import STYLES from './sanctions.less'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
@@ -21,15 +21,17 @@ const Sanctions = ({
 }) => {
   return (
     <Row>
-      <Col xs={{ span: 18, offset: 3 }} lg={{ span: 12, offset: 6 }} className={STYLES.formContainer}>
-        <CreateSanctionForm
-          response={PromiseState.all([teamFetch, usersFetch])}
-          mapResponseToProps={([team, users]) => ({
-            team,
-            users
-          })}
-          createSanction={postSanction}
-        />
+      <Col xs={{ span: 18, offset: 3 }} lg={{ span: 12, offset: 6 }}>
+        <Row type='flex' justify='center' align='middle' className={STYLES.formContainer}>
+          <CreateSanctionForm
+            response={PromiseState.all([teamFetch, usersFetch])}
+            mapResponseToProps={([team, users]) => ({
+              team,
+              users
+            })}
+            createSanction={postSanction}
+          />
+        </Row>
       </Col>
     </Row>
   )

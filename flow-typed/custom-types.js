@@ -13,11 +13,22 @@ declare type Failed = {|
 |}
 
 type Reason = {
-  cause: {
-    kind: any,
-    description: string
-  }
+  cause: ?ApiError
 }
+
+type ApiError = {
+  kind: ErrorKind,
+  description: string
+}
+
+type ErrorKind =
+  | 'SERVICE_UNAVAILABLE'
+  | 'UNKNOWN'
+  | 'NOT_FOUND'
+  | 'JSON'
+  | 'BAD_REFERENCE'
+  | 'DUPLICATED_FIELD'
+  | 'BAD_PARAMETER'
 
 declare type Team = {
   id: Uuid,

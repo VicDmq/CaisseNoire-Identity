@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
-import Sanctions from './sanctions/Sanctions'
+import Sanctions from './Sanctions/Sanctions'
 
 import './styles/app.less'
 
