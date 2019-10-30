@@ -1,5 +1,5 @@
-// @flow
 import React, { type AbstractComponent } from 'react'
+import { Spin, Result } from 'antd'
 
 type WithConnect<T> = { response: Response<any>, mapResponseToProps: (any[]) => T }
 
@@ -9,13 +9,19 @@ const withConnect = <Props, OtherProps>(
   // $FlowFixMe: Should accept (WithConnect<Props> & OtherProps)
   return ({ response, mapResponseToProps, ...otherProps }: WithConnect<Props> & OtherProps) => {
     if (response.rejected) {
-      return <div>Erreur... {response.reason.cause.kind}</div>
+      return (
+        <Result
+          status='error'
+          title='Échec du chargement'
+          subTitle="Une erreur s'est produite pendant le chargement des données"
+        />
+      )
     }
     if (response.fulfilled) {
       return <WrappedComponent {...mapResponseToProps(response.value)} {...otherProps} />
     }
 
-    return <div>Loading...</div>
+    return <Spin size={'large'} />
   }
 }
 

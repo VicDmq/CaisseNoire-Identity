@@ -21,9 +21,9 @@ type OtherProps = {
 
 type CreateSanctionProps = DataProps & OtherProps
 
-const CreateSanctionComponent = ({ team, users, createSanction }: CreateSanctionProps) => {
+const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
-  const [creating, setCreating] = useState<boolean>(false)
+  const [creatingSanction, setCreatingSanction] = useState<boolean>(false)
 
   const updateSanction = (sanction: CreateSanction) => {
     setSanction(sanction)
@@ -39,23 +39,35 @@ const CreateSanctionComponent = ({ team, users, createSanction }: CreateSanction
     return ''
   }
 
-  const getErrorAlertText = (reason: Reason): string => {
-    return 'Error'
+  const getErrorAlertText = (error: ?ApiError): string => {
+    if (error) {
+      switch (error.kind) {
+        case 'NOT_FOUND':
+        case 'BAD_REFERENCE': {
+          return "Une des ressources utilisées n'existe pas : rechargez la page "
+        }
+        default: {
+          break
+        }
+      }
+    }
+
+    return "Une erreur inconnue s'est produite lors de la sauvegarde"
   }
 
   const saveSanction = () => {
-    setCreating(true)
+    setCreatingSanction(true)
 
     createSanction(
       sanction,
       sanction => {
         message.success(getSuccessAlertText(sanction))
         setSanction({})
-        setCreating(false)
+        setCreatingSanction(false)
       },
       reason => {
-        message.error(getErrorAlertText(reason))
-        setCreating(false)
+        message.error(getErrorAlertText(reason.cause))
+        setCreatingSanction(false)
       }
     )
   }
@@ -117,12 +129,12 @@ const CreateSanctionComponent = ({ team, users, createSanction }: CreateSanction
             })
           }
         />
-        <Button type='primary' onClick={() => saveSanction()} disabled={buttonIsDisabled}>
-          Ça paye !
+        <Button type='primary' onClick={saveSanction} disabled={buttonIsDisabled} loading={creatingSanction}>
+          {creatingSanction ? '' : 'Ça paye !'}
         </Button>
       </Form>
     </Row>
   )
 }
 
-export default withConnect<DataProps, OtherProps>(CreateSanctionComponent)
+export default withConnect<DataProps, OtherProps>(SanctionForm)
