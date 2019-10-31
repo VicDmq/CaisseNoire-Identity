@@ -110,3 +110,8 @@ declare type Multiplication = {
   type: 'MULTIPLICATION',
   factor: number
 }
+
+type CookieProps = {
+  team_id: Uuid,
+  admin_password: string
+}
