@@ -1,6 +1,7 @@
 // @flow
 import React, { type Node } from 'react'
 import { Form } from 'antd'
+import classNames from 'classnames/bind'
 
 import STYLES from './styles.less'
 
@@ -8,18 +9,21 @@ const { Item } = Form
 
 type LabelProps = {
   label: string,
-  error?: boolean
+  error?: boolean,
+  disabled?: boolean
 }
 
 const Label = (props: LabelProps) => {
-  return <span className={props.error ? STYLES.labelError : ''}>{props.label}</span>
+  const cx = classNames.bind(STYLES)
+  return <span className={cx({ labelError: props.error, labelDisabled: props.disabled })}>{props.label}</span>
 }
 
 type FormItemProps = {
   label: string,
   error?: boolean,
   reason?: string,
-  children: Node
+  children: Node,
+  disabled?: boolean
 }
 
 const FormItem = (props: FormItemProps) => {
@@ -32,7 +36,11 @@ const FormItem = (props: FormItemProps) => {
       : {}
   }
   return (
-    <Item label={<Label label={props.label} error={props.error} />} {...getFormItemProps()} hasFeedback>
+    <Item
+      label={<Label label={props.label} error={props.error} disabled={props.disabled} />}
+      {...getFormItemProps()}
+      hasFeedback
+    >
       {props.children}
     </Item>
   )

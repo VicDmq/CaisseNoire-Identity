@@ -7,14 +7,14 @@ declare module 'react-router-dom' {
     forceRefresh?: boolean,
     getUserConfirmation?: GetUserConfirmation,
     keyLength?: number,
-    children?: React$Node,
+    children?: React$Node
   |}>
 
   declare export var HashRouter: React$ComponentType<{|
     basename?: string,
     getUserConfirmation?: GetUserConfirmation,
     hashType?: 'slash' | 'noslash' | 'hashbang',
-    children?: React$Node,
+    children?: React$Node
   |}>
 
   declare export var Link: React$ComponentType<{
@@ -63,20 +63,14 @@ declare module 'react-router-dom' {
     length: number,
     location: Location,
     action: HistoryAction,
-    listen(
-      callback: (location: Location, action: HistoryAction) => void
-    ): () => void,
+    listen(callback: (location: Location, action: HistoryAction) => void): () => void,
     push(path: string | LocationShape, state?: any): void,
     replace(path: string | LocationShape, state?: any): void,
     go(n: number): void,
     goBack(): void,
     goForward(): void,
     canGo?: (n: number) => boolean,
-    block(
-      callback:
-        | string
-        | ((location: Location, action: HistoryAction) => ?string)
-    ): () => void,
+    block(callback: string | ((location: Location, action: HistoryAction) => ?string)): () => void,
     // createMemoryHistory
     index?: number,
     entries?: Array<Location>,
@@ -95,7 +89,7 @@ declare module 'react-router-dom' {
     history: RouterHistory,
     location: Location,
     match: Match,
-    staticContext?: StaticRouterContext,
+    staticContext?: StaticRouterContext
   |}
 
   declare type ContextRouterVoid = {
@@ -106,10 +100,7 @@ declare module 'react-router-dom' {
     ...
   }
 
-  declare export type GetUserConfirmation = (
-    message: string,
-    callback: (confirmed: boolean) => void
-  ) => void
+  declare export type GetUserConfirmation = (message: string, callback: (confirmed: boolean) => void) => void
 
   declare export type StaticRouterContext = { url?: string, ... }
 
@@ -117,7 +108,7 @@ declare module 'react-router-dom' {
     basename?: string,
     location?: string | Location,
     context: StaticRouterContext,
-    children?: React$Node,
+    children?: React$Node
   |}>
 
   declare export var MemoryRouter: React$ComponentType<{|
@@ -125,17 +116,17 @@ declare module 'react-router-dom' {
     initialIndex?: number,
     getUserConfirmation?: GetUserConfirmation,
     keyLength?: number,
-    children?: React$Node,
+    children?: React$Node
   |}>
 
   declare export var Router: React$ComponentType<{|
     history: RouterHistory,
-    children?: React$Node,
+    children?: React$Node
   |}>
 
   declare export var Prompt: React$ComponentType<{|
     message: string | ((location: Location) => string | boolean),
-    when?: boolean,
+    when?: boolean
   |}>
 
   declare export var Redirect: React$ComponentType<{|
@@ -143,7 +134,7 @@ declare module 'react-router-dom' {
     push?: boolean,
     from?: string,
     exact?: boolean,
-    strict?: boolean,
+    strict?: boolean
   |}>
 
   declare export var Route: React$ComponentType<{|
@@ -154,22 +145,17 @@ declare module 'react-router-dom' {
     exact?: boolean,
     strict?: boolean,
     location?: LocationShape,
-    sensitive?: boolean,
+    sensitive?: boolean
   |}>
 
   declare export var Switch: React$ComponentType<{|
     children?: React$Node,
-    location?: Location,
+    location?: Location
   |}>
 
-  declare export function withRouter<
-    Props: { ... },
-    Component: React$ComponentType<Props>
-  >(
+  declare export function withRouter<Props: { ... }, Component: React$ComponentType<Props>>(
     WrappedComponent: Component
-  ): React$ComponentType<
-    $Diff<React$ElementConfig<Component>, ContextRouterVoid>
-  >
+  ): React$ComponentType<$Diff<React$ElementConfig<Component>, ContextRouterVoid>>
 
   declare type MatchPathOptions = {
     path?: string | string[],
@@ -185,8 +171,9 @@ declare module 'react-router-dom' {
     parent?: Match
   ): null | Match
 
-  declare export function generatePath(
-    pattern?: string,
-    params?: { +[string]: mixed, ... }
-  ): string
+  declare export function generatePath(pattern?: string, params?: { +[string]: mixed, ... }): string
+
+  declare export function useLocation(): Location
+
+  declare export function useHistory(): RouterHistory
 }

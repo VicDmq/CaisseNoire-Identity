@@ -92,7 +92,7 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
   return (
-    <Form hideRequiredMark colon={false} className={STYLES.form}>
+    <Form colon={false} className={STYLES.form}>
       <SelectUser
         users={users}
         userId={sanction.user_id}

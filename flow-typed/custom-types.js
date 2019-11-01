@@ -111,7 +111,12 @@ declare type Multiplication = {
   factor: number
 }
 
-type CookieProps = {
-  team_id: Uuid,
-  admin_password: string
+declare type LoginRequest = {
+  name: string,
+  admin_password?: string
+}
+
+declare type LoginResponse = {
+  id: Uuid,
+  admin_password?: string
 }
