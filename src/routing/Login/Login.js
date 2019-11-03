@@ -4,7 +4,8 @@ import { connect } from 'react-refetch'
 import { Redirect, type Location, useHistory } from 'react-router-dom'
 import { Row, Col, Form, Button, Checkbox, Icon } from 'antd'
 
-import Input from '../../components/common/Input'
+import Input from '@Components/common/Input'
+import type { Reason } from '@Components/utils/Connect'
 
 import STYLES from './login.less'
 

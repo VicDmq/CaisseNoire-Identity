@@ -2,8 +2,7 @@
 import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
-import withConnect from '../../components/utils/Connect'
-
+import withConnect, { type Reason } from '@Components/utils/Connect.js'
 import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'

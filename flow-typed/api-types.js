@@ -1,21 +1,5 @@
 declare opaque type Uuid: string
 
-declare type Response<T> = Success<T> | Failed
-
-declare type Success<T> = {|
-  fulfilled: true,
-  value: T
-|}
-
-declare type Failed = {|
-  rejected: true,
-  reason: Reason
-|}
-
-type Reason = {
-  cause: ?ApiError
-}
-
 type ApiError = {
   kind: ErrorKind,
   description: string
