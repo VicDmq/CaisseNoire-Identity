@@ -2,8 +2,7 @@
 import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
-import withConnect from '../../components/utils/Connect'
-
+import withConnect, { type Reason } from '@Components/utils/Connect.js'
 import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
@@ -92,7 +91,7 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
   return (
-    <Form hideRequiredMark colon={false} className={STYLES.form}>
+    <Form colon={false} className={STYLES.form}>
       <SelectUser
         users={users}
         userId={sanction.user_id}

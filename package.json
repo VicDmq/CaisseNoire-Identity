@@ -15,6 +15,7 @@
     "antd": "^3.24.3",
     "jquery": "^3.4.1",
     "react": "^16.10.2",
+    "react-cookie": "^4.0.1",
     "react-dom": "^16.10.2",
     "react-refetch": "^2.0.3",
     "react-router-dom": "^5.1.2"

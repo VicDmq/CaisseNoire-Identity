@@ -1,21 +1,5 @@
 declare opaque type Uuid: string
 
-declare type Response<T> = Success<T> | Failed
-
-declare type Success<T> = {|
-  fulfilled: true,
-  value: T
-|}
-
-declare type Failed = {|
-  rejected: true,
-  reason: Reason
-|}
-
-type Reason = {
-  cause: ?ApiError
-}
-
 type ApiError = {
   kind: ErrorKind,
   description: string
@@ -109,4 +93,14 @@ declare type None = {
 declare type Multiplication = {
   type: 'MULTIPLICATION',
   factor: number
+}
+
+declare type LoginRequest = {
+  name: string,
+  admin_password?: string
+}
+
+declare type LoginResponse = {
+  id: Uuid,
+  admin_password?: string
 }

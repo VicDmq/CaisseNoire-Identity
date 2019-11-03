@@ -1,25 +1,20 @@
 // @flow
 import React from 'react'
 import { render } from 'react-dom'
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+import { CookiesProvider } from 'react-cookie'
 
-import Sanctions from './sanctions/Sanctions'
+import Router from './routing/Router'
 
 import './styles/app.less'
 
-const Routes = () => {
-  return (
-    <Switch>
-      <Route path='/:team_id/sanctions' render={({ match }) => <Sanctions match={match} />} />
-    </Switch>
-  )
-}
-
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
+    <CookiesProvider>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </CookiesProvider>
   )
 }
 

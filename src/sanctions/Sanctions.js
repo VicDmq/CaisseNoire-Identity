@@ -1,10 +1,12 @@
 // @flow
 import React, { useState } from 'react'
 import { connect, PromiseState } from 'react-refetch'
-import type { Match } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 import { Row, Col } from 'antd'
 
+import type { Response, Reason } from '@Components/utils/Connect'
 import CreateSanctionForm from './CreateSanction/CreateSanction'
+import type { ApiProps } from '../routing/routes'
 
 import STYLES from './sanctions.less'
 
@@ -37,17 +39,15 @@ const Sanctions = ({
   )
 }
 
-export default connect(({ match }: { match: Match }) => {
-  let team_id = match.params.team_id || ''
-  let root_url = REACT_APP_API_URL || ''
-
+export default connect(({ teamId, rootUrl }: ApiProps) => {
   return {
-    teamFetch: `${root_url}/teams/${team_id}`,
-    usersFetch: `${root_url}/teams/${team_id}/users`,
+    teamFetch: `${rootUrl}/teams/${teamId}`,
+    usersFetch: `${rootUrl}/teams/${teamId}/users`,
     postSanction: (sanction: CreateSanction, cb: Sanction => void, errCb: Reason => void) => ({
       createSanction: {
-        url: `${root_url}/teams/${team_id}/sanctions`,
+        url: `${rootUrl}/teams/${teamId}/sanctions`,
         method: 'POST',
+        force: true,
         body: JSON.stringify(sanction),
         then: sanction => cb(sanction),
         catch: reason => errCb(reason)
