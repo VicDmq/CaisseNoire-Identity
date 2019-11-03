@@ -19,7 +19,7 @@ type LoginState = {
   credentials: LoginRequest,
   adminMode: boolean,
   loading: boolean,
-  error?: boolean
+  error?: ?string
 }
 
 const Login = (props: LoginProps) => {
@@ -29,7 +29,7 @@ const Login = (props: LoginProps) => {
   const updateCredentials = (credentials: LoginRequest) => {
     setState({
       ...state,
-      error: false,
+      error: undefined,
       credentials
     })
   }
@@ -49,12 +49,20 @@ const Login = (props: LoginProps) => {
   const onSuccess = (response: LoginResponse) => {
     props.setCookie(response.id, !!response.admin_password)
     let { from } = history.location.state || { from: '/sanctions' }
-    history.replace({ pathname: from })
+    history.push({ pathname: from })
   }
 
   const onError = (reason: Reason) => {
-    setState({ ...state, credentials: { name: '' }, loading: false, error: true })
-    console.log(reason.cause)
+    let error = "Une erreur s'est produite lors de la connexion"
+
+    if (reason.cause) {
+      switch (reason.cause.kind) {
+        case 'NOT_FOUND':
+          error = `Nom d'équipe ${state.adminMode ? 'ou mot de passe' : ''} incorrect`
+      }
+    }
+
+    setState({ ...state, credentials: { name: '' }, loading: false, error })
   }
 
   const saveDisabled = state.credentials.name === '' || (state.adminMode && !state.credentials.admin_password)
@@ -90,7 +98,7 @@ const Login = (props: LoginProps) => {
           {state.error && (
             <div className={STYLES.errorMessage}>
               <Icon type='exclamation-circle' theme='filled' />
-              Nom d'équipe incorrect
+              {state.error}
             </div>
           )}
           <Row type='flex' justify='center'>

@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { useState } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
@@ -18,7 +18,7 @@ export type SessionProps = {
 }
 
 const Router = () => {
-  const [cookies, setCookie, removeCookie] = useCookies<CookieProps, SessionProps>([])
+  const [cookies, setCookie, removeCookie] = useCookies<CookieProps, SessionProps>(['session'])
 
   const setCookieValue = (teamId: Uuid, isAdmin: boolean) => {
     setCookie('session', { teamId, isAdmin }, { path: '/' })

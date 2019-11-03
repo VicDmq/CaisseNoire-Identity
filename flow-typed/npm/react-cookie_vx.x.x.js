@@ -8,5 +8,5 @@ declare module 'react-cookie' {
     pathname?: string
   }
 
-  declare export function useCookies<T, U>([]): [T, (string, U, Options) => void, (string, Options) => void]
+  declare export function useCookies<T, U>([string]): [T, (string, U, Options) => void, (string, Options) => void]
 }
