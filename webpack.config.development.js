@@ -1,6 +1,7 @@
 const Dotenv = require('dotenv-webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const FlowWebpackPlugin = require('flow-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   mode: 'development',
@@ -10,6 +11,11 @@ module.exports = {
   output: {
     filename: './js/bundle.js',
     publicPath: '/'
+  },
+  resolve: {
+    alias: {
+      '@Components': path.resolve(__dirname, 'src/components')
+    }
   },
   module: {
     rules: [

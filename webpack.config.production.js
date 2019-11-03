@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const FlowWebpackPlugin = require('flow-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   mode: 'production',
@@ -12,6 +13,11 @@ module.exports = {
   output: {
     filename: './js/bundle.[hash].js',
     publicPath: '/'
+  },
+  resolve: {
+    alias: {
+      '@Components': path.resolve(__dirname, 'src/components')
+    }
   },
   module: {
     rules: [
