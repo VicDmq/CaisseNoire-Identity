@@ -1,14 +1,17 @@
 // @flow
 import React from 'react'
 
-import NumericInput from '@Components/common/NumericInput'
+import { Row } from 'antd'
 
-const label = 'Information supplémentaires'
+import NumericInput from '@Components/common/NumericInput/NumericInput'
+import { TimeUnitText } from '@Text/rule'
 
 const ExtraInfoInput = ({
+  ruleKind,
   extraInfo,
   updateExtraInfo
 }: {
+  ruleKind: ?RuleKind,
   extraInfo: ?ExtraInfo,
   updateExtraInfo: ExtraInfo => void
 }) => {
@@ -16,8 +19,9 @@ const ExtraInfoInput = ({
     switch (extraInfo.type) {
       case 'MULTIPLICATION': {
         return (
+          // <Row type='flex'>
           <NumericInput
-            label={label}
+            label='Information supplémentaires'
             value={extraInfo && extraInfo.factor}
             onChange={factor =>
               updateExtraInfo({
@@ -25,9 +29,11 @@ const ExtraInfoInput = ({
                 factor
               })
             }
+            suffix={ruleKind && ruleKind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[ruleKind.time_unit] : undefined}
             min={1}
             required
           />
+          // </Row>
         )
       }
 

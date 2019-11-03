@@ -8,6 +8,7 @@
 
 [options]
 module.name_mapper='^@Components' ->'<PROJECT_ROOT>/src/components'
+module.name_mapper='^@Text' ->'<PROJECT_ROOT>/src/text'
 module.name_mapper.extension='less' -> '<PROJECT_ROOT>/flow/less_module.js.flow'
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue

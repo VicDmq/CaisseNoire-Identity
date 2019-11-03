@@ -88,6 +88,12 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
     return { type: 'NONE' }
   }
 
+  const getRuleKind = (): ?RuleKind => {
+    const rule = team.rules.find(rule => rule.id === (sanction.sanction_info && sanction.sanction_info.associated_rule))
+
+    return rule ? rule.kind : undefined
+  }
+
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
   return (
@@ -118,6 +124,7 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
         }
       />
       <ExtraInfoInput
+        ruleKind={getRuleKind()}
         extraInfo={sanction.sanction_info && sanction.sanction_info.extra_info}
         updateExtraInfo={extra_info =>
           updateSanction({

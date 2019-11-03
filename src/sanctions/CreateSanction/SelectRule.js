@@ -2,11 +2,7 @@
 import React from 'react'
 
 import Select from '@Components/common/Select'
-
-const RuleCategory: { [key: string]: string } = {
-  TRAINING_DAY: 'Entrainement',
-  GAME_DAY: 'Jour de match'
-}
+import { RuleCategoryText } from '@Text/rule'
 
 const SelectRule = ({
   rules,
@@ -24,7 +20,7 @@ const SelectRule = ({
       onChange={id => updateSelectedRule(id)}
       options={rules.map(rule => ({
         value: rule.id,
-        label: rule.name + ' (' + RuleCategory[rule.category] + ')'
+        label: rule.name + ' (' + RuleCategoryText[rule.category] + ')'
       }))}
       required
     />
