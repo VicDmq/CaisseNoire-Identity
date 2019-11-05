@@ -1,10 +1,12 @@
 // @flow
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
-import Routes from './Routes'
+import { routes } from './routes'
+import CustomRoute from './Route'
 import Login from './Login/Login'
+import PageNotFound from './PageNotFound'
 
 type CookieProps = {
   session: SessionProps
@@ -28,8 +30,29 @@ const Router = ({ rootUrl }: { rootUrl: string }) => {
 
   return (
     <Switch>
-      <Route exact path='/' render={() => <Login rootUrl={rootUrl} setSession={setSession} />} />
-      <Routes session={cookies.session} rootUrl={rootUrl} deleteSession={deleteSession} />
+      <Route exact path='/'>
+        <Login rootUrl={rootUrl} setSession={setSession} />
+      </Route>
+      {routes.map((route, i) => (
+        <Route
+          path={route.path}
+          render={() =>
+            !cookies.session ? (
+              <Redirect
+                to={{
+                  pathname: '/',
+                  state: { from: route.path }
+                }}
+              />
+            ) : (
+              <CustomRoute route={route} session={cookies.session} rootUrl={rootUrl} deleteSession={deleteSession} />
+            )
+          }
+        />
+      ))}
+      <Route path='*'>
+        <PageNotFound />
+      </Route>
     </Switch>
   )
 }

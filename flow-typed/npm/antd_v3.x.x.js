@@ -23,6 +23,8 @@ declare module 'antd' {
 
   declare export class Avatar extends React$Component<{ ... }> {}
 
+  declare export class Result extends React$Component<{ ... }> {}
+
   declare export type AutoCompleteDataItem =
     | string
     | {
