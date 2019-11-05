@@ -1,12 +1,12 @@
 // @flow
-import React, { useState } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
-import { routes, type RouteProps } from './routes'
+import { routes } from './routes'
+import CustomRoute from './Route'
 import Login from './Login/Login'
-
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL || ''
+import PageNotFound from './PageNotFound'
 
 type CookieProps = {
   session: SessionProps
@@ -17,34 +17,42 @@ export type SessionProps = {
   isAdmin: boolean
 }
 
-const Router = () => {
+const Router = ({ rootUrl }: { rootUrl: string }) => {
   const [cookies, setCookie, removeCookie] = useCookies<CookieProps, SessionProps>(['session'])
 
-  const setCookieValue = (teamId: Uuid, isAdmin: boolean) => {
+  const setSession = (teamId: Uuid, isAdmin: boolean) => {
     setCookie('session', { teamId, isAdmin }, { path: '/' })
+  }
+
+  const deleteSession = () => {
+    removeCookie('session', {})
   }
 
   return (
     <Switch>
-      <Route exact path='/' render={() => <Login rootUrl={REACT_APP_API_URL} setCookie={setCookieValue} />} />
-      {routes.map((route: RouteProps, i) => (
+      <Route exact path='/'>
+        <Login rootUrl={rootUrl} setSession={setSession} />
+      </Route>
+      {routes.map((route, i) => (
         <Route
-          key={i}
           path={route.path}
-          render={routeProps =>
+          render={() =>
             !cookies.session ? (
               <Redirect
                 to={{
                   pathname: '/',
-                  state: { from: routeProps.location.pathname }
+                  state: { from: route.path }
                 }}
               />
             ) : (
-              <route.component teamId={cookies.session.teamId} rootUrl={REACT_APP_API_URL} />
+              <CustomRoute route={route} session={cookies.session} rootUrl={rootUrl} deleteSession={deleteSession} />
             )
           }
         />
       ))}
+      <Route path='*'>
+        <PageNotFound />
+      </Route>
     </Switch>
   )
 }

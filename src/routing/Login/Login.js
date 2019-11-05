@@ -1,7 +1,7 @@
 // @flow
 import React, { useState } from 'react'
 import { connect } from 'react-refetch'
-import { Redirect, type Location, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Row, Col, Form, Button, Checkbox, Icon } from 'antd'
 
 import Input from '@Components/common/Input'
@@ -9,10 +9,8 @@ import type { Reason } from '@Components/utils/Connect'
 
 import STYLES from './login.less'
 
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL
-
 type LoginProps = {
-  setCookie: (Uuid, boolean) => void,
+  setSession: (Uuid, boolean) => void,
   login: (LoginRequest, (LoginResponse) => void, (Reason) => void) => void
 }
 
@@ -49,7 +47,7 @@ const Login = (props: LoginProps) => {
   }
 
   const onSuccess = (response: LoginResponse) => {
-    props.setCookie(response.id, !!response.admin_password)
+    props.setSession(response.id, !!response.admin_password)
     let { from } = history.location.state || { from: '/sanctions' }
     history.push({ pathname: from })
   }
