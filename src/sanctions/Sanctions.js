@@ -6,7 +6,7 @@ import { Row, Col } from 'antd'
 
 import type { Response, Reason } from '@Components/utils/Connect'
 import CreateSanctionForm from './CreateSanction/CreateSanction'
-import type { ApiProps } from '../routing/routes'
+import type { ApiProps } from '../routing/Routes'
 
 import STYLES from './sanctions.less'
 

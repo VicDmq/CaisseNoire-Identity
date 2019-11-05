@@ -1,19 +1,20 @@
 // @flow
 import React, { type ComponentType, type Element } from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { Layout } from 'antd'
 
-import Sanctions from '../sanctions/Sanctions'
-import NavBar from './NavBar/NavBar'
+import Header from './Header/Header'
 import type { SessionProps } from './Router'
-
-type RouteProps = {
-  path: string,
-  component: ComponentType<ApiProps>
-}
+import Sanctions from '../sanctions/Sanctions'
 
 export type ApiProps = {
   teamId: Uuid,
   rootUrl: string
+}
+
+type RouteProps = {
+  path: string,
+  component: ComponentType<ApiProps>
 }
 
 const routes: RouteProps[] = [
@@ -23,7 +24,17 @@ const routes: RouteProps[] = [
   }
 ]
 
-const Routes = ({ session, rootUrl }: { session: ?SessionProps, rootUrl: string }): Element<typeof Route>[] => {
+const { Content } = Layout
+
+const Routes = ({
+  session,
+  rootUrl,
+  deleteSession
+}: {
+  session: ?SessionProps,
+  rootUrl: string,
+  deleteSession: () => void
+}): Element<typeof Route>[] => {
   return routes.map((route: RouteProps, i) => (
     <Route
       key={i}
@@ -37,10 +48,12 @@ const Routes = ({ session, rootUrl }: { session: ?SessionProps, rootUrl: string 
             }}
           />
         ) : (
-          <div style={{ height: '100%' }}>
-            <NavBar />
-            <route.component teamId={session.teamId} rootUrl={rootUrl} />
-          </div>
+          <Layout>
+            <Header deleteSession={deleteSession} />
+            <Content>
+              <route.component teamId={session.teamId} rootUrl={rootUrl} />
+            </Content>
+          </Layout>
         )
       }
     />

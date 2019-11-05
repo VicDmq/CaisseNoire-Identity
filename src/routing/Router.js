@@ -18,14 +18,18 @@ export type SessionProps = {
 const Router = ({ rootUrl }: { rootUrl: string }) => {
   const [cookies, setCookie, removeCookie] = useCookies<CookieProps, SessionProps>(['session'])
 
-  const setCookieValue = (teamId: Uuid, isAdmin: boolean) => {
+  const setSession = (teamId: Uuid, isAdmin: boolean) => {
     setCookie('session', { teamId, isAdmin }, { path: '/' })
+  }
+
+  const deleteSession = () => {
+    removeCookie('session', {})
   }
 
   return (
     <Switch>
-      <Route exact path='/' render={() => <Login rootUrl={rootUrl} setCookie={setCookieValue} />} />
-      <Routes session={cookies.session} rootUrl={rootUrl} />
+      <Route exact path='/' render={() => <Login rootUrl={rootUrl} setSession={setSession} />} />
+      <Routes session={cookies.session} rootUrl={rootUrl} deleteSession={deleteSession} />
     </Switch>
   )
 }

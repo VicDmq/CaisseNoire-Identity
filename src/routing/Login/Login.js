@@ -10,7 +10,7 @@ import type { Reason } from '@Components/utils/Connect'
 import STYLES from './login.less'
 
 type LoginProps = {
-  setCookie: (Uuid, boolean) => void,
+  setSession: (Uuid, boolean) => void,
   login: (LoginRequest, (LoginResponse) => void, (Reason) => void) => void
 }
 
@@ -47,7 +47,7 @@ const Login = (props: LoginProps) => {
   }
 
   const onSuccess = (response: LoginResponse) => {
-    props.setCookie(response.id, !!response.admin_password)
+    props.setSession(response.id, !!response.admin_password)
     let { from } = history.location.state || { from: '/sanctions' }
     history.push({ pathname: from })
   }
