@@ -1,12 +1,10 @@
 // @flow
-import React, { useState } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
-import { routes, type RouteProps } from './routes'
+import Routes from './Routes'
 import Login from './Login/Login'
-
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL || ''
 
 type CookieProps = {
   session: SessionProps
@@ -17,7 +15,7 @@ export type SessionProps = {
   isAdmin: boolean
 }
 
-const Router = () => {
+const Router = ({ rootUrl }: { rootUrl: string }) => {
   const [cookies, setCookie, removeCookie] = useCookies<CookieProps, SessionProps>(['session'])
 
   const setCookieValue = (teamId: Uuid, isAdmin: boolean) => {
@@ -26,25 +24,8 @@ const Router = () => {
 
   return (
     <Switch>
-      <Route exact path='/' render={() => <Login rootUrl={REACT_APP_API_URL} setCookie={setCookieValue} />} />
-      {routes.map((route: RouteProps, i) => (
-        <Route
-          key={i}
-          path={route.path}
-          render={routeProps =>
-            !cookies.session ? (
-              <Redirect
-                to={{
-                  pathname: '/',
-                  state: { from: routeProps.location.pathname }
-                }}
-              />
-            ) : (
-              <route.component teamId={cookies.session.teamId} rootUrl={REACT_APP_API_URL} />
-            )
-          }
-        />
-      ))}
+      <Route exact path='/' render={() => <Login rootUrl={rootUrl} setCookie={setCookieValue} />} />
+      <Routes session={cookies.session} rootUrl={rootUrl} />
     </Switch>
   )
 }

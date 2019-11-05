@@ -17,6 +17,8 @@ declare module 'antd' {
 
   declare function modalFn(args: modalFnArguments): ModalReference
 
+  declare export class Affix extends React$Component<{ ... }> {}
+
   declare export class Alert extends React$Component<{ ... }> {}
 
   declare export class Avatar extends React$Component<{ ... }> {}

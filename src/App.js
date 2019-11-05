@@ -8,11 +8,13 @@ import Router from './routing/Router'
 
 import './styles/app.less'
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL || ''
+
 const App = () => {
   return (
     <CookiesProvider>
       <BrowserRouter>
-        <Router />
+        <Router rootUrl={REACT_APP_API_URL} />
       </BrowserRouter>
     </CookiesProvider>
   )
