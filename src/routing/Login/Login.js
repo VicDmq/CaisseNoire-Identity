@@ -38,6 +38,7 @@ const Login = (props: LoginProps) => {
   const updateAdminMode = () => {
     setState({
       ...state,
+      credentials: state.adminMode ? { name: state.credentials.name } : state.credentials,
       adminMode: !state.adminMode
     })
   }
@@ -92,6 +93,7 @@ const Login = (props: LoginProps) => {
                 admin_password: value === '' ? undefined : value
               })
             }
+            password
           />
           <Checkbox checked={state.adminMode} onChange={updateAdminMode} className={STYLES.checkbox}>
             Mode administrateur
