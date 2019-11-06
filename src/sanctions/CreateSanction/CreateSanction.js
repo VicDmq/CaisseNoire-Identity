@@ -109,7 +109,7 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
         }
       />
       <SelectRule
-        rules={team.rules.filter(rule => rule.kind.type !== 'REGULAR_INTERVALS')}
+        rules={team.rules.filter(rule => rule.kind.type !== 'MONTHLY')}
         ruleId={sanction.sanction_info && sanction.sanction_info.associated_rule}
         updateSelectedRule={associated_rule =>
           updateSanction({
