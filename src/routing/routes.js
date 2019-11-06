@@ -4,6 +4,7 @@ import Sanctions from '../sanctions/Sanctions'
 
 export type ApiProps = {
   teamId: Uuid,
+  isAdmin: boolean,
   rootUrl: string
 }
 

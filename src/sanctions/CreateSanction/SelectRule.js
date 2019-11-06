@@ -7,11 +7,13 @@ import { RuleCategoryText } from '@Text/rule'
 const SelectRule = ({
   rules,
   ruleId,
-  updateSelectedRule
+  updateSelectedRule,
+  disabled
 }: {
   rules: Rule[],
   ruleId: ?Uuid,
-  updateSelectedRule: (?Uuid) => void
+  updateSelectedRule: (?Uuid) => void,
+  disabled: boolean
 }) => {
   return (
     <Select
@@ -23,6 +25,7 @@ const SelectRule = ({
         label: rule.name + ' (' + RuleCategoryText[rule.category] + ')'
       }))}
       required
+      disabled={disabled}
     />
   )
 }

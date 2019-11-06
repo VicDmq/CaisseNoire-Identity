@@ -14,7 +14,8 @@ type SelectProps = {
   value: ?Uuid,
   onChange: (?Uuid) => void,
   options: OptionProps[],
-  required?: boolean
+  required?: boolean,
+  disabled?: boolean
 }
 
 const CustomSelect = (props: SelectProps) => {
@@ -23,7 +24,7 @@ const CustomSelect = (props: SelectProps) => {
   }
 
   return (
-    <FormItem label={props.label} error={props.required && !props.value}>
+    <FormItem label={props.label} error={!props.disabled && props.required && !props.value} disabled={props.disabled}>
       <Select
         type='select'
         allowClear
@@ -33,6 +34,7 @@ const CustomSelect = (props: SelectProps) => {
         showSearch
         filterOption
         optionFilterProp='children'
+        disabled={props.disabled}
       >
         {props.options.map((option, i) => (
           <Select.Option value={option.value} key={i}>

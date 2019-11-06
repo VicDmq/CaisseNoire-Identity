@@ -15,12 +15,13 @@ type DataProps = {
 }
 
 type OtherProps = {
-  createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
+  createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  isAdmin: boolean
 }
 
 type CreateSanctionProps = DataProps & OtherProps
 
-const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
+const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
   const [creatingSanction, setCreatingSanction] = useState<boolean>(false)
 
@@ -107,6 +108,7 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
             user_id
           })
         }
+        disabled={!isAdmin}
       />
       <SelectRule
         rules={team.rules.filter(rule => rule.kind.type !== 'MONTHLY')}
@@ -122,6 +124,7 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
               : undefined
           })
         }
+        disabled={!isAdmin}
       />
       <ExtraInfoInput
         ruleKind={getRuleKind()}

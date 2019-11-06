@@ -21,7 +21,7 @@ const CustomRoute = ({ route, session, rootUrl, deleteSession }: CustomRouteProp
     <Layout>
       <Header deleteSession={deleteSession} />
       <Content>
-        <route.component teamId={session.teamId} rootUrl={rootUrl} />
+        <route.component teamId={session.teamId} isAdmin={session.isAdmin} rootUrl={rootUrl} />
       </Content>
     </Layout>
   )

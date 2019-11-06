@@ -15,11 +15,13 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 const Sanctions = ({
   teamFetch,
   usersFetch,
-  postSanction
+  postSanction,
+  isAdmin
 }: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
-  postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
+  postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  isAdmin: boolean
 }) => {
   return (
     <Row>
@@ -32,6 +34,7 @@ const Sanctions = ({
               users
             })}
             createSanction={postSanction}
+            isAdmin={isAdmin}
           />
         </Row>
       </Col>
