@@ -1,16 +1,18 @@
 // @flow
 import React from 'react'
 
-import Select from '../../components/common/Select'
+import Select from '@Components/common/Select'
 
 const SelectUser = ({
   users,
   userId,
-  updateSelectedUser
+  updateSelectedUser,
+  disabled
 }: {
   users: User[],
   userId: ?Uuid,
-  updateSelectedUser: (?Uuid) => void
+  updateSelectedUser: (?Uuid) => void,
+  disabled: boolean
 }) => {
   return (
     <Select
@@ -22,6 +24,7 @@ const SelectUser = ({
         label: user.firstname + ' ' + user.lastname
       }))}
       required
+      disabled={disabled}
     />
   )
 }

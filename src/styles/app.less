@@ -1,6 +1,29 @@
 @import "~antd/dist/antd.less";
 @import "./variables.less";
 
+#app {
+    height: 100%;
+}
+
+//Override Menu Style
+.ant-menu-horizontal {
+    border: 0;
+
+    .ant-menu-item:hover,
+    .ant-menu-item-selected {
+        font-weight: 600;
+        border-bottom: 2px solid @white;
+    }
+
+    .ant-menu-item {
+        padding: unset;
+        min-width: 100px;
+        text-align: center;
+    }
+
+}
+
+//Override Select Style
 .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
     color: @white;
     font-weight: 600;

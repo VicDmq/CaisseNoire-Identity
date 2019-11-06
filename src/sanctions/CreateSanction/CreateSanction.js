@@ -2,8 +2,7 @@
 import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
-import withConnect from '../../components/utils/Connect'
-
+import withConnect, { type Reason } from '@Components/utils/Connect.js'
 import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
@@ -16,12 +15,13 @@ type DataProps = {
 }
 
 type OtherProps = {
-  createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void
+  createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  isAdmin: boolean
 }
 
 type CreateSanctionProps = DataProps & OtherProps
 
-const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
+const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
   const [creatingSanction, setCreatingSanction] = useState<boolean>(false)
 
@@ -89,10 +89,16 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
     return { type: 'NONE' }
   }
 
+  const getRuleKind = (): ?RuleKind => {
+    const rule = team.rules.find(rule => rule.id === (sanction.sanction_info && sanction.sanction_info.associated_rule))
+
+    return rule ? rule.kind : undefined
+  }
+
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
 
   return (
-    <Form hideRequiredMark colon={false} className={STYLES.form}>
+    <Form colon={false} className={STYLES.form}>
       <SelectUser
         users={users}
         userId={sanction.user_id}
@@ -102,9 +108,10 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
             user_id
           })
         }
+        disabled={!isAdmin}
       />
       <SelectRule
-        rules={team.rules.filter(rule => rule.kind.type !== 'REGULAR_INTERVALS')}
+        rules={team.rules.filter(rule => rule.kind.type !== 'MONTHLY')}
         ruleId={sanction.sanction_info && sanction.sanction_info.associated_rule}
         updateSelectedRule={associated_rule =>
           updateSanction({
@@ -117,8 +124,10 @@ const SanctionForm = ({ team, users, createSanction }: CreateSanctionProps) => {
               : undefined
           })
         }
+        disabled={!isAdmin}
       />
       <ExtraInfoInput
+        ruleKind={getRuleKind()}
         extraInfo={sanction.sanction_info && sanction.sanction_info.extra_info}
         updateExtraInfo={extra_info =>
           updateSanction({
