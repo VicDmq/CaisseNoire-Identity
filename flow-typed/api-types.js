@@ -30,7 +30,7 @@ declare type Rule = {
 
 declare type RuleCategory = 'TRAINING_DAY' | 'GAME_DAY'
 
-declare type RuleKind = BasicKind | MultiplicationKind | TimeMultiplicationKind | RegularIntervalsKind
+declare type RuleKind = BasicKind | MultiplicationKind | TimeMultiplicationKind | MonthlyKind
 
 declare type BasicKind = {
   type: 'BASIC',
@@ -48,11 +48,9 @@ declare type TimeMultiplicationKind = {
   time_unit: TimeUnit
 }
 
-declare type RegularIntervalsKind = {
-  type: 'REGULAR_INTERVALS',
-  price: number,
-  interval_in_time_unit: number,
-  time_unit: TimeUnit
+declare type MonthlyKind = {
+  type: 'MONTHLY',
+  price: number
 }
 
 declare type TimeUnit = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'
