@@ -45,7 +45,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run tests
+    - name: Run flow
       run: npm run flow
 
   build:
@@ -65,5 +65,5 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run tests
+    - name: Run build
       run: npm run build
