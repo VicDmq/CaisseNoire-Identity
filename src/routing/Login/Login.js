@@ -21,7 +21,7 @@ type LoginState = {
   error?: ?string
 }
 
-const Login = (props: LoginProps) => {
+export const Login = (props: LoginProps) => {
   const [state, setState] = useState<LoginState>({ credentials: { name: '' }, adminMode: false, loading: false })
   const history = useHistory()
 
