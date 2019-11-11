@@ -21,14 +21,15 @@ export const SanctionListItem = (props: ListItemProps) => {
         type={isExpanded ? 'down-circle' : 'right-circle'}
         onClick={() => setIsExpanded(!isExpanded)}
       />
-      {props.user ? (
-        <span className={STYLES.user}>
+      {props.user && props.rule ? (
+        <div className={STYLES.info}>
           {props.user.nickname ? props.user.nickname : `${props.user.firstname} ${props.user.lastname}`}
-        </span>
+          {' - '}
+          {props.rule.name}
+        </div>
       ) : (
-        <span>Joueur supprimé</span>
+        <div className={STYLES.missingData}>{!props.user ? 'Joueur supprimé' : 'Règle supprimée'}</div>
       )}
-      {props.rule ? <span className={STYLES.rule}>{props.rule.name}</span> : <span>Règle supprimée</span>}
       <span className={STYLES.price}>{props.sanction.price} €</span>
     </div>
   )
