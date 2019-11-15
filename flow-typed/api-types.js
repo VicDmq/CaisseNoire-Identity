@@ -1,5 +1,7 @@
 declare opaque type Uuid: string
 
+declare opaque type CustomDate: string
+
 type ApiError = {
   kind: ErrorKind,
   description: string
@@ -69,7 +71,8 @@ declare type Sanction = {
   team_id: Uuid,
   user_id: Uuid,
   sanction_info: SanctionInfo,
-  price: number
+  price: number,
+  created_at: CustomDate
 }
 
 declare type CreateSanction = {

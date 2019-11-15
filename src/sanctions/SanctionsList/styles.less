@@ -5,12 +5,21 @@
         margin-bottom: 10px;
 
         .listItem {
+            border-radius: @border-radius-base;
+        }
+
+        .listItemExtended {
+            border-radius: @border-radius-base @border-radius-base 0 0;
+        }
+
+        .listItem,
+        .listItemExtended {
             height: 50px;
             display: flex;
             align-items: center;
             border: 1px solid @primary-color;
             padding-left: 10px;
-            border-radius: @border-radius-base;
+
 
             .expandIcon {
                 color: @primary-color;
@@ -48,7 +57,7 @@
                     margin-right: 10px;
                     background-color: @primary-color;
                     color: @white;
-                    font-weight: 700;
+                    font-weight: 600;
                     width: 50px;
                     line-height: 30px;
                     border-radius: @border-radius-base;
@@ -65,19 +74,56 @@
             }
         }
 
-        .default {
+        .collapsed,
+        .extended {
             overflow: hidden;
             transition: max-height 0.2s ease-out;
-            width: 100%;
-            background-color: lightgray;
         }
 
         .collapsed {
             max-height: 0;
         }
 
-        .collapsible {
-            max-height: 50px;
+        .extended {
+            max-height: 80px;
+            width: 100%;
+            border: 1px solid @primary-color;
+            border-top: 0px;
+            border-radius: 0 0 @border-radius-base @border-radius-base;
+        }
+
+        .categoryAndDate {
+            display: flex;
+            margin: 5px 0 5px;
+
+            .categoryTag {
+                width: 50%;
+                margin-left: 10px;
+
+                div {
+                    display: inline-block;
+                    background-color: @primary-color;
+                    color: @white;
+                    font-weight: 500;
+                    padding: 3px 6px;
+                    border-radius: @border-radius-base;
+                }
+            }
+
+            .creationDate {
+                width: 50%;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin-right: 10px;
+            }
+        }
+
+        .ruleDescription {
+            margin: 5px 0 5px;
+            padding: 0 10px;
+            font-style: italic;
         }
     }
 }

@@ -1,8 +1,9 @@
 // @flow
 import React, { useState } from 'react'
 import { Icon, Button } from 'antd'
-import classNames from 'classnames/bind'
 
+import { RuleCategoryText } from '@Text/rule'
+import { formatDate } from '@Text/date'
 import STYLES from './styles.less'
 
 export type ListItemProps = {
@@ -11,24 +12,25 @@ export type ListItemProps = {
   sanction: Sanction
 }
 
-const cx = classNames.bind(STYLES)
-
 export const SanctionListItem = (props: ListItemProps) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false)
+  const [isExtended, setisExtended] = useState<boolean>(false)
 
   const deleteSanction = () => {
     // Modal TODO
     console.log(props.sanction.id)
   }
 
+  // $FlowFixMe: aa
+  console.log(props.sanction.created_at)
+
   return (
     <div className={STYLES.listItemContainer}>
-      <div className={STYLES.listItem}>
+      <div className={isExtended ? STYLES.listItemExtended : STYLES.listItem}>
         <Icon
           className={STYLES.expandIcon}
           theme='filled'
-          type={isExpanded ? 'down-circle' : 'right-circle'}
-          onClick={() => setIsExpanded(!isExpanded)}
+          type={isExtended ? 'down-circle' : 'right-circle'}
+          onClick={() => setisExtended(!isExtended)}
         />
         <div className={STYLES.infoContainer}>
           <div className={STYLES.playerInfo}>
@@ -47,8 +49,18 @@ export const SanctionListItem = (props: ListItemProps) => {
           </Button>
         </div>
       </div>
-      <div className={cx({ default: true, collapsible: isExpanded, collapsed: !isExpanded })}>
-        <div>aaaaaaaaaaaaaaaaa</div>Hey
+      <div className={isExtended ? STYLES.extended : STYLES.collapsed}>
+        <div className={STYLES.categoryAndDate}>
+          {props.rule ? (
+            <div className={STYLES.categoryTag}>
+              <div>{RuleCategoryText[props.rule.category]}</div>
+            </div>
+          ) : (
+            ''
+          )}
+          <span className={STYLES.creationDate}>Ajouté le {formatDate(props.sanction.created_at)}</span>
+        </div>
+        {props.rule && <div className={STYLES.ruleDescription}>{props.rule.description}</div>}
       </div>
     </div>
   )
