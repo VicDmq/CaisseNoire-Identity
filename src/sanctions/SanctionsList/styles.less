@@ -1,43 +1,83 @@
 .list {
     width: 100%;
 
-    .listItem {
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        border: 1px solid @primary-color;
-        margin-bottom: 5px;
-        padding: 10px;
-        border-radius: @border-radius-base;
+    .listItemContainer {
+        margin-bottom: 10px;
 
-        .expandIcon {
-            color: @primary-color;
-            font-size: 18px;
-            margin-right: 10px;
-
-        }
-
-        .info {
-            width: 65%;
-            overflow: hidden;
-            white-space: pre;
-            text-overflow: ellipsis;
-        }
-
-        .missingData {
-            color: @error-color
-        }
-
-        .price {
-            position: absolute;
-            right: 10px;
-            background-color: @primary-color;
-            color: @white;
-            font-weight: 600;
-            width: 50px;
-            text-align: center;
+        .listItem {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            border: 1px solid @primary-color;
+            padding-left: 10px;
             border-radius: @border-radius-base;
+
+            .expandIcon {
+                color: @primary-color;
+                font-size: 18px;
+                margin-right: 10px;
+            }
+
+            .infoContainer {
+                width: 50%;
+
+                .playerInfo {
+                    font-weight: 700
+                }
+
+                .ruleInfo,
+                .missingRule {
+                    font-style: italic
+                }
+
+                .missingRule {
+                    color: @error-color
+                }
+            }
+
+            .tagAndButtonContainer {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+                .priceTag {
+                    display: flex;
+                    justify-content: center;
+                    margin-right: 10px;
+                    background-color: @primary-color;
+                    color: @white;
+                    font-weight: 700;
+                    width: 50px;
+                    line-height: 30px;
+                    border-radius: @border-radius-base;
+                }
+
+                .deleteButton {
+                    display: flex;
+                    justify-content: center;
+                    margin-right: 10px;
+                    height: 30px;
+                    width: 30px;
+
+                }
+            }
+        }
+
+        .default {
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            width: 100%;
+            background-color: lightgray;
+        }
+
+        .collapsed {
+            max-height: 0;
+        }
+
+        .collapsible {
+            max-height: 50px;
         }
     }
 }
