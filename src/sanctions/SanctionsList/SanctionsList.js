@@ -14,12 +14,13 @@ type DataProps = {
 }
 
 type OtherProps = {
-  deleteSanction: (Uuid, () => void, () => void) => void
+  deleteSanction: (Uuid, () => void, () => void) => void,
+  isAdmin: boolean
 }
 
 type SanctionListProps = DataProps & OtherProps
 
-const SanctionsList = ({ team, users, sanctions, deleteSanction }: SanctionListProps) => {
+const SanctionsList = ({ team, users, sanctions, deleteSanction, isAdmin }: SanctionListProps) => {
   const showDeleteConfirm = (sanction_id: Uuid) => {
     const modal = Modal.confirm({})
 
@@ -57,7 +58,8 @@ const SanctionsList = ({ team, users, sanctions, deleteSanction }: SanctionListP
             rule: team.rules.find(rule => rule.id === sanction.sanction_info.associated_rule),
             user,
             sanction,
-            showDeleteConfirm
+            showDeleteConfirm,
+            isAdmin
           })
         }
       })

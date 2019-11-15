@@ -10,7 +10,8 @@ export type ListItemProps = {
   rule: ?Rule,
   user: User,
   sanction: Sanction,
-  showDeleteConfirm: Uuid => void
+  showDeleteConfirm: Uuid => void,
+  isAdmin: boolean
 }
 
 export const SanctionListItem = (props: ListItemProps) => {
@@ -39,6 +40,7 @@ export const SanctionListItem = (props: ListItemProps) => {
           <span className={STYLES.priceTag}>{props.sanction.price} €</span>
           <Button
             className={STYLES.deleteButton}
+            disabled={!props.isAdmin}
             type='danger'
             onClick={() => props.showDeleteConfirm(props.sanction.id)}
           >

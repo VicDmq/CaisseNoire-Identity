@@ -30,7 +30,6 @@ const Sanctions = ({
   deleteSanction: (Uuid, () => void, (Reason) => void) => void,
   isAdmin: boolean
 }) => {
-  console.log(sanctionsFetch)
   return (
     <Tabs defaultActiveKey='2'>
       <TabPane tab={<span>Nouvelle sanction</span>} key='1'>
@@ -58,6 +57,7 @@ const Sanctions = ({
                 response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch])}
                 mapResponseToProps={([team, users, sanctions]) => ({ team, users, sanctions })}
                 deleteSanction={deleteSanction}
+                isAdmin={isAdmin}
               />
             </Row>
           </Col>
