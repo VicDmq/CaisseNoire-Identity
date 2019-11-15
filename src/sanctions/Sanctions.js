@@ -20,14 +20,17 @@ const Sanctions = ({
   usersFetch,
   sanctionsFetch,
   postSanction,
+  deleteSanction,
   isAdmin
 }: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
   sanctionsFetch: Response<Sanction[]>,
   postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  deleteSanction: (Uuid, () => void, (Reason) => void) => void,
   isAdmin: boolean
 }) => {
+  console.log(sanctionsFetch)
   return (
     <Tabs defaultActiveKey='2'>
       <TabPane tab={<span>Nouvelle sanction</span>} key='1'>
@@ -54,6 +57,7 @@ const Sanctions = ({
               <SanctionsList
                 response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch])}
                 mapResponseToProps={([team, users, sanctions]) => ({ team, users, sanctions })}
+                deleteSanction={deleteSanction}
               />
             </Row>
           </Col>
@@ -64,18 +68,42 @@ const Sanctions = ({
 }
 
 export default connect(({ teamId, rootUrl }: ApiProps) => {
+  const sanctionsUrl = `${rootUrl}/teams/${teamId}/sanctions`
+
   return {
     teamFetch: `${rootUrl}/teams/${teamId}`,
     usersFetch: `${rootUrl}/teams/${teamId}/users`,
-    sanctionsFetch: `${rootUrl}/teams/${teamId}/sanctions`,
+    sanctionsFetch: sanctionsUrl,
     postSanction: (sanction: CreateSanction, cb: Sanction => void, errCb: Reason => void) => ({
-      createSanction: {
+      createdSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions`,
         method: 'POST',
         force: true,
         body: JSON.stringify(sanction),
         then: sanction => cb(sanction),
-        catch: reason => errCb(reason)
+        catch: reason => errCb(reason),
+        andThen: () => ({
+          sanctionsFetch: {
+            url: sanctionsUrl,
+            refreshing: true,
+            force: true
+          }
+        })
+      }
+    }),
+    deleteSanction: (sanction_id: Uuid, cb: () => void, errCb: () => void) => ({
+      deletedSanction: {
+        url: `${rootUrl}/teams/${teamId}/sanctions/${sanction_id}`,
+        method: 'DELETE',
+        then: () => cb(),
+        catch: reason => errCb(),
+        andThen: () => ({
+          sanctionsFetch: {
+            url: sanctionsUrl,
+            refreshing: true,
+            force: true
+          }
+        })
       }
     })
   }

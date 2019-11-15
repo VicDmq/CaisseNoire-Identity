@@ -1,8 +1,8 @@
 // @flow
-import React from 'react'
-import { List } from 'antd'
+import React, { useState } from 'react'
+import { List, Modal, message } from 'antd'
 
-import withConnect from '@Components/utils/Connect'
+import withConnect, { type Reason } from '@Components/utils/Connect'
 import { SanctionListItem, type ListItemProps } from './SanctionListItem'
 
 import STYLES from './styles.less'
@@ -13,21 +13,54 @@ type DataProps = {
   sanctions: Sanction[]
 }
 
-const SanctionsList = ({ team, users, sanctions }: DataProps) => {
-  const getDataSource = (): ListItemProps[] => {
-    let props: ListItemProps[] = []
+type OtherProps = {
+  deleteSanction: (Uuid, () => void, () => void) => void
+}
 
-    sanctions.forEach(sanction => {
-      const user = users.find(user => user.id === sanction.user_id)
+type SanctionListProps = DataProps & OtherProps
 
-      if (user) {
-        props.push({
-          rule: team.rules.find(rule => rule.id === sanction.sanction_info.associated_rule),
-          user: user,
-          sanction
+const SanctionsList = ({ team, users, sanctions, deleteSanction }: SanctionListProps) => {
+  const showDeleteConfirm = (sanction_id: Uuid) => {
+    const modal = Modal.confirm({})
+
+    modal.update({
+      centered: true,
+      maskClosable: true,
+      title: 'Supprimer une sanction',
+      content: 'Êtes vous sur de vouloir supprimer cette sanction ?',
+      okText: 'Oui',
+      cancelText: 'Non',
+      okType: 'danger',
+      onOk () {
+        return new Promise(function (resolve, reject) {
+          deleteSanction(sanction_id, () => resolve(), () => reject())
+        }).catch(() => {
+          modal.destroy()
+          message.error('Impossible de supprimer cette sanction')
         })
       }
     })
+  }
+
+  const getDataSource = (): ListItemProps[] => {
+    let props: ListItemProps[] = []
+
+    sanctions
+      .sort((item1, item2) => {
+        return new Date(item2.created_at) - new Date(item1.created_at)
+      })
+      .forEach(sanction => {
+        const user = users.find(user => user.id === sanction.user_id)
+
+        if (user) {
+          props.push({
+            rule: team.rules.find(rule => rule.id === sanction.sanction_info.associated_rule),
+            user,
+            sanction,
+            showDeleteConfirm
+          })
+        }
+      })
 
     return props
   }
@@ -37,4 +70,4 @@ const SanctionsList = ({ team, users, sanctions }: DataProps) => {
   )
 }
 
-export default withConnect<DataProps, {}>(SanctionsList)
+export default withConnect<DataProps, OtherProps>(SanctionsList)

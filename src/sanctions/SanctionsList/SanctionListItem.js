@@ -9,19 +9,12 @@ import STYLES from './styles.less'
 export type ListItemProps = {
   rule: ?Rule,
   user: User,
-  sanction: Sanction
+  sanction: Sanction,
+  showDeleteConfirm: Uuid => void
 }
 
 export const SanctionListItem = (props: ListItemProps) => {
   const [isExtended, setisExtended] = useState<boolean>(false)
-
-  const deleteSanction = () => {
-    // Modal TODO
-    console.log(props.sanction.id)
-  }
-
-  // $FlowFixMe: aa
-  console.log(props.sanction.created_at)
 
   return (
     <div className={STYLES.listItemContainer}>
@@ -42,9 +35,13 @@ export const SanctionListItem = (props: ListItemProps) => {
             <div className={STYLES.missingRule}>Cette règle a été supprimée</div>
           )}
         </div>
-        <div className={STYLES.tagAndButtonContainer} onClick={deleteSanction}>
+        <div className={STYLES.tagAndButtonContainer}>
           <span className={STYLES.priceTag}>{props.sanction.price} €</span>
-          <Button className={STYLES.deleteButton} type='danger'>
+          <Button
+            className={STYLES.deleteButton}
+            type='danger'
+            onClick={() => props.showDeleteConfirm(props.sanction.id)}
+          >
             <Icon theme='filled' type='delete' />
           </Button>
         </div>
