@@ -35,10 +35,16 @@ const SanctionsList = ({ team, users, sanctions, deleteSanction, isAdmin }: Sanc
       onOk () {
         return new Promise(function (resolve, reject) {
           deleteSanction(sanction_id, () => resolve(), () => reject())
-        }).catch(() => {
-          modal.destroy()
-          message.error('Impossible de supprimer cette sanction')
         })
+          .then(() => {
+            message.success('Sanction supprimée')
+          })
+          .catch(() => {
+            message.error('Impossible de supprimer cette sanction')
+          })
+          .finally(() => {
+            modal.destroy()
+          })
       }
     })
   }

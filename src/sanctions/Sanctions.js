@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { connect, PromiseState } from 'react-refetch'
 import { useCookies } from 'react-cookie'
-import { Row, Col, Tabs } from 'antd'
+import { Row, Col, Tabs, Icon } from 'antd'
 
 import type { Response, Reason } from '@Components/utils/Connect'
 import CreateSanctionForm from './CreateSanction/CreateSanction'
@@ -31,8 +31,16 @@ const Sanctions = ({
   isAdmin: boolean
 }) => {
   return (
-    <Tabs defaultActiveKey='2'>
-      <TabPane tab={<span>Nouvelle sanction</span>} key='1'>
+    <Tabs>
+      <TabPane
+        tab={
+          <span>
+            <Icon type='plus-circle' theme='filled' />
+            Nouvelle sanction
+          </span>
+        }
+        key='1'
+      >
         <Row>
           <Col xs={{ span: 18, offset: 3 }} lg={{ span: 12, offset: 6 }}>
             <Row type='flex' justify='center' align='middle' className={STYLES.formContainer}>
@@ -49,7 +57,15 @@ const Sanctions = ({
           </Col>
         </Row>
       </TabPane>
-      <TabPane tab={<span>Sanctions</span>} key='2'>
+      <TabPane
+        tab={
+          <span>
+            <Icon type='unordered-list' />
+            Liste
+          </span>
+        }
+        key='2'
+      >
         <Row>
           <Col xs={{ span: 18, offset: 3 }} lg={{ span: 12, offset: 6 }}>
             <Row type='flex' justify='center' align='middle'>

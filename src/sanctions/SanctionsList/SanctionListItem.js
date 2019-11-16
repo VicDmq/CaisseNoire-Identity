@@ -31,9 +31,13 @@ export const SanctionListItem = (props: ListItemProps) => {
             {props.user.nickname ? props.user.nickname : `${props.user.firstname} ${props.user.lastname}`}
           </div>
           {props.rule ? (
-            <div className={STYLES.ruleInfo}>{props.rule.name}</div>
+            <div id='definedRule' className={STYLES.ruleInfo}>
+              {props.rule.name}
+            </div>
           ) : (
-            <div className={STYLES.missingRule}>Cette règle a été supprimée</div>
+            <div id='missingRule' className={STYLES.missingRule}>
+              Cette règle a été supprimée
+            </div>
           )}
         </div>
         <div className={STYLES.tagAndButtonContainer}>
@@ -48,7 +52,7 @@ export const SanctionListItem = (props: ListItemProps) => {
           </Button>
         </div>
       </div>
-      <div className={isExtended ? STYLES.extended : STYLES.collapsed}>
+      <div id='extraDescription' className={isExtended ? STYLES.extended : STYLES.collapsed}>
         <div className={STYLES.categoryAndDate}>
           {props.rule ? (
             <div className={STYLES.categoryTag}>
