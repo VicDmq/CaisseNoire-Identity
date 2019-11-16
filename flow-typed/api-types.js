@@ -1,6 +1,6 @@
-declare opaque type Uuid: string
+declare type Uuid = string
 
-declare opaque type CustomDate: string
+declare type CustomDate = string
 
 type ApiError = {
   kind: ErrorKind,
