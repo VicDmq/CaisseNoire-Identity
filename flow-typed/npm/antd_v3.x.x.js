@@ -4,7 +4,7 @@
 declare module 'antd' {
   import type { Node, Component } from 'react'
 
-  declare type ModalReference = { destroy: () => void, ... }
+  declare type ModalReference = { destroy: () => void, update: (args: modalFnArguments) => void, ... }
 
   declare type messageFn<TReturn> = (content: React$Node, duration?: number, onClose?: () => mixed) => TReturn
 

@@ -35,6 +35,7 @@ const Router = ({ rootUrl }: { rootUrl: string }) => {
       </Route>
       {routes.map((route, i) => (
         <Route
+          key={i}
           path={route.path}
           render={() =>
             !cookies.session ? (

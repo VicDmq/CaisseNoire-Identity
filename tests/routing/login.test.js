@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { shallow, mount, render } from 'enzyme'
+import { shallow } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
 
 import { Login } from '../../src/routing/Login/Login'
@@ -13,6 +13,6 @@ describe('Login', () => {
       </MemoryRouter>
     )
 
-    expect(true).toBe(true)
+    // expect(true).toBe(true)
   })
 })
