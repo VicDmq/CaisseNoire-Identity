@@ -1,3 +1,4 @@
+// @flow
 import React, { type AbstractComponent } from 'react'
 import { Spin, Result } from 'antd'
 
@@ -22,6 +23,7 @@ type WithConnect<T> = { response: Response<any>, mapResponseToProps: (any[]) => 
 const withConnect = <Props, OtherProps>(
   WrappedComponent: AbstractComponent<Props & OtherProps>
 ): AbstractComponent<WithConnect<Props> & OtherProps> => {
+  // $FlowFixMe: Should accept (WithConnect<Props> & OtherProps)
   return ({ response, mapResponseToProps, ...otherProps }: WithConnect<Props> & OtherProps) => {
     if (response.rejected) {
       return (
