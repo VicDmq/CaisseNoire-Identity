@@ -3,50 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { SanctionListItem } from '@Sanctions/SanctionsList/SanctionListItem'
-
-const DEFAULT_RULE: Rule = {
-  id: 'id',
-  name: 'Rule',
-  description: 'This is a description',
-  category: 'TRAINING_DAY',
-  kind: {
-    type: 'BASIC',
-    price: 2.0
-  }
-}
-
-const DEFAULT_USER: User = {
-  id: 'id',
-  team_id: 'team_id',
-  lastname: 'Snow',
-  firstname: 'John',
-  nickname: 'King Of the North',
-  email: null
-}
-
-const DEFAULT_SANCTION: Sanction = {
-  id: 'id',
-  team_id: 'team_id',
-  user_id: 'user_id',
-  sanction_info: {
-    associated_rule: 'rule_id',
-    extra_info: null
-  },
-  price: 2.0,
-  created_at: '2019-10-28'
-}
-
-const DEFAULT_LIST_ITEM = (isAdmin: boolean, showDeleteConfirm?: Uuid => void) => {
-  return (
-    <SanctionListItem
-      rule={DEFAULT_RULE}
-      user={DEFAULT_USER}
-      sanction={DEFAULT_SANCTION}
-      isAdmin={isAdmin}
-      showDeleteConfirm={showDeleteConfirm || jest.fn()}
-    />
-  )
-}
+import { DEFAULT_RULE, DEFAULT_USER, DEFAULT_TEAM } from '../../utils/default'
 
 describe('SanctionListItem', () => {
   it('Extends and collapses additionnal description', () => {
