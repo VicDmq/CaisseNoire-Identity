@@ -1,4 +1,5 @@
 // @flow
+
 export const DEFAULT_RULE: Rule = {
   id: 'id',
   name: 'Rule',
@@ -8,6 +9,12 @@ export const DEFAULT_RULE: Rule = {
     type: 'BASIC',
     price: 2.0
   }
+}
+
+export const DEFAULT_TEAM: Team = {
+  id: 'id',
+  name: 'Dream Team',
+  rules: [DEFAULT_RULE]
 }
 
 export const DEFAULT_USER: User = {

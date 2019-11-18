@@ -1,5 +1,5 @@
 module.exports = {
-  setupFilesAfterEnv: ['./test/setup.js'],
+  setupFilesAfterEnv: ['./tests/setup.js'],
   modulePaths: ['src'],
   moduleNameMapper: {
     '^@Sanctions(.*)$': '<rootDir>/src/sanctions$1',
