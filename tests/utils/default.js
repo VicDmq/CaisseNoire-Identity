@@ -1,7 +1,7 @@
 // @flow
 
 export const DEFAULT_RULE: Rule = {
-  id: 'id',
+  id: 'rule_id',
   name: 'Rule',
   description: 'This is a description',
   category: 'TRAINING_DAY',
@@ -12,13 +12,13 @@ export const DEFAULT_RULE: Rule = {
 }
 
 export const DEFAULT_TEAM: Team = {
-  id: 'id',
+  id: 'team_id',
   name: 'Dream Team',
   rules: [DEFAULT_RULE]
 }
 
 export const DEFAULT_USER: User = {
-  id: 'id',
+  id: 'user_id',
   team_id: 'team_id',
   lastname: 'Snow',
   firstname: 'John',
