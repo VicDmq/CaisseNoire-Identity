@@ -9,7 +9,7 @@ import CreateSanctionForm from './CreateSanction/CreateSanction'
 import SanctionsList from './SanctionsList/SanctionsList'
 import type { ApiProps } from '../routing/routes'
 
-import STYLES from './sanctions.less'
+import STYLES from './styles.less'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 

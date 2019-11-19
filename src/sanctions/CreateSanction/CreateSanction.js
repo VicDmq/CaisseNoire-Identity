@@ -7,7 +7,7 @@ import SelectUser from './SelectUser'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
 
-import STYLES from '../sanctions.less'
+import STYLES from './styles.less'
 
 type DataProps = {
   team: Team,
