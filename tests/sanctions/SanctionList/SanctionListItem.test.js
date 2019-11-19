@@ -2,7 +2,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { SanctionListItem } from '@Sanctions/SanctionsList/SanctionListItem'
+import { SanctionListItem } from '@Sanctions/SanctionList/SanctionListItem'
 import { DEFAULT_RULE, DEFAULT_USER, DEFAULT_SANCTION } from '../../utils/default'
 
 describe('SanctionListItem', () => {

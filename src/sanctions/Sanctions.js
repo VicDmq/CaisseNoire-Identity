@@ -6,7 +6,7 @@ import { Row, Col, Tabs, Icon } from 'antd'
 
 import type { Response, Reason } from '@Components/utils/Connect'
 import CreateSanctionForm from './CreateSanction/CreateSanction'
-import SanctionsList from './SanctionsList/SanctionsList'
+import SanctionList from './SanctionList/SanctionList'
 import type { ApiProps } from '../routing/routes'
 
 import STYLES from './styles.less'
@@ -69,7 +69,7 @@ const Sanctions = ({
         <Row>
           <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
             <Row type='flex' justify='center' align='middle'>
-              <SanctionsList
+              <SanctionList
                 response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch || { refreshing: true }])}
                 mapResponseToProps={([team, users, sanctions]) => ({ team, users, sanctions })}
                 deleteSanction={deleteSanction}
