@@ -31,12 +31,12 @@ const Sanctions = ({
   isAdmin: boolean
 }) => {
   return (
-    <Tabs>
+    <Tabs tabBarStyle={{ display: 'flex', justifyContent: 'center' }}>
       <TabPane
         tab={
           <span>
             <Icon type='plus-circle' theme='filled' />
-            Nouvelle sanction
+            Créer
           </span>
         }
         key='1'

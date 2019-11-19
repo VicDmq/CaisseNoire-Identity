@@ -5,19 +5,21 @@
         margin-bottom: 10px;
 
         .listItem {
+            border: 1px solid @primary-color;
             border-radius: @border-radius-base;
         }
 
         .listItemExtended {
+            border: 1px solid @primary-color;
+            border-bottom: 0px;
             border-radius: @border-radius-base @border-radius-base 0 0;
         }
 
         .listItem,
         .listItemExtended {
-            height: 50px;
+            min-height: 50px;
             display: flex;
             align-items: center;
-            border: 1px solid @primary-color;
             padding-left: 10px;
 
 
@@ -29,6 +31,7 @@
 
             .infoContainer {
                 width: 50%;
+                margin: 5px 0;
 
                 .playerInfo {
                     font-weight: 700
@@ -85,7 +88,7 @@
         }
 
         .extended {
-            max-height: 80px;
+            max-height: 150px;
             width: 100%;
             border: 1px solid @primary-color;
             border-top: 0px;
