@@ -25,7 +25,7 @@ const Sanctions = ({
 }: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
-  sanctionsFetch: Response<Sanction[]>,
+  sanctionsFetch: ?Response<Sanction[]>,
   postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
   deleteSanction: (Uuid, () => void, (Reason) => void) => void,
   isAdmin: boolean
@@ -70,7 +70,7 @@ const Sanctions = ({
           <Col xs={{ span: 18, offset: 3 }} lg={{ span: 12, offset: 6 }}>
             <Row type='flex' justify='center' align='middle'>
               <SanctionsList
-                response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch])}
+                response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch || { refreshing: true }])}
                 mapResponseToProps={([team, users, sanctions]) => ({ team, users, sanctions })}
                 deleteSanction={deleteSanction}
                 isAdmin={isAdmin}
@@ -88,8 +88,13 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
 
   return {
     teamFetch: `${rootUrl}/teams/${teamId}`,
-    usersFetch: `${rootUrl}/teams/${teamId}/users`,
-    sanctionsFetch: sanctionsUrl,
+    usersFetch: {
+      url: `${rootUrl}/teams/${teamId}/users`,
+      andThen: () => ({
+        sanctionsFetch: sanctionsUrl
+      })
+    },
+    // sanctionsFetch: sanctionsUrl,
     postSanction: (sanction: CreateSanction, cb: Sanction => void, errCb: Reason => void) => ({
       createdSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions`,
