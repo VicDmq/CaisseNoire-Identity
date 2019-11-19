@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { shallow, render, mount, ReactWrapper } from 'enzyme'
+import { mount } from 'enzyme'
 
 import { SanctionsList } from '@Sanctions/SanctionsList/SanctionsList'
 

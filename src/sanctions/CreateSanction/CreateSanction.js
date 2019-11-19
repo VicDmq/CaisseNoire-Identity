@@ -21,7 +21,7 @@ type OtherProps = {
 
 type CreateSanctionProps = DataProps & OtherProps
 
-const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
+export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
   const [sanction, setSanction] = useState<CreateSanction>({})
   const [creatingSanction, setCreatingSanction] = useState<boolean>(false)
 
