@@ -17,6 +17,7 @@ const SelectRule = ({
 }) => {
   return (
     <Select
+      type='default'
       label='Sanction à appliquer'
       value={ruleId}
       onChange={id => updateSelectedRule(id)}

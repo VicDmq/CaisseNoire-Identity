@@ -16,6 +16,7 @@ const SelectUser = ({
 }) => {
   return (
     <Select
+      type='default'
       label='Joueur sanctionné'
       value={userId}
       onChange={id => updateSelectedUser(id)}
