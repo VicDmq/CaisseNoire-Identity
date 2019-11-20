@@ -10,20 +10,51 @@ type OptionProps = {
 }
 
 type SelectProps<T> = {
-  type: 'default' | 'multiple',
-  value: ?T,
-  onChange: (?T) => void,
+  value: T,
+  onChange: T => void,
   label: string,
   options: OptionProps[],
+  multiple?: boolean,
   required?: boolean,
   disabled?: boolean
 }
 
-const CustomSelect = <T>(props: SelectProps<T>) => {
+function CustomSelect<T> (props: SelectProps<T>) {
+  const showError = () => {
+    if (!props.disabled && props.required) {
+      if (props.multiple) {
+        return !props.value || (Array.isArray(props.value) && props.value.length) === 0
+      } else {
+        return !props.value
+      }
+    }
+
+    return false
+  }
+
+  const shouldBeHidden = option => {
+    if (
+      (Array.isArray(props.value) && props.value.includes(option.value)) ||
+      (props.value && props.value === option.value)
+    ) {
+      return true
+    }
+
+    return false
+  }
+
+  const mapOptions = () => {
+    return props.options.map((option, i) => (
+      <Select.Option value={option.value} key={i} hidden={shouldBeHidden(option)}>
+        {option.label}
+      </Select.Option>
+    ))
+  }
+
   return (
-    <FormItem label={props.label} error={!props.disabled && props.required && !props.value} disabled={props.disabled}>
+    <FormItem label={props.label} error={showError()} disabled={props.disabled}>
       <Select
-        mode={props.type}
+        mode={props.multiple ? 'multiple' : 'default'}
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled}
@@ -32,11 +63,7 @@ const CustomSelect = <T>(props: SelectProps<T>) => {
         filterOption
         optionFilterProp='children'
       >
-        {props.options.map((option, i) => (
-          <Select.Option value={option.value} key={i}>
-            {option.label}
-          </Select.Option>
-        ))}
+        {mapOptions()}
       </Select>
     </FormItem>
   )

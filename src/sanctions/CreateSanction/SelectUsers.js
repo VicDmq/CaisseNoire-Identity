@@ -5,21 +5,21 @@ import Select from '@Components/common/Select'
 
 const SelectUser = ({
   users,
-  userId,
-  updateSelectedUser,
+  selectedUsers,
+  updateSelectedUsers,
   disabled
 }: {
   users: User[],
-  userId: ?Uuid,
-  updateSelectedUser: (?Uuid) => void,
+  selectedUsers: Uuid[],
+  updateSelectedUsers: (Uuid[]) => void,
   disabled: boolean
 }) => {
   return (
     <Select
-      type='default'
-      label='Joueur sanctionné'
-      value={userId}
-      onChange={id => updateSelectedUser(id)}
+      multiple
+      label='Joueurs sanctionnés'
+      value={selectedUsers}
+      onChange={users => updateSelectedUsers(users || [])}
       options={users.map(user => ({
         value: user.id,
         label: user.firstname + ' ' + user.lastname

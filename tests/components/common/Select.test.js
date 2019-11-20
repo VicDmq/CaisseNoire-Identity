@@ -72,7 +72,7 @@ describe('Select', () => {
   })
 })
 
-class MultiSelectWrapper extends React.Component<{}, { value: ?(Uuid[]) }> {
+class MultiSelectWrapper extends React.Component<{}, { value: Uuid[] }> {
   constructor (props) {
     super(props)
 
@@ -85,7 +85,7 @@ class MultiSelectWrapper extends React.Component<{}, { value: ?(Uuid[]) }> {
     return (
       <Select
         label='Select'
-        type='multiple'
+        multiple
         value={this.state.value}
         onChange={value => this.setState({ value })}
         options={DEFAULT_OPTIONS}

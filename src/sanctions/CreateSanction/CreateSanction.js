@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
-import SelectUser from './SelectUser'
+import SelectUsers from './SelectUsers'
 import SelectRule from './SelectRule'
 import ExtraInfoInput from './ExtraInfoInput'
 
@@ -22,6 +22,8 @@ type OtherProps = {
 type CreateSanctionProps = DataProps & OtherProps
 
 export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
+  const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
+  const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
   const [sanction, setSanction] = useState<CreateSanction>({})
   const [creatingSanction, setCreatingSanction] = useState<boolean>(false)
 
@@ -99,15 +101,10 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
 
   return (
     <Form colon={false} className={STYLES.form}>
-      <SelectUser
+      <SelectUsers
         users={users}
-        userId={sanction.user_id}
-        updateSelectedUser={user_id =>
-          updateSanction({
-            ...sanction,
-            user_id
-          })
-        }
+        selectedUsers={selectedUsers}
+        updateSelectedUsers={users => setSelectedUsers(users)}
         disabled={!isAdmin}
       />
       <SelectRule
@@ -127,6 +124,7 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
         disabled={!isAdmin}
       />
       <ExtraInfoInput
+        selectedUsers={users.filter(user => selectedUsers.includes(user.id))}
         ruleKind={getRuleKind()}
         extraInfo={sanction.sanction_info && sanction.sanction_info.extra_info}
         updateExtraInfo={extra_info =>
