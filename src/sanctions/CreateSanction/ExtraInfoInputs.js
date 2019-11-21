@@ -1,26 +1,43 @@
 // @flow
-import React from 'react'
+import React, { type Element } from 'react'
 
 import { Row } from 'antd'
 
 import NumericInput from '@Components/common/NumericInput/NumericInput'
 import { TimeUnitText } from '@Text/rule'
+import { type ComparisonResult } from './CreateSanction'
 
 const ExtraInfoInput = ({
   user,
   rule,
   extraInfo,
-  updateExtraInfo
+  updateExtraInfo,
+  usersComparedToRules
 }: {
   user: User,
   rule: Rule,
   extraInfo: ExtraInfo,
-  updateExtraInfo: ExtraInfo => void
+  updateExtraInfo: ExtraInfo => void,
+  usersComparedToRules: ComparisonResult
 }) => {
   if (extraInfo.type === 'MULTIPLICATION') {
+    let label = ''
+
+    switch (usersComparedToRules) {
+      case 'MORE':
+        label = `Détails (${user.nickname || user.firstname + ' ' + user.lastname[0]})`
+        break
+      case 'LESS':
+        label = `Détails (${rule.name})`
+        break
+      case 'SAME':
+        label = 'Détails supplémentaires'
+        break
+    }
+
     return (
       <NumericInput
-        label='Information supplémentaires'
+        label={label}
         value={extraInfo.factor}
         onChange={factor =>
           updateExtraInfo({
@@ -31,6 +48,7 @@ const ExtraInfoInput = ({
         suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
         min={1}
         required
+        fullWidth
       />
     )
   }
@@ -40,10 +58,12 @@ const ExtraInfoInput = ({
 
 const ExtraInfoInputs = ({
   formState,
-  updateSanction
+  updateSanction,
+  usersComparedToRules
 }: {
   formState: [User, Rule, CreateSanction][],
-  updateSanction: (number, ExtraInfo) => void
+  updateSanction: (number, ExtraInfo) => void,
+  usersComparedToRules: ComparisonResult
 }) => {
   return (formState.map(([user, rule, sanction], i) => (
     <ExtraInfoInput
@@ -52,8 +72,9 @@ const ExtraInfoInputs = ({
       rule={rule}
       extraInfo={sanction.sanction_info.extra_info}
       updateExtraInfo={extraInfo => updateSanction(i, extraInfo)}
+      usersComparedToRules={usersComparedToRules}
     />
-  )): any)
+  )): Element<typeof ExtraInfoInput>[])
 }
 
 export default ExtraInfoInputs

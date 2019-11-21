@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { InputNumber } from 'antd'
+import classNames from 'classnames/bind'
 
 import FormItem from '../FormItem/FormItem'
 
@@ -10,6 +11,7 @@ type NumericInputProps = {
   label: string,
   value: ?number,
   onChange: number => void,
+  fullWidth?: boolean,
   suffix?: string,
   min?: number,
   required?: boolean
@@ -20,14 +22,16 @@ const Suffix = ({ suffix }: { suffix: string }) => {
 }
 
 const NumericInput = (props: NumericInputProps) => {
+  const cx = classNames.bind(STYLES)
+
   return (
     <FormItem label={props.label} error={props.required && !props.value}>
-      <div className={props.suffix ? STYLES.itemWithSuffix : ''}>
+      <div className={cx({ itemWithSuffix: props.suffix, fullWidth: props.fullWidth })}>
         <InputNumber
           min={props.min}
           value={props.value}
           onChange={props.onChange}
-          className={props.suffix ? STYLES.inputWithSuffix : ''}
+          className={cx({ itemWithSuffix: props.suffix, fullWidth: props.fullWidth })}
         />
         {props.suffix && <Suffix suffix={props.suffix} />}
       </div>

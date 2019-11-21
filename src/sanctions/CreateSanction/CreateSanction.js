@@ -21,6 +21,14 @@ type OtherProps = {
 
 type CreateSanctionProps = DataProps & OtherProps
 
+export type ComparisonResult = 'LESS' | 'MORE' | 'SAME'
+
+export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
+  MORE: 'MORE',
+  LESS: 'LESS',
+  SAME: 'SAME'
+}
+
 export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
@@ -49,6 +57,18 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
     })
 
     return sanctionToReturn
+  }
+
+  const getUsersComparedToRules = (): ComparisonResult => {
+    if (selectedUsers.length > selectedRules.length) {
+      return USERS_COMPARED_TO_RULES.MORE
+    }
+
+    if (selectedUsers.length < selectedRules.length) {
+      return USERS_COMPARED_TO_RULES.LESS
+    }
+
+    return USERS_COMPARED_TO_RULES.SAME
   }
 
   const initializeExtraInfo = (rule: Rule): ExtraInfo => {
@@ -188,7 +208,11 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
         disabled={!isAdmin}
         isMultiple={selectedUsers.length <= 1}
       />
-      <ExtraInfoInputs formState={state} updateSanction={updateSanction} />
+      <ExtraInfoInputs
+        formState={state}
+        updateSanction={updateSanction}
+        usersComparedToRules={getUsersComparedToRules()}
+      />
       <Row type='flex' justify='center'>
         <Button
           type='primary'
