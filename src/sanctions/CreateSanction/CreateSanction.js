@@ -5,7 +5,7 @@ import { Row, Form, message, Button } from 'antd'
 import withConnect, { type Reason } from '@Components/utils/Connect'
 import SelectUsers from './SelectUsers'
 import SelectRules from './SelectRules'
-import ExtraInfoInput from './ExtraInfoInput'
+import ExtraInfoInputs from './ExtraInfoInputs'
 
 import STYLES from './styles.less'
 
@@ -24,11 +24,105 @@ type CreateSanctionProps = DataProps & OtherProps
 export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
-  const [sanction, setSanction] = useState<CreateSanction>({})
-  const [creatingSanction, setCreatingSanction] = useState<boolean>(false)
+  const [state, setState] = useState<[User, Rule, CreateSanction][]>([])
+  const [creatingSanctions, setCreatingSanctions] = useState<boolean>(false)
 
-  const updateSanction = (sanction: CreateSanction) => {
-    setSanction(sanction)
+  const getUser = (id: Uuid): ?User => {
+    return users.find(user => user.id === id)
+  }
+
+  const getRule = (id: Uuid): ?Rule => {
+    return team.rules.find(rule => rule.id === id)
+  }
+
+  const getSanctions = (): CreateSanction[] => {
+    return state.map(([user, rule, sanction]) => sanction)
+  }
+
+  const getSanction = (user_id: Uuid, rule_id: Uuid): ?CreateSanction => {
+    let sanctionToReturn
+
+    state.forEach(([user, rule, sanction]) => {
+      if (user_id === user.id && rule_id === rule.id) {
+        sanctionToReturn = sanction
+      }
+    })
+
+    return sanctionToReturn
+  }
+
+  const initializeExtraInfo = (rule: Rule): ExtraInfo => {
+    switch (rule.kind.type) {
+      case 'MULTIPLICATION':
+      case 'TIME_MULTIPLICATION':
+        return { type: 'MULTIPLICATION', factor: 1 }
+
+      default:
+        return { type: 'NONE' }
+    }
+  }
+
+  const initializeSanction = (user: User, rule: Rule): CreateSanction => {
+    return {
+      user_id: user.id,
+      sanction_info: {
+        associated_rule: rule.id,
+        extra_info: initializeExtraInfo(rule)
+      }
+    }
+  }
+
+  const updateState = (usersIdSelected: Uuid[], rulesIdSelected: Uuid[]) => {
+    const newState: [User, Rule, CreateSanction][] = []
+    const nbUsersSelected = usersIdSelected.length
+    const nbRulesSelected = rulesIdSelected.length
+
+    for (var i = 0; i < Math.max(nbUsersSelected, nbRulesSelected); i++) {
+      let user
+      let rule
+
+      // Multiple Users
+      if (nbUsersSelected > nbRulesSelected && nbRulesSelected > 0) {
+        user = getUser(usersIdSelected[i])
+        rule = getRule(rulesIdSelected[0])
+      }
+      // Multiple Rules
+      else if (nbUsersSelected < nbRulesSelected && nbUsersSelected > 0) {
+        user = getUser(usersIdSelected[0])
+        rule = getRule(rulesIdSelected[i])
+      }
+      // Each is single
+      else if (nbUsersSelected > 0 && nbRulesSelected > 0) {
+        user = getUser(usersIdSelected[0])
+        rule = getRule(rulesIdSelected[0])
+      }
+
+      if (user && rule) {
+        const sanction = getSanction(user.id, rule.id) || initializeSanction(user, rule)
+        newState.push([user, rule, sanction])
+      }
+    }
+
+    setState(newState)
+  }
+
+  const updateSelectedUsers = (value: Uuid[]) => {
+    setSelectedUsers(value)
+    // To Refactor
+    updateState(value, selectedRules)
+  }
+
+  const updateSelectedRules = (value: Uuid[]) => {
+    setSelectedRules(value)
+    // To Refactor
+    updateState(selectedUsers, value)
+  }
+
+  const updateSanction = (index: number, extraInfo: ExtraInfo) => {
+    let stateCopy = [...state]
+    stateCopy[index][2].sanction_info.extra_info = extraInfo
+
+    setState(stateCopy)
   }
 
   const getSuccessAlertText = (sanction: Sanction): string => {
@@ -58,87 +152,52 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
   }
 
   const saveSanction = () => {
-    setCreatingSanction(true)
+    setCreatingSanctions(true)
 
-    createSanction(
-      sanction,
-      sanction => {
-        message.success(getSuccessAlertText(sanction))
-        setSanction({})
-        setCreatingSanction(false)
-      },
-      reason => {
-        message.error(getErrorAlertText(reason.cause))
-        setCreatingSanction(false)
-      }
-    )
+    getSanctions().forEach(sanction => {
+      createSanction(
+        sanction,
+        sanction => {
+          message.success(getSuccessAlertText(sanction))
+          // Todo RESET
+          setCreatingSanctions(false)
+        },
+        reason => {
+          message.error(getErrorAlertText(reason.cause))
+          setCreatingSanctions(false)
+        }
+      )
+    })
   }
 
-  const initializeExtraInfo = (associated_rule: string): ExtraInfo => {
-    const rule = team.rules.find(rule => rule.id === associated_rule)
+  const buttonIsDisabled: boolean = state.length === 0
 
-    if (rule) {
-      switch (rule.kind.type) {
-        case 'MULTIPLICATION':
-        case 'TIME_MULTIPLICATION':
-          return { type: 'MULTIPLICATION', factor: 1 }
-
-        default:
-          break
-      }
-    }
-
-    return { type: 'NONE' }
-  }
-
-  const getRuleKind = (): ?RuleKind => {
-    const rule = team.rules.find(rule => rule.id === (sanction.sanction_info && sanction.sanction_info.associated_rule))
-
-    return rule ? rule.kind : undefined
-  }
-
-  const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
-  console.log(selectedRules)
-  console.log(`Hey ${(selectedRules.length > 1).toString()}`)
   return (
     <Form colon={false} className={STYLES.form}>
       <SelectUsers
         users={users}
         selectedUsers={selectedUsers}
-        updateSelectedUsers={setSelectedUsers}
+        updateSelectedUsers={updateSelectedUsers}
         disabled={!isAdmin}
-        isMultiple={selectedRules.length > 1}
+        isMultiple={selectedRules.length <= 1}
       />
       <SelectRules
         rules={team.rules}
         selectedRules={selectedRules}
-        updateSelectedRules={setSelectedRules}
+        updateSelectedRules={updateSelectedRules}
         disabled={!isAdmin}
-        isMultiple={selectedUsers.length > 1}
+        isMultiple={selectedUsers.length <= 1}
       />
-      <ExtraInfoInput
-        selectedUsers={users.filter(user => selectedUsers.includes(user.id))}
-        ruleKind={getRuleKind()}
-        extraInfo={sanction.sanction_info && sanction.sanction_info.extra_info}
-        updateExtraInfo={extra_info =>
-          updateSanction({
-            ...sanction,
-            sanction_info: {
-              ...sanction.sanction_info,
-              extra_info
-            }
-          })
-        }
-      />
+      <ExtraInfoInputs formState={state} updateSanction={updateSanction} />
       <Row type='flex' justify='center'>
         <Button
           type='primary'
           onClick={saveSanction}
           disabled={buttonIsDisabled}
-          loading={creatingSanction}
+          loading={creatingSanctions}
           className={STYLES.saveButton}
         >
-          {creatingSanction ? '' : 'Ça paye !'}
+          {creatingSanctions ? '' : 'Ça paye !'}
         </Button>
       </Row>
     </Form>
