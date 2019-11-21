@@ -2,24 +2,28 @@
 import React from 'react'
 import { Select } from 'antd'
 
-import FormItem from './FormItem/FormItem'
+import FormItem from '../FormItem/FormItem'
 
 type OptionProps = {
   value: Uuid,
   label: string
 }
 
-type SelectProps<T> = {
-  value: T,
-  onChange: T => void,
+export type CommonSelectProps = {|
   label: string,
   options: OptionProps[],
-  multiple?: boolean,
   required?: boolean,
   disabled?: boolean
+|}
+
+type SelectProps<T> = {
+  value: ?T,
+  onChange: (?T) => void,
+  multiple: boolean,
+  ...CommonSelectProps
 }
 
-function CustomSelect<T> (props: SelectProps<T>) {
+function CommonSelect<T> (props: SelectProps<T>) {
   const showError = () => {
     if (!props.disabled && props.required) {
       if (props.multiple) {
@@ -69,4 +73,4 @@ function CustomSelect<T> (props: SelectProps<T>) {
   )
 }
 
-export default CustomSelect
+export default CommonSelect

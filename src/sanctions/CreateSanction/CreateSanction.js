@@ -4,7 +4,7 @@ import { Row, Form, message, Button } from 'antd'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
 import SelectUsers from './SelectUsers'
-import SelectRule from './SelectRule'
+import SelectRules from './SelectRules'
 import ExtraInfoInput from './ExtraInfoInput'
 
 import STYLES from './styles.less'
@@ -98,30 +98,23 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
   }
 
   const buttonIsDisabled: boolean = !sanction.user_id || !sanction.sanction_info
-
+  console.log(selectedRules)
+  console.log(`Hey ${(selectedRules.length > 1).toString()}`)
   return (
     <Form colon={false} className={STYLES.form}>
       <SelectUsers
         users={users}
         selectedUsers={selectedUsers}
-        updateSelectedUsers={users => setSelectedUsers(users)}
+        updateSelectedUsers={setSelectedUsers}
         disabled={!isAdmin}
+        blockMultiple={selectedRules.length > 1}
       />
-      <SelectRule
-        rules={team.rules.filter(rule => rule.kind.type !== 'MONTHLY')}
-        ruleId={sanction.sanction_info && sanction.sanction_info.associated_rule}
-        updateSelectedRule={associated_rule =>
-          updateSanction({
-            ...sanction,
-            sanction_info: associated_rule
-              ? {
-                associated_rule,
-                extra_info: initializeExtraInfo(associated_rule)
-              }
-              : undefined
-          })
-        }
+      <SelectRules
+        rules={team.rules}
+        selectedRules={selectedRules}
+        updateSelectedRules={setSelectedRules}
         disabled={!isAdmin}
+        blockMultiple={selectedUsers.length > 1}
       />
       <ExtraInfoInput
         selectedUsers={users.filter(user => selectedUsers.includes(user.id))}

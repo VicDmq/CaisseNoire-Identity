@@ -1,33 +1,42 @@
 // @flow
 import React from 'react'
 
-import Select from '@Components/common/Select'
+import type { CommonSelectProps } from '@Components/common/Select/CommonSelect'
+import SingleSelect from '@Components/common/Select/SingleSelect'
+import MultipleSelect from '@Components/common/Select/MultipleSelect'
 
-const SelectUser = ({
+const SelectUsers = ({
   users,
   selectedUsers,
   updateSelectedUsers,
-  disabled
+  disabled,
+  blockMultiple
 }: {
   users: User[],
   selectedUsers: Uuid[],
   updateSelectedUsers: (Uuid[]) => void,
-  disabled: boolean
+  disabled: boolean,
+  blockMultiple: boolean
 }) => {
-  return (
-    <Select
-      multiple
-      label='Joueurs sanctionnés'
-      value={selectedUsers}
-      onChange={users => updateSelectedUsers(users || [])}
-      options={users.map(user => ({
-        value: user.id,
-        label: user.firstname + ' ' + user.lastname
-      }))}
-      required
-      disabled={disabled}
+  const commonProps: CommonSelectProps = {
+    label: 'Joueurs sanctionnés',
+    options: users.map(user => ({
+      value: user.id,
+      label: user.firstname + ' ' + user.lastname
+    })),
+    required: true,
+    disabled
+  }
+
+  return blockMultiple ? (
+    <SingleSelect
+      value={selectedUsers[0] || undefined}
+      onChange={user => updateSelectedUsers(user ? [user] : [])}
+      {...commonProps}
     />
+  ) : (
+    <MultipleSelect value={selectedUsers} onChange={updateSelectedUsers} {...commonProps} />
   )
 }
 
-export default SelectUser
+export default SelectUsers
