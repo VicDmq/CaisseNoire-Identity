@@ -11,13 +11,13 @@ const SelectRules = ({
   selectedRules,
   updateSelectedRules,
   disabled,
-  blockMultiple
+  isMultiple
 }: {
   rules: Rule[],
   selectedRules: Uuid[],
   updateSelectedRules: (Uuid[]) => void,
   disabled: boolean,
-  blockMultiple: boolean
+  isMultiple: boolean
 }) => {
   const commonProps: CommonSelectProps = {
     label: 'Sanction à appliquer',
@@ -31,14 +31,14 @@ const SelectRules = ({
     disabled
   }
 
-  return blockMultiple ? (
+  return isMultiple ? (
+    <MultipleSelect value={selectedRules} onChange={updateSelectedRules} {...commonProps} />
+  ) : (
     <SingleSelect
       value={selectedRules[0] || undefined}
       onChange={rule => updateSelectedRules(rule ? [rule] : [])}
       {...commonProps}
     />
-  ) : (
-    <MultipleSelect value={selectedRules} onChange={updateSelectedRules} {...commonProps} />
   )
 }
 

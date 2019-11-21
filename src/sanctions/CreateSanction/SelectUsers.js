@@ -10,13 +10,13 @@ const SelectUsers = ({
   selectedUsers,
   updateSelectedUsers,
   disabled,
-  blockMultiple
+  isMultiple
 }: {
   users: User[],
   selectedUsers: Uuid[],
   updateSelectedUsers: (Uuid[]) => void,
   disabled: boolean,
-  blockMultiple: boolean
+  isMultiple: boolean
 }) => {
   const commonProps: CommonSelectProps = {
     label: 'Joueurs sanctionnés',
@@ -28,14 +28,14 @@ const SelectUsers = ({
     disabled
   }
 
-  return blockMultiple ? (
+  return isMultiple ? (
+    <MultipleSelect value={selectedUsers} onChange={updateSelectedUsers} {...commonProps} />
+  ) : (
     <SingleSelect
       value={selectedUsers[0] || undefined}
       onChange={user => updateSelectedUsers(user ? [user] : [])}
       {...commonProps}
     />
-  ) : (
-    <MultipleSelect value={selectedUsers} onChange={updateSelectedUsers} {...commonProps} />
   )
 }
 

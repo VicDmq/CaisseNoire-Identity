@@ -107,14 +107,14 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
         selectedUsers={selectedUsers}
         updateSelectedUsers={setSelectedUsers}
         disabled={!isAdmin}
-        blockMultiple={selectedRules.length > 1}
+        isMultiple={selectedRules.length > 1}
       />
       <SelectRules
         rules={team.rules}
         selectedRules={selectedRules}
         updateSelectedRules={setSelectedRules}
         disabled={!isAdmin}
-        blockMultiple={selectedUsers.length > 1}
+        isMultiple={selectedUsers.length > 1}
       />
       <ExtraInfoInput
         selectedUsers={users.filter(user => selectedUsers.includes(user.id))}
