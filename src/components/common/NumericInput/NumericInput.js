@@ -31,7 +31,7 @@ const NumericInput = (props: NumericInputProps) => {
           min={props.min}
           value={props.value}
           onChange={props.onChange}
-          className={cx({ itemWithSuffix: props.suffix, fullWidth: props.fullWidth })}
+          className={cx({ inputWithSuffix: props.suffix, fullWidth: props.fullWidth })}
         />
         {props.suffix && <Suffix suffix={props.suffix} />}
       </div>
