@@ -19,14 +19,14 @@ const Sanctions = ({
   teamFetch,
   usersFetch,
   sanctionsFetch,
-  postSanction,
+  postSanctions,
   deleteSanction,
   isAdmin
 }: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
   sanctionsFetch: ?Response<Sanction[]>,
-  postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  postSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
   deleteSanction: (Uuid, () => void, (Reason) => void) => void,
   isAdmin: boolean
 }) => {
@@ -50,7 +50,7 @@ const Sanctions = ({
                   team,
                   users
                 })}
-                createSanction={postSanction}
+                createSanctions={postSanctions}
                 isAdmin={isAdmin}
               />
             </Row>
@@ -94,14 +94,13 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
         sanctionsFetch: sanctionsUrl
       })
     },
-    // sanctionsFetch: sanctionsUrl,
-    postSanction: (sanction: CreateSanction, cb: Sanction => void, errCb: Reason => void) => ({
+    postSanctions: (sanctions: CreateSanction[], cb: (Sanction[]) => void, errCb: Reason => void) => ({
       createdSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions`,
         method: 'POST',
         force: true,
-        body: JSON.stringify(sanction),
-        then: sanction => cb(sanction),
+        body: JSON.stringify(sanctions),
+        then: sanctions => cb(sanctions),
         catch: reason => errCb(reason),
         andThen: () => ({
           sanctionsFetch: {

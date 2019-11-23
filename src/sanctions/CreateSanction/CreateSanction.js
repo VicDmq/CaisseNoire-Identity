@@ -15,7 +15,7 @@ type DataProps = {
 }
 
 type OtherProps = {
-  createSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  createSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
   isAdmin: boolean
 }
 
@@ -29,11 +29,18 @@ export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   SAME: 'SAME'
 }
 
-export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSanctionProps) => {
+export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
   const [state, setState] = useState<[User, Rule, CreateSanction][]>([])
   const [creatingSanctions, setCreatingSanctions] = useState<boolean>(false)
+
+  const resetForm = () => {
+    setSelectedUsers([])
+    setSelectedRules([])
+    setState([])
+    setCreatingSanctions(false)
+  }
 
   const getUser = (id: Uuid): ?User => {
     return users.find(user => user.id === id)
@@ -145,14 +152,22 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
     setState(stateCopy)
   }
 
-  const getSuccessAlertText = (sanction: Sanction): string => {
-    const user = users.find(user => user.id === sanction.user_id)
+  const getSuccessAlertText = (sanctions: Sanction[]): any => {
+    return (
+      <div>
+        {sanctions.map(sanction => {
+          const user = users.find(user => user.id === sanction.user_id)
 
-    if (user) {
-      return `${user.firstname} ${user.lastname} a payé ${sanction.price}`
-    }
-
-    return ''
+          if (user) {
+            return (
+              <div className={STYLES.messageText}>
+                {user.firstname} {user.lastname} a payé {sanction.price} €
+              </div>
+            )
+          }
+        })}
+      </div>
+    )
   }
 
   const getErrorAlertText = (error: ?ApiError): string => {
@@ -174,20 +189,17 @@ export const SanctionForm = ({ team, users, createSanction, isAdmin }: CreateSan
   const saveSanction = () => {
     setCreatingSanctions(true)
 
-    getSanctions().forEach(sanction => {
-      createSanction(
-        sanction,
-        sanction => {
-          message.success(getSuccessAlertText(sanction))
-          // Todo RESET
-          setCreatingSanctions(false)
-        },
-        reason => {
-          message.error(getErrorAlertText(reason.cause))
-          setCreatingSanctions(false)
-        }
-      )
-    })
+    createSanctions(
+      getSanctions(),
+      sanctions => {
+        message.success(getSuccessAlertText(sanctions))
+        resetForm()
+      },
+      reason => {
+        message.error(getErrorAlertText(reason.cause))
+        setCreatingSanctions(false)
+      }
+    )
   }
 
   const buttonIsDisabled: boolean = state.length === 0
