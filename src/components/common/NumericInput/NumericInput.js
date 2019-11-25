@@ -13,8 +13,7 @@ type NumericInputProps = {
   onChange: number => void,
   fullWidth?: boolean,
   suffix?: string,
-  min?: number,
-  required?: boolean
+  min?: number
 }
 
 const Suffix = ({ suffix }: { suffix: string }) => {
@@ -24,8 +23,13 @@ const Suffix = ({ suffix }: { suffix: string }) => {
 const NumericInput = (props: NumericInputProps) => {
   const cx = classNames.bind(STYLES)
 
+  // Ensure bad input is handled correctly
+  if (!props.value) {
+    props.onChange(props.min || 0)
+  }
+
   return (
-    <FormItem label={props.label} error={props.required && !props.value}>
+    <FormItem label={props.label}>
       <div className={cx({ itemWithSuffix: props.suffix, fullWidth: props.fullWidth })}>
         <InputNumber
           min={props.min}
