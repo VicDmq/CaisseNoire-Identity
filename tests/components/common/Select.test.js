@@ -2,7 +2,8 @@
 import React from 'react'
 import { mount, type ReactWrapper } from 'enzyme'
 
-import Select from '@Components/common/Select'
+import SingleSelect from '@Components/common/Select/SingleSelect'
+import MultipleSelect from '@Components/common/Select/MultipleSelect'
 
 const DEFAULT_OPTIONS = [
   {
@@ -30,7 +31,7 @@ class SingleSelectWrapper extends React.Component<{}, { value: ?Uuid }> {
 
   render () {
     return (
-      <Select
+      <SingleSelect
         label='Select'
         type='default'
         value={this.state.value}
@@ -83,9 +84,8 @@ class MultiSelectWrapper extends React.Component<{}, { value: Uuid[] }> {
 
   render () {
     return (
-      <Select
+      <MultipleSelect
         label='Select'
-        multiple
         value={this.state.value}
         onChange={value => this.setState({ value })}
         options={DEFAULT_OPTIONS}

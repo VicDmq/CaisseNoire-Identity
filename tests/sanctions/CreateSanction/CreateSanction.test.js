@@ -15,7 +15,7 @@ const selectFirstInput = (wrapper: ReactWrapper<any>, selectName: string) => {
 
   wrapper
     .find(selectName)
-    .find('li')
+    .find('.ant-select-dropdown-menu-item')
     .first()
     .simulate('click')
 }
@@ -23,25 +23,25 @@ const selectFirstInput = (wrapper: ReactWrapper<any>, selectName: string) => {
 describe('SanctionForm', () => {
   it('Disables fields when not admin', () => {
     const wrapper = shallow(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin={false} createSanction={jest.fn()} />
+      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin={false} createSanctions={jest.fn()} />
     )
 
-    expect(wrapper.find('SelectUser').prop('disabled')).toBe(true)
-    expect(wrapper.find('SelectRule').prop('disabled')).toBe(true)
+    expect(wrapper.find('SelectUsers').prop('disabled')).toBe(true)
+    expect(wrapper.find('SelectRules').prop('disabled')).toBe(true)
   })
 
   it('Enables fields when admin', () => {
     const wrapper = shallow(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanction={jest.fn()} />
+      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
-    expect(wrapper.find('SelectUser').prop('disabled')).toBe(false)
-    expect(wrapper.find('SelectRule').prop('disabled')).toBe(false)
+    expect(wrapper.find('SelectUsers').prop('disabled')).toBe(false)
+    expect(wrapper.find('SelectRules').prop('disabled')).toBe(false)
   })
 
   it('Disables save button when fields are empty', () => {
     const wrapper = shallow(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanction={jest.fn()} />
+      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
     expect(wrapper.find('Button').prop('disabled')).toBe(true)
@@ -49,14 +49,14 @@ describe('SanctionForm', () => {
 
   it('Enables save button when fields are filled', () => {
     const wrapper = mount(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanction={jest.fn()} />
+      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
-    selectFirstInput(wrapper, 'SelectUser')
+    selectFirstInput(wrapper, 'SelectUsers')
 
     expect(wrapper.find('Button').prop('disabled')).toBe(true)
 
-    selectFirstInput(wrapper, 'SelectRule')
+    selectFirstInput(wrapper, 'SelectRules')
 
     expect(wrapper.find('Button').prop('disabled')).toBe(false)
   })
@@ -69,14 +69,15 @@ describe('SanctionForm', () => {
       price_to_multiply: 2.0
     }
 
-    const wrapper = mount(<SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanction={jest.fn()} />)
+    const wrapper = mount(<SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />)
 
-    expect(wrapper.find('ExtraInfoInput').isEmptyRender()).toBe(true)
+    expect(wrapper.find('ExtraInfoInputs').isEmptyRender()).toBe(true)
 
-    selectFirstInput(wrapper, 'SelectRule')
+    selectFirstInput(wrapper, 'SelectUsers')
+    selectFirstInput(wrapper, 'SelectRules')
 
-    expect(wrapper.find('ExtraInfoInput').isEmptyRender()).toBe(false)
-    expect(wrapper.find('ExtraInfoInput').prop('ruleKind')).toBe(team.rules[0].kind)
+    expect(wrapper.find('ExtraInfoInputs').isEmptyRender()).toBe(false)
+    expect(wrapper.find('ExtraInfoInputs').prop('formState')[0][1]).toBe(team.rules[0])
   })
 
   it('Filters out rules with monthly kind', () => {
@@ -87,8 +88,13 @@ describe('SanctionForm', () => {
       price: 2.0
     }
 
-    const wrapper = mount(<SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanction={jest.fn()} />)
+    const wrapper = mount(<SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />)
 
-    expect(wrapper.find('SelectRule').prop('rules')).toStrictEqual([])
+    expect(
+      wrapper
+        .find('SelectRules')
+        .find('MultipleSelect')
+        .prop('options')
+    ).toStrictEqual([])
   })
 })
