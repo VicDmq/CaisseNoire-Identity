@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { render } from '@testing-library/react'
 import { mount, type ReactWrapper } from 'enzyme'
 import { message } from 'antd'
 
@@ -32,8 +33,8 @@ describe('SanctionsList', () => {
     }
   })
 
-  it('Displays sanctions list', () => {
-    const wrapper = mount(
+  it('Displays sanction list items', () => {
+    const { getAllByTestId } = render(
       <SanctionList
         team={DEFAULT_TEAM}
         users={[DEFAULT_USER]}
@@ -43,7 +44,9 @@ describe('SanctionsList', () => {
       />
     )
 
-    expect(wrapper.find('SanctionListItem')).toHaveLength(2)
+    const listItems = getAllByTestId('sanction-list-item')
+
+    expect(listItems).toHaveLength(2)
   })
 
   it('Shows modal when deleting sanction', () => {

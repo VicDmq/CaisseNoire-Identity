@@ -18,7 +18,7 @@ export const SanctionListItem = (props: ListItemProps) => {
   const [isExtended, setisExtended] = useState<boolean>(false)
 
   return (
-    <div className={STYLES.listItemContainer}>
+    <div className={STYLES.listItemContainer} data-testid={'sanction-list-item'}>
       <div className={isExtended ? STYLES.listItemExtended : STYLES.listItem}>
         <Icon
           className={STYLES.expandIcon}
