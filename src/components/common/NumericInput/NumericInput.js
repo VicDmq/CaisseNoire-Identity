@@ -24,7 +24,7 @@ const NumericInput = (props: NumericInputProps) => {
   const cx = classNames.bind(STYLES)
 
   // Ensure bad input is handled correctly
-  if (!props.value) {
+  if (!props.value || typeof props.value !== 'number') {
     props.onChange(props.min || 0)
   }
 
