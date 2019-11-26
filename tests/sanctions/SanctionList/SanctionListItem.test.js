@@ -31,7 +31,7 @@ describe('SanctionListItem', () => {
   })
 
   it('Shows that this rule no longer exists', () => {
-    const { queryByText } = render(
+    const { getByText } = render(
       <SanctionListItem
         rule={undefined}
         user={DEFAULT_USER}
@@ -41,9 +41,8 @@ describe('SanctionListItem', () => {
       />
     )
 
-    const missingRuleDiv = queryByText('Cette règle a été supprimée')
+    const missingRuleDiv = getByText('Cette règle a été supprimée')
 
-    expect(missingRuleDiv).not.toBeNull()
     expect(missingRuleDiv).toHaveClass('missingRule')
   })
 
