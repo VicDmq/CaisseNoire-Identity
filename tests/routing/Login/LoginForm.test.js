@@ -97,7 +97,7 @@ describe('LoginForm', () => {
     expect(errorMessage).not.toBeInTheDocument()
   })
 
-  it('Calls signIn and reset form', () => {
+  it('Calls signIn and reset form on submit (except adminCheckBox)', () => {
     const signIn = jest.fn()
 
     const { getByTestId, getByRole } = render(<LoginForm signIn={signIn} response={undefined} />)
