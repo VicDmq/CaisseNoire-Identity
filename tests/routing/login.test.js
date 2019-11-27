@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { shallow } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
 
 import { Login } from '../../src/routing/Login/Login'

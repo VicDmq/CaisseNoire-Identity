@@ -1,13 +1,13 @@
 // @flow
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 
 import { SanctionListItem } from '@Sanctions/SanctionList/SanctionListItem'
 import { DEFAULT_RULE, DEFAULT_USER, DEFAULT_SANCTION } from '../../utils/default'
 
 describe('SanctionListItem', () => {
   it('Extends and collapses additionnal description', () => {
-    const wrapper = shallow(
+    const { getByTestId } = render(
       <SanctionListItem
         rule={DEFAULT_RULE}
         user={DEFAULT_USER}
@@ -17,25 +17,21 @@ describe('SanctionListItem', () => {
       />
     )
 
-    expect(wrapper.find('#extraDescription').hasClass('extended')).toBe(false)
+    const expandIcon = getByTestId('expand-icon')
 
-    wrapper
-      .find('Icon')
-      .first()
-      .simulate('click')
+    expect(getByTestId('extraDescription')).toHaveClass('collapsed')
 
-    expect(wrapper.find('#extraDescription').hasClass('extended')).toBe(true)
+    fireEvent.click(expandIcon)
 
-    wrapper
-      .find('Icon')
-      .first()
-      .simulate('click')
+    expect(getByTestId('extraDescription')).toHaveClass('extended')
 
-    expect(wrapper.find('#extraDescription').hasClass('extended')).toBe(false)
+    fireEvent.click(expandIcon)
+
+    expect(getByTestId('extraDescription')).toHaveClass('collapsed')
   })
 
   it('Shows that this rule no longer exists', () => {
-    const wrapper = shallow(
+    const { getByText } = render(
       <SanctionListItem
         rule={undefined}
         user={DEFAULT_USER}
@@ -45,12 +41,13 @@ describe('SanctionListItem', () => {
       />
     )
 
-    expect(wrapper.exists('#definedRule')).toBe(false)
-    expect(wrapper.exists('#missingRule')).toBe(true)
+    const missingRuleDiv = getByText('Cette règle a été supprimée')
+
+    expect(missingRuleDiv).toHaveClass('missingRule')
   })
 
   it('Disables button for non administrators', () => {
-    const wrapper = shallow(
+    const { getByRole } = render(
       <SanctionListItem
         rule={DEFAULT_RULE}
         user={DEFAULT_USER}
@@ -60,15 +57,15 @@ describe('SanctionListItem', () => {
       />
     )
 
-    const isDisabled = wrapper.find('Button').prop('disabled')
+    const disabledButton = getByRole('button')
 
-    expect(isDisabled).toBe(true)
+    expect(disabledButton).toBeDisabled()
   })
 
   it('Calls showDeleteConfirm', () => {
     const showDeleteConfirm = jest.fn()
 
-    const wrapper = shallow(
+    const { getByRole } = render(
       <SanctionListItem
         rule={DEFAULT_RULE}
         user={DEFAULT_USER}
@@ -78,8 +75,11 @@ describe('SanctionListItem', () => {
       />
     )
 
-    wrapper.find('Button').simulate('click')
+    const button = getByRole('button')
 
-    expect(showDeleteConfirm).toHaveBeenCalled()
+    fireEvent.click(button)
+
+    expect(showDeleteConfirm).toHaveBeenCalledTimes(1)
+    expect(showDeleteConfirm).toHaveBeenCalledWith(DEFAULT_SANCTION.id)
   })
 })

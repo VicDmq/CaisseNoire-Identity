@@ -18,9 +18,10 @@ export const SanctionListItem = (props: ListItemProps) => {
   const [isExtended, setisExtended] = useState<boolean>(false)
 
   return (
-    <div className={STYLES.listItemContainer}>
+    <div className={STYLES.listItemContainer} data-testid='sanction-list-item'>
       <div className={isExtended ? STYLES.listItemExtended : STYLES.listItem}>
         <Icon
+          data-testid='expand-icon'
           className={STYLES.expandIcon}
           theme='filled'
           type={isExtended ? 'down-circle' : 'right-circle'}
@@ -31,13 +32,9 @@ export const SanctionListItem = (props: ListItemProps) => {
             {props.user.nickname ? props.user.nickname : `${props.user.firstname} ${props.user.lastname}`}
           </div>
           {props.rule ? (
-            <div id='definedRule' className={STYLES.ruleInfo}>
-              {props.rule.name}
-            </div>
+            <div className={STYLES.ruleInfo}>{props.rule.name}</div>
           ) : (
-            <div id='missingRule' className={STYLES.missingRule}>
-              Cette règle a été supprimée
-            </div>
+            <div className={STYLES.missingRule}>Cette règle a été supprimée</div>
           )}
         </div>
         <div className={STYLES.tagAndButtonContainer}>
@@ -52,7 +49,7 @@ export const SanctionListItem = (props: ListItemProps) => {
           </Button>
         </div>
       </div>
-      <div id='extraDescription' className={isExtended ? STYLES.extended : STYLES.collapsed}>
+      <div data-testid='extraDescription' className={isExtended ? STYLES.extended : STYLES.collapsed}>
         <div className={STYLES.categoryAndDate}>
           {props.rule ? (
             <div className={STYLES.categoryTag}>
