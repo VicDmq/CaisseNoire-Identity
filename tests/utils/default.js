@@ -32,7 +32,9 @@ export const DEFAULT_SANCTION: Sanction = {
   user_id: 'user_id',
   sanction_info: {
     associated_rule: 'rule_id',
-    extra_info: null
+    extra_info: {
+      type: 'NONE'
+    }
   },
   price: 2.0,
   created_at: '2019-10-28'
