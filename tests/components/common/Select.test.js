@@ -1,11 +1,12 @@
 // @flow
 import React from 'react'
-import { mount, type ReactWrapper } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 
+import type { OptionProps } from '@Components/common/Select/CommonSelect'
 import SingleSelect from '@Components/common/Select/SingleSelect'
 import MultipleSelect from '@Components/common/Select/MultipleSelect'
 
-const DEFAULT_OPTIONS = [
+const DEFAULT_OPTIONS: OptionProps[] = [
   {
     value: '1',
     label: 'label 1'
@@ -20,104 +21,54 @@ const DEFAULT_OPTIONS = [
   }
 ]
 
-class SingleSelectWrapper extends React.Component<{}, { value: ?Uuid }> {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      value: undefined
-    }
-  }
-
-  render () {
-    return (
-      <SingleSelect
-        label='Select'
-        type='default'
-        value={this.state.value}
-        onChange={value => this.setState({ value })}
-        options={DEFAULT_OPTIONS}
-      />
+describe('SingleSelect', () => {
+  it('Hides selected value', () => {
+    const { getAllByRole, getByRole } = render(
+      <SingleSelect label='Select' value={DEFAULT_OPTIONS[0].value} onChange={jest.fn()} options={DEFAULT_OPTIONS} />
     )
-  }
-}
 
-const selectValue = (wrapper: ReactWrapper<any>, label: string) => {
-  wrapper
-    .find('Select')
-    .last()
-    .simulate('click')
+    const select = getByRole('combobox')
 
-  wrapper
-    .find('Select')
-    .last()
-    .find('li')
-    .filterWhere(node => node.text() === label)
-    .first()
-    .simulate('click')
-}
+    fireEvent.click(select)
 
-describe('Select', () => {
-  it('Selects only one value', () => {
-    const wrapper = mount(<SingleSelectWrapper />)
+    const selectedOption = getByRole((content, element) => element.getAttribute('aria-selected') === 'true', {
+      hidden: true
+    })
 
-    expect(wrapper.find('.ant-select-selection-selected-value').exists()).toBe(false)
+    expect(selectedOption).toHaveTextContent(DEFAULT_OPTIONS[0].label)
+    expect(selectedOption).not.toBeVisible()
 
-    selectValue(wrapper, 'label 1')
+    const notSelectedOptions = getAllByRole('option')
 
-    expect(wrapper.find('.ant-select-selection-selected-value').text()).toBe('label 1')
-
-    selectValue(wrapper, 'label 2')
-
-    expect(wrapper.find('.ant-select-selection-selected-value').text()).toBe('label 2')
+    expect(notSelectedOptions).toHaveLength(DEFAULT_OPTIONS.length - 1)
+    notSelectedOptions.forEach(selectedOption => expect(selectedOption).toBeVisible())
   })
 })
 
-class MultiSelectWrapper extends React.Component<{}, { value: Uuid[] }> {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      value: []
-    }
-  }
-
-  render () {
-    return (
+describe('MultiSelect', () => {
+  it('Hides selected values', () => {
+    const { getByRole, getAllByRole } = render(
       <MultipleSelect
         label='Select'
-        value={this.state.value}
-        onChange={value => this.setState({ value })}
+        value={DEFAULT_OPTIONS.slice(0, 2).map(option => option.value)}
+        onChange={jest.fn()}
         options={DEFAULT_OPTIONS}
       />
     )
-  }
-}
 
-describe('Multi Select', () => {
-  it('Can select more than one value', () => {
-    const wrapper = mount(<MultiSelectWrapper />)
+    const select = getByRole('combobox')
 
-    expect(wrapper.find('.ant-select-selection__choice').exists()).toBe(false)
+    fireEvent.click(select)
 
-    selectValue(wrapper, 'label 1')
+    const selectedOptions = getAllByRole((content, element) => element.getAttribute('aria-selected') === 'true', {
+      hidden: true
+    })
 
-    expect(wrapper.find('.ant-select-selection__choice').text()).toBe('label 1')
+    expect(selectedOptions).toHaveLength(DEFAULT_OPTIONS.length - 1)
+    selectedOptions.forEach(selectedOption => expect(selectedOption).not.toBeVisible())
 
-    selectValue(wrapper, 'label 2')
+    const notSelectedOption = getByRole('option')
 
-    expect(wrapper.find('.ant-select-selection__choice')).toHaveLength(2)
-    expect(
-      wrapper
-        .find('.ant-select-selection__choice')
-        .at(0)
-        .text()
-    ).toBe('label 1')
-    expect(
-      wrapper
-        .find('.ant-select-selection__choice')
-        .at(1)
-        .text()
-    ).toBe('label 2')
+    expect(notSelectedOption).toBeVisible()
   })
 })

@@ -4,7 +4,7 @@ import { Select } from 'antd'
 
 import FormItem from '../FormItem/FormItem'
 
-type OptionProps = {
+export type OptionProps = {
   value: Uuid,
   label: string
 }
