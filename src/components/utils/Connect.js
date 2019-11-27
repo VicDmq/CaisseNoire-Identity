@@ -2,7 +2,7 @@
 import React, { type AbstractComponent } from 'react'
 import { Spin, Result } from 'antd'
 
-export type Response<T> = Success<T> | Failed
+export type Response<T> = Success<T> | Failed | Pending
 
 type Success<T> = {|
   fulfilled: true,
@@ -13,6 +13,8 @@ type Failed = {|
   rejected: true,
   reason: Reason
 |}
+
+type Pending = {| pending: true |}
 
 export type Reason = {
   cause: ?ApiError

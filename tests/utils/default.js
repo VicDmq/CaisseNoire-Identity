@@ -39,3 +39,8 @@ export const DEFAULT_SANCTION: Sanction = {
   price: 2.0,
   created_at: '2019-10-28'
 }
+
+export const DEFAULT_NOT_FOUND: ApiError = {
+  kind: 'NOT_FOUND',
+  description: 'Not found'
+}

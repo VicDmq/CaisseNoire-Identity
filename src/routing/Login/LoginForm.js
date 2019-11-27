@@ -7,19 +7,19 @@ import type { Response, Reason } from '@Components/utils/Connect'
 
 import STYLES from './styles.less'
 
-type LoginProps = {
+type LoginFormProps = {
   signIn: LoginRequest => void,
   response: ?Response<LoginResponse>
 }
 
-type LoginState = {
+type LoginFormState = {
   credentials: LoginRequest,
   adminMode: boolean,
   hideError: boolean
 }
 
-const LoginForm = (props: LoginProps) => {
-  const [state, setState] = useState<LoginState>({ credentials: { name: '' }, adminMode: false, hideError: false })
+const LoginForm = (props: LoginFormProps) => {
+  const [state, setState] = useState<LoginFormState>({ credentials: { name: '' }, adminMode: false, hideError: false })
 
   const resetForm = () => {
     setState({ ...state, credentials: { name: '' }, hideError: false })
@@ -59,9 +59,10 @@ const LoginForm = (props: LoginProps) => {
     return error
   }
 
-  const loading = !!props.response && !props.response.fulfilled && !props.response.rejected
+  const loading = !!props.response && !!props.response.pending && props.response.pending
 
-  const saveDisabled = state.credentials.name === '' || (state.adminMode && !state.credentials.admin_password)
+  const saveDisabled =
+    loading || state.credentials.name === '' || (state.adminMode && !state.credentials.admin_password)
 
   return (
     <Row type='flex' justify='center' align='middle' className={STYLES.row}>
@@ -76,6 +77,7 @@ const LoginForm = (props: LoginProps) => {
                 name: value
               })
             }
+            testId='team-name-input'
           />
           <Input
             label='Mot de passe'
@@ -88,12 +90,13 @@ const LoginForm = (props: LoginProps) => {
               })
             }
             password
+            testId='password-input'
           />
           <Checkbox checked={state.adminMode} onChange={updateAdminMode} className={STYLES.checkbox}>
             Mode administrateur
           </Checkbox>
           {props.response && props.response.rejected && !state.hideError && (
-            <div className={STYLES.errorMessage}>
+            <div className={STYLES.errorMessage} test-id='error-message'>
               <Icon type='exclamation-circle' theme='filled' />
               {getError(props.response.reason)}
             </div>

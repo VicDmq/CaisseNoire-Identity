@@ -12,7 +12,7 @@ type LoginProps = {
   loginResponse: ?Response<LoginResponse>
 }
 
-export const Login = (props: LoginProps) => {
+const Login = (props: LoginProps) => {
   const history = useHistory()
 
   const tryToLogIn = (credentials: LoginRequest) => {
