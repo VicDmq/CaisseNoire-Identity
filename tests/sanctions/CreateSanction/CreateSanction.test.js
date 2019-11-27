@@ -1,64 +1,72 @@
 // @flow
 import React from 'react'
-import { shallow, mount, type ReactWrapper } from 'enzyme'
+import { cleanup, render, fireEvent, type AllByBoundAttribute } from '@testing-library/react'
 
 import { SanctionForm } from '@Sanctions/CreateSanction/CreateSanction'
 
 import { DEFAULT_TEAM, DEFAULT_USER } from '../../utils/default'
 
-const selectFirstInput = (wrapper: ReactWrapper<any>, selectName: string) => {
-  wrapper
-    .find(selectName)
-    .find('Select')
-    .last()
-    .simulate('click')
+const selectFirstOption = (select: HTMLElement, getAllByRole: AllByBoundAttribute) => {
+  fireEvent.click(select)
 
-  wrapper
-    .find(selectName)
-    .find('.ant-select-dropdown-menu-item')
-    .first()
-    .simulate('click')
+  const firstOption = getAllByRole('option')[0]
+
+  fireEvent.click(firstOption)
 }
 
 describe('SanctionForm', () => {
+  afterEach(cleanup)
+
   it('Disables fields when not admin', () => {
-    const wrapper = shallow(
+    const { getAllByRole } = render(
       <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin={false} createSanctions={jest.fn()} />
     )
 
-    expect(wrapper.find('SelectUsers').prop('disabled')).toBe(true)
-    expect(wrapper.find('SelectRules').prop('disabled')).toBe(true)
+    const fields = getAllByRole((content, element) => element.tagName.toLowerCase() === 'input')
+
+    fields.forEach(field => {
+      expect(field).toBeDisabled()
+    })
   })
 
   it('Enables fields when admin', () => {
-    const wrapper = shallow(
+    const { getAllByRole } = render(
       <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
-    expect(wrapper.find('SelectUsers').prop('disabled')).toBe(false)
-    expect(wrapper.find('SelectRules').prop('disabled')).toBe(false)
+    const fields = getAllByRole((content, element) => element.tagName.toLowerCase() === 'input')
+
+    fields.forEach(field => {
+      expect(field).toBeEnabled()
+    })
   })
 
   it('Disables save button when fields are empty', () => {
-    const wrapper = shallow(
+    const { getByRole } = render(
       <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
-    expect(wrapper.find('Button').prop('disabled')).toBe(true)
+    const saveButton = getByRole('button')
+
+    expect(saveButton).toBeDisabled()
   })
 
   it('Enables save button when fields are filled', () => {
-    const wrapper = mount(
+    const { getAllByRole, getByRole } = render(
       <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
-    selectFirstInput(wrapper, 'SelectUsers')
+    const saveButton = getByRole('button')
 
-    expect(wrapper.find('Button').prop('disabled')).toBe(true)
+    expect(saveButton).toBeDisabled()
 
-    selectFirstInput(wrapper, 'SelectRules')
+    const [selectUsers, selectRules] = getAllByRole('combobox')
 
-    expect(wrapper.find('Button').prop('disabled')).toBe(false)
+    selectFirstOption(selectUsers, getAllByRole)
+
+    selectFirstOption(selectRules, getAllByRole)
+
+    expect(saveButton).toBeEnabled()
   })
 
   it('Shows ExtraInfoInput', () => {
@@ -69,32 +77,47 @@ describe('SanctionForm', () => {
       price_to_multiply: 2.0
     }
 
-    const wrapper = mount(<SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />)
+    const { queryByTestId, getAllByRole, getByTestId } = render(
+      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+    )
 
-    expect(wrapper.find('ExtraInfoInputs').isEmptyRender()).toBe(true)
+    expect(queryByTestId('extra-info-input')).not.toBeInTheDocument()
 
-    selectFirstInput(wrapper, 'SelectUsers')
-    selectFirstInput(wrapper, 'SelectRules')
+    const [selectUsers, selectRules] = getAllByRole('combobox')
 
-    expect(wrapper.find('ExtraInfoInputs').isEmptyRender()).toBe(false)
-    expect(wrapper.find('ExtraInfoInputs').prop('formState')[0][1]).toBe(team.rules[0])
+    selectFirstOption(selectUsers, getAllByRole)
+
+    selectFirstOption(selectRules, getAllByRole)
+
+    expect(getByTestId('extra-info-input')).toBeInTheDocument()
   })
 
   it('Filters out rules with monthly kind', () => {
     const team = DEFAULT_TEAM
 
-    team.rules[0].kind = {
-      type: 'MONTHLY',
-      price: 2.0
+    const new_rule: Rule = {
+      id: 'rule_id_2',
+      name: 'Monthly Rule',
+      description: 'This is a description',
+      category: 'TRAINING_DAY',
+      kind: { type: 'MONTHLY', price: 2 }
     }
 
-    const wrapper = mount(<SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />)
+    team.rules.push(new_rule)
 
-    expect(
-      wrapper
-        .find('SelectRules')
-        .find('MultipleSelect')
-        .prop('options')
-    ).toStrictEqual([])
+    const { getAllByRole, getByRole } = render(
+      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+    )
+
+    const selectRules = getAllByRole('combobox')[1]
+
+    expect(selectRules).toBeInTheDocument()
+
+    fireEvent.click(selectRules)
+
+    // Return error if there are more than one option
+    const option = getByRole('option')
+
+    expect(option).toHaveTextContent(team.rules[0].name)
   })
 })
