@@ -1,10 +1,6 @@
 // setup file
 import 'regenerator-runtime/runtime'
 import '@testing-library/jest-dom/extend-expect'
-import { configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-
-configure({ adapter: new Adapter() })
 
 // Override window.fetch which is undefined otherwise
 global.fetch = () => {
