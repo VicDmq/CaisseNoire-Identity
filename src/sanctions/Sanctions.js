@@ -6,10 +6,10 @@ import { Row, Col, Tabs, Icon } from 'antd'
 
 import type { Response, Reason } from '@Components/utils/Connect'
 import CreateSanctionForm from './CreateSanction/CreateSanction'
-import SanctionsList from './SanctionsList/SanctionsList'
+import SanctionList from './SanctionList/SanctionList'
 import type { ApiProps } from '../routing/routes'
 
-import STYLES from './sanctions.less'
+import STYLES from './styles.less'
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
@@ -19,14 +19,14 @@ const Sanctions = ({
   teamFetch,
   usersFetch,
   sanctionsFetch,
-  postSanction,
+  postSanctions,
   deleteSanction,
   isAdmin
 }: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
   sanctionsFetch: ?Response<Sanction[]>,
-  postSanction: (CreateSanction, (Sanction) => void, (Reason) => void) => void,
+  postSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
   deleteSanction: (Uuid, () => void, (Reason) => void) => void,
   isAdmin: boolean
 }) => {
@@ -50,7 +50,7 @@ const Sanctions = ({
                   team,
                   users
                 })}
-                createSanction={postSanction}
+                createSanctions={postSanctions}
                 isAdmin={isAdmin}
               />
             </Row>
@@ -69,7 +69,7 @@ const Sanctions = ({
         <Row>
           <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
             <Row type='flex' justify='center' align='middle'>
-              <SanctionsList
+              <SanctionList
                 response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch || { refreshing: true }])}
                 mapResponseToProps={([team, users, sanctions]) => ({ team, users, sanctions })}
                 deleteSanction={deleteSanction}
@@ -94,14 +94,13 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
         sanctionsFetch: sanctionsUrl
       })
     },
-    // sanctionsFetch: sanctionsUrl,
-    postSanction: (sanction: CreateSanction, cb: Sanction => void, errCb: Reason => void) => ({
+    postSanctions: (sanctions: CreateSanction[], cb: (Sanction[]) => void, errCb: Reason => void) => ({
       createdSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions`,
         method: 'POST',
         force: true,
-        body: JSON.stringify(sanction),
-        then: sanction => cb(sanction),
+        body: JSON.stringify(sanctions),
+        then: sanctions => cb(sanctions),
         catch: reason => errCb(reason),
         andThen: () => ({
           sanctionsFetch: {

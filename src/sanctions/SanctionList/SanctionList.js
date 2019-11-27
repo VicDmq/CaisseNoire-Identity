@@ -20,7 +20,7 @@ type OtherProps = {
 
 type SanctionListProps = DataProps & OtherProps
 
-export const SanctionsList = ({ team, users, sanctions, deleteSanction, isAdmin }: SanctionListProps) => {
+export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }: SanctionListProps) => {
   const showDeleteConfirm = (sanction_id: Uuid) => {
     const modal = Modal.confirm({})
 
@@ -78,4 +78,4 @@ export const SanctionsList = ({ team, users, sanctions, deleteSanction, isAdmin 
   )
 }
 
-export default withConnect<DataProps, OtherProps>(SanctionsList)
+export default withConnect<DataProps, OtherProps>(SanctionList)

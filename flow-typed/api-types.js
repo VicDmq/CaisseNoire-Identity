@@ -76,13 +76,13 @@ declare type Sanction = {
 }
 
 declare type CreateSanction = {
-  user_id?: ?Uuid,
-  sanction_info?: SanctionInfo
+  user_id: Uuid,
+  sanction_info: SanctionInfo
 }
 
 declare type SanctionInfo = {
-  associated_rule: ?Uuid,
-  extra_info: ?ExtraInfo
+  associated_rule: Uuid,
+  extra_info: ExtraInfo
 }
 
 declare type ExtraInfo = None | Multiplication
