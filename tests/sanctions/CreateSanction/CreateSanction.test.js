@@ -1,6 +1,13 @@
-// @flow
 import React from 'react'
-import { cleanup, render, fireEvent, type AllByBoundAttribute } from '@testing-library/react'
+import {
+  cleanup,
+  render,
+  fireEvent,
+  type AllByBoundAttribute,
+  waitForElement,
+  within,
+  prettyDOM
+} from '@testing-library/react'
 
 import { SanctionForm } from '@Sanctions/CreateSanction/CreateSanction'
 
@@ -69,12 +76,70 @@ describe('SanctionForm', () => {
     expect(saveButton).toBeEnabled()
   })
 
-  it('Shows ExtraInfoInput', () => {
-    const team = DEFAULT_TEAM
+  it('Disables multiple rules select when more than one user is selected', async () => {
+    const users = [DEFAULT_USER]
+    const new_user: User = {
+      ...DEFAULT_USER,
+      id: 'user_id_2'
+    }
+    users.push(new_user)
 
-    team.rules[0].kind = {
-      type: 'MULTIPLICATION',
-      price_to_multiply: 2.0
+    const { getAllByRole, getByRole, getByText } = render(
+      <SanctionForm team={DEFAULT_TEAM} users={users} isAdmin createSanctions={jest.fn()} />
+    )
+
+    const [selectUsers, multipleSelect] = getAllByRole('combobox')
+
+    expect(multipleSelect).toHaveClass('ant-select-selection--multiple')
+    getByText('Sanction(s) à appliquer')
+
+    selectFirstOption(selectUsers, getAllByRole)
+    selectFirstOption(selectUsers, getAllByRole)
+
+    const singleSelect = getAllByRole('combobox')[1]
+    getByText('Sanction à appliquer')
+    expect(singleSelect).toHaveClass('ant-select-selection--single')
+  })
+
+  it('Disables multiple users select when more than one rule is selected', async () => {
+    const new_rule: Rule = {
+      ...DEFAULT_TEAM.rules[0],
+      id: 'rule_id_2'
+    }
+    const team: Team = {
+      ...DEFAULT_TEAM,
+      rules: [...DEFAULT_TEAM.rules, new_rule]
+    }
+
+    const { getAllByRole, getByRole, getByText } = render(
+      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+    )
+
+    const [multipleSelect, selectRules] = getAllByRole('combobox')
+
+    expect(multipleSelect).toHaveClass('ant-select-selection--multiple')
+    getByText('Joueurs sanctionnés')
+
+    selectFirstOption(selectRules, getAllByRole)
+    selectFirstOption(selectRules, getAllByRole)
+
+    const singleSelect = getAllByRole('combobox')[0]
+    getByText('Joueur sanctionné')
+    expect(singleSelect).toHaveClass('ant-select-selection--single')
+  })
+
+  it('Shows ExtraInfoInput', () => {
+    const team: Team = {
+      ...DEFAULT_TEAM,
+      rules: [
+        {
+          ...DEFAULT_TEAM.rules[0],
+          kind: {
+            type: 'MULTIPLICATION',
+            price_to_multiply: 2.0
+          }
+        }
+      ]
     }
 
     const { queryByTestId, getAllByRole, getByTestId } = render(
@@ -92,9 +157,125 @@ describe('SanctionForm', () => {
     expect(getByTestId('extra-info-input')).toBeInTheDocument()
   })
 
-  it('Filters out rules with monthly kind', () => {
-    const team = DEFAULT_TEAM
+  it('Removes associated ExtraInfoInput when multiple rules are selected', async () => {
+    const new_rule_1: Rule = {
+      ...DEFAULT_TEAM.rules[0],
+      id: 'rule_id_2',
+      name: 'Rule 2',
+      kind: {
+        type: 'MULTIPLICATION',
+        price_to_multiply: 2.0
+      }
+    }
 
+    const new_rule_2: Rule = {
+      ...DEFAULT_TEAM.rules[0],
+      id: 'rule_id_3',
+      name: 'Rule 3',
+      kind: {
+        type: 'TIME_MULTIPLICATION',
+        price_per_time_unit: 2.0,
+        time_unit: 'MINUTE'
+      }
+    }
+
+    const team: Team = {
+      ...DEFAULT_TEAM,
+      rules: [...DEFAULT_TEAM.rules, new_rule_1, new_rule_2]
+    }
+
+    const { getAllByRole, queryAllByTestId, getAllByTestId, getByText } = render(
+      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+    )
+
+    const [selectUsers, selectRules] = getAllByRole('combobox')
+    selectFirstOption(selectUsers, getAllByRole)
+    selectFirstOption(selectRules, getAllByRole)
+    selectFirstOption(selectRules, getAllByRole)
+    selectFirstOption(selectRules, getAllByRole)
+
+    const deleteIcons = getAllByRole('presentation').map(rulePresentation =>
+      within(rulePresentation).getByLabelText('icon: close')
+    )
+
+    fireEvent.click(deleteIcons[0])
+    expect(getAllByTestId('extra-info-input')).toHaveLength(2)
+    getByText(`Détails (${team.rules[1].name})`)
+    getByText(`Détails (${team.rules[2].name})`)
+
+    fireEvent.click(deleteIcons[1])
+    expect(getAllByTestId('extra-info-input')).toHaveLength(1)
+    getByText('Détails supplémentaires')
+
+    fireEvent.click(deleteIcons[2])
+    expect(queryAllByTestId('extra-info-input')).toHaveLength(0)
+  })
+
+  it('Removes associated ExtraInfoInput when multiple users are selected', async () => {
+    const users = [DEFAULT_USER]
+
+    const new_user_1: User = {
+      ...DEFAULT_USER,
+      id: 'user_id_2',
+      nickname: 'User 2'
+    }
+
+    users.push(new_user_1)
+
+    const new_user_2: User = {
+      ...DEFAULT_USER,
+      id: 'user_id_3',
+      nickname: undefined
+    }
+
+    users.push(new_user_2)
+
+    const team: Team = {
+      ...DEFAULT_TEAM,
+      rules: [
+        {
+          ...DEFAULT_TEAM.rules[0],
+          kind: {
+            type: 'MULTIPLICATION',
+            price_to_multiply: 2.0
+          }
+        }
+      ]
+    }
+
+    const { getAllByRole, queryAllByTestId, getAllByTestId, getByText } = render(
+      <SanctionForm team={team} users={users} isAdmin createSanctions={jest.fn()} />
+    )
+
+    const [selectUsers, selectRules] = getAllByRole('combobox')
+    selectFirstOption(selectRules, getAllByRole)
+    selectFirstOption(selectUsers, getAllByRole)
+    selectFirstOption(selectUsers, getAllByRole)
+    selectFirstOption(selectUsers, getAllByRole)
+
+    const deleteIcons = getAllByRole('presentation').map(userPresentation =>
+      within(userPresentation).getByLabelText('icon: close')
+    )
+
+    expect(getAllByTestId('extra-info-input')).toHaveLength(3)
+    getByText(`Détails (${users[0].nickname})`)
+    getByText(`Détails (${users[1].nickname})`)
+    getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`)
+
+    fireEvent.click(deleteIcons[0])
+    expect(getAllByTestId('extra-info-input')).toHaveLength(2)
+    getByText(`Détails (${users[1].nickname})`)
+    getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`)
+
+    fireEvent.click(deleteIcons[1])
+    expect(getAllByTestId('extra-info-input')).toHaveLength(1)
+    getByText(`Détails supplémentaires`)
+
+    fireEvent.click(deleteIcons[2])
+    expect(queryAllByTestId('extra-info-input')).toHaveLength(0)
+  })
+
+  it('Filters out rules with monthly kind', () => {
     const new_rule: Rule = {
       id: 'rule_id_2',
       name: 'Monthly Rule',
@@ -103,21 +284,22 @@ describe('SanctionForm', () => {
       kind: { type: 'MONTHLY', price: 2 }
     }
 
-    team.rules.push(new_rule)
+    const team: Team = {
+      ...DEFAULT_TEAM,
+      rules: [...DEFAULT_TEAM.rules, new_rule]
+    }
 
-    const { getAllByRole, getByRole } = render(
+    const { getAllByRole } = render(
       <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
     )
 
     const selectRules = getAllByRole('combobox')[1]
 
-    expect(selectRules).toBeInTheDocument()
-
     fireEvent.click(selectRules)
 
-    // Return error if there are more than one option
-    const option = getByRole('option')
+    const options = getAllByRole('option')
 
-    expect(option).toHaveTextContent(team.rules[0].name)
+    expect(options).toHaveLength(1)
+    expect(options[0]).toHaveTextContent(team.rules[0].name)
   })
 })
