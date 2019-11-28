@@ -118,7 +118,7 @@ describe('SanctionForm', () => {
     const [multipleSelect, selectRules] = getAllByRole('combobox')
 
     expect(multipleSelect).toHaveClass('ant-select-selection--multiple')
-    getByText('Joueurs sanctionnés')
+    getByText('Joueur(s) sanctionné(s)')
 
     selectFirstOption(selectRules, getAllByRole)
     selectFirstOption(selectRules, getAllByRole)
