@@ -155,12 +155,12 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
   const getSuccessAlertText = (sanctions: Sanction[]): any => {
     return (
       <div>
-        {sanctions.map(sanction => {
+        {sanctions.map((sanction, i) => {
           const user = users.find(user => user.id === sanction.user_id)
 
           if (user) {
             return (
-              <div className={STYLES.messageText}>
+              <div className={STYLES.messageText} key={i}>
                 {user.firstname} {user.lastname} a payé {sanction.price} €
               </div>
             )

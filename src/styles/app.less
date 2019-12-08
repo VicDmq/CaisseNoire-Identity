@@ -24,6 +24,11 @@
 }
 
 // Override Select Style
+.ant-select-dropdown-menu-vertical {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
 .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
     color: @white;
     font-weight: 600;
@@ -31,6 +36,23 @@
 
 .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
     color: @white;
+}
+
+// Override MultiSelect Style
+.ant-select-selection--multiple {
+    .ant-select-selection__choice {
+        background-color: @select-item-active-bg;
+        color: @white;
+        border: none;
+
+        .ant-select-selection__choice__remove {
+            color: inherit
+        }
+    }
+}
+
+.ant-select-dropdown--multiple .ant-select-dropdown-menu-item i {
+    display: none;
 }
 
 // Override Message Style

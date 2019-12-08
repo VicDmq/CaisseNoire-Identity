@@ -48,7 +48,7 @@ const ExtraInfoInput = ({
         suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
         min={1}
         fullWidth
-        dataTestId='extra-info-input'
+        testId='extra-info-input'
       />
     )
   }

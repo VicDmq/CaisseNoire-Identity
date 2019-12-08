@@ -20,7 +20,7 @@ const SelectRules = ({
   isMultiple: boolean
 }) => {
   const commonProps: CommonSelectProps = {
-    label: 'Sanction à appliquer',
+    label: `Sanction${isMultiple ? '(s)' : ''} à appliquer`,
     options: rules
       .filter(rule => rule.kind.type !== 'MONTHLY')
       .map(rule => ({
