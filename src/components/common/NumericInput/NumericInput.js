@@ -14,7 +14,7 @@ type NumericInputProps = {
   fullWidth?: boolean,
   suffix?: string,
   min?: number,
-  dataTestId?: string
+  testId?: string
 }
 
 const Suffix = ({ suffix }: { suffix: string }) => {
@@ -31,7 +31,7 @@ const NumericInput = (props: NumericInputProps) => {
 
   return (
     <FormItem label={props.label}>
-      <div className={cx({ itemWithSuffix: props.suffix, fullWidth: props.fullWidth })} data-testid={props.dataTestId}>
+      <div className={cx({ itemWithSuffix: props.suffix, fullWidth: props.fullWidth })} test-id={props.testId}>
         <InputNumber
           min={props.min}
           value={props.value}

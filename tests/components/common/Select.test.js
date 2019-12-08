@@ -71,4 +71,27 @@ describe('MultiSelect', () => {
 
     expect(notSelectedOption).toBeVisible()
   })
+
+  it('Returns an empty array instead of undefined when input is cleared', () => {
+    const onChange = jest.fn()
+    const Component = (
+      <MultipleSelect label='Select' value={[DEFAULT_OPTIONS[0].value]} onChange={onChange} options={DEFAULT_OPTIONS} />
+    )
+
+    const { getByLabelText, rerender, debug } = render(Component)
+
+    const clearValueIcon = getByLabelText('icon: close')
+    fireEvent.click(clearValueIcon)
+
+    expect(onChange).toHaveBeenCalledWith([])
+    expect(onChange).toHaveBeenCalledTimes(1)
+
+    rerender(Component)
+
+    const clearAllValuesIcon = getByLabelText('icon: close-circle')
+    fireEvent.click(clearAllValuesIcon)
+
+    expect(onChange).toHaveBeenLastCalledWith([])
+    expect(onChange).toHaveBeenCalledTimes(2)
+  })
 })
