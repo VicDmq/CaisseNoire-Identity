@@ -1,9 +1,8 @@
 // @flow
 import React from 'react'
+import { DatePicker } from 'antd'
 
-import DatePicker from '@Components/common/DatePicker'
-
-const SelectDate = () => {
+const CustomDatePicker = () => {
   const onChange = (date, dateString) => {
     console.log(date, dateString)
   }
@@ -11,4 +10,4 @@ const SelectDate = () => {
   return <DatePicker onChange={onChange} />
 }
 
-export default SelectDate
+export default CustomDatePicker
