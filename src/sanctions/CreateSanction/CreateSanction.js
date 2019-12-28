@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
+import SelectDate from "./SelectDate"
 import SelectUsers from './SelectUsers'
 import SelectRules from './SelectRules'
 import ExtraInfoInputs from './ExtraInfoInputs'
@@ -225,6 +226,7 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
         updateSanction={updateSanction}
         usersComparedToRules={getUsersComparedToRules()}
       />
+      <SelectDate></SelectDate>
       <Row type='flex' justify='center'>
         <Button
           type='primary'
