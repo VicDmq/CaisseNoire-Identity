@@ -27,6 +27,7 @@ const CustomDatePicker = (props: DatePickerProps) => {
       <DatePicker
         value={value}
         onChange={onChange}
+        disabled={props.disabled}
         disabledDate={props.disableDates}
         className={STYLES.datePicker}
         showToday={false}
