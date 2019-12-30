@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import moment from 'moment'
+import moment, { type Moment } from 'moment'
 
 import DatePicker from '@Components/common/DatePicker/DatePicker'
 
@@ -9,8 +9,8 @@ const SelectDate = ({
   updateDate,
   disabled
 }: {
-  date: ?string,
-  updateDate: (?string) => void,
+  date: ?Moment,
+  updateDate: (?Moment) => void,
   disabled: boolean
 }) => {
   const disableDates = (date): boolean => {

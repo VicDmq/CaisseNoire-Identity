@@ -1,6 +1,7 @@
 // @flow
 import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
+import type { Moment } from 'moment'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
 import SelectDate from './SelectDate'
@@ -34,6 +35,8 @@ export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   SAME: 'SAME'
 }
 
+const API_DATE_FORMAT = 'YYYY-MM-DD'
+
 export const SanctionForm = ({
   team,
   users,
@@ -42,7 +45,7 @@ export const SanctionForm = ({
 }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
-  const [sanctionsDate, setSanctionsDate] = useState<?string>(undefined)
+  const [sanctionsDate, setSanctionsDate] = useState<?Moment>(undefined)
   const [state, setState] = useState<[User, Rule, CreateSanction][]>([])
   const [creatingSanctions, setCreatingSanctions] = useState<boolean>(false)
 
@@ -67,15 +70,11 @@ export const SanctionForm = ({
   }
 
   const getSanction = (user_id: Uuid, rule_id: Uuid): ?CreateSanction => {
-    let sanctionToReturn
+    const result = state.find(
+      ([user, rule, sanction]) => user_id === user.id && rule_id === rule.id
+    )
 
-    state.forEach(([user, rule, sanction]) => {
-      if (user_id === user.id && rule_id === rule.id) {
-        sanctionToReturn = sanction
-      }
-    })
-
-    return sanctionToReturn
+    return result ? result[2] : undefined
   }
 
   const getUsersComparedToRules = (): ComparisonResult => {
@@ -108,7 +107,9 @@ export const SanctionForm = ({
         associated_rule: rule.id,
         extra_info: initializeExtraInfo(rule)
       },
-      created_at: undefined
+      created_at: sanctionsDate
+        ? sanctionsDate.format(API_DATE_FORMAT)
+        : undefined
     }
   }
 
@@ -166,9 +167,12 @@ export const SanctionForm = ({
     setState(stateCopy)
   }
 
-  const updateSanctionsDate = (value: ?string) => {
+  const updateSanctionsDate = (value: ?Moment) => {
     let stateCopy = [...state]
-    stateCopy.forEach(element => (element[2].created_at = value))
+    stateCopy.forEach(
+      element =>
+        (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value)
+    )
 
     setState(stateCopy)
     setSanctionsDate(value)
