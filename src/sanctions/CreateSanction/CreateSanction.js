@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
-import SelectDate from "./SelectDate"
+import SelectDate from './SelectDate'
 import SelectUsers from './SelectUsers'
 import SelectRules from './SelectRules'
 import ExtraInfoInputs from './ExtraInfoInputs'
@@ -16,7 +16,11 @@ type DataProps = {
 }
 
 type OtherProps = {
-  createSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
+  createSanctions: (
+    CreateSanction[],
+    (Sanction[]) => void,
+    (Reason) => void
+  ) => void,
   isAdmin: boolean
 }
 
@@ -30,15 +34,22 @@ export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   SAME: 'SAME'
 }
 
-export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSanctionProps) => {
+export const SanctionForm = ({
+  team,
+  users,
+  createSanctions,
+  isAdmin
+}: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
+  const [sanctionsDate, setSanctionsDate] = useState<?string>(undefined)
   const [state, setState] = useState<[User, Rule, CreateSanction][]>([])
   const [creatingSanctions, setCreatingSanctions] = useState<boolean>(false)
 
   const resetForm = () => {
     setSelectedUsers([])
     setSelectedRules([])
+    setSanctionsDate(undefined)
     setState([])
     setCreatingSanctions(false)
   }
@@ -96,7 +107,8 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
       sanction_info: {
         associated_rule: rule.id,
         extra_info: initializeExtraInfo(rule)
-      }
+      },
+      created_at: undefined
     }
   }
 
@@ -126,7 +138,8 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
       }
 
       if (user && rule) {
-        const sanction = getSanction(user.id, rule.id) || initializeSanction(user, rule)
+        const sanction =
+          getSanction(user.id, rule.id) || initializeSanction(user, rule)
         newState.push([user, rule, sanction])
       }
     }
@@ -151,6 +164,14 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
     stateCopy[index][2].sanction_info.extra_info = extraInfo
 
     setState(stateCopy)
+  }
+
+  const updateSanctionsDate = (value: ?string) => {
+    let stateCopy = [...state]
+    stateCopy.forEach(element => (element[2].created_at = value))
+
+    setState(stateCopy)
+    setSanctionsDate(value)
   }
 
   const getSuccessAlertText = (sanctions: Sanction[]): any => {
@@ -226,7 +247,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
         updateSanction={updateSanction}
         usersComparedToRules={getUsersComparedToRules()}
       />
-      <SelectDate></SelectDate>
+      <SelectDate
+        date={sanctionsDate}
+        updateDate={updateSanctionsDate}
+        disabled={!isAdmin}
+      />
       <Row type='flex' justify='center'>
         <Button
           type='primary'

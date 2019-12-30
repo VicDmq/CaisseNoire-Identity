@@ -32,7 +32,11 @@ declare type Rule = {
 
 declare type RuleCategory = 'TRAINING_DAY' | 'GAME_DAY'
 
-declare type RuleKind = BasicKind | MultiplicationKind | TimeMultiplicationKind | MonthlyKind
+declare type RuleKind =
+  | BasicKind
+  | MultiplicationKind
+  | TimeMultiplicationKind
+  | MonthlyKind
 
 declare type BasicKind = {
   type: 'BASIC',
@@ -55,7 +59,14 @@ declare type MonthlyKind = {
   price: number
 }
 
-declare type TimeUnit = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'YEAR'
+declare type TimeUnit =
+  | 'SECOND'
+  | 'MINUTE'
+  | 'HOUR'
+  | 'DAY'
+  | 'WEEK'
+  | 'MONTH'
+  | 'YEAR'
 
 declare type User = {
   id: Uuid,
@@ -77,7 +88,8 @@ declare type Sanction = {
 
 declare type CreateSanction = {
   user_id: Uuid,
-  sanction_info: SanctionInfo
+  sanction_info: SanctionInfo,
+  created_at: ?CustomDate
 }
 
 declare type SanctionInfo = {
