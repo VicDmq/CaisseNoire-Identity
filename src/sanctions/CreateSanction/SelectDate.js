@@ -24,6 +24,7 @@ const SelectDate = ({
       onChange={updateDate}
       disableDates={disableDates}
       disabled={disabled}
+      testId={'date-input'}
     />
   )
 }
