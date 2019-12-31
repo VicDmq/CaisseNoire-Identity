@@ -65,8 +65,7 @@
 }
 
 // Override DatePicker Style
-.ant-calendar-selected-day:not(.ant-calendar-selected-date):not(.ant-calendar-disabled-cell)
-  .ant-calendar-date {
+.ant-calendar-selected-day:not(.ant-calendar-selected-date):not(.ant-calendar-disabled-cell) .ant-calendar-date {
   background-color: @white;
 }
 
@@ -74,11 +73,12 @@
   color: @white;
 }
 
-td:not(.ant-calendar-disabled-cell) .ant-calendar-date:hover {
-  color: @white;
+td:not(.ant-calendar-disabled-cell):not(.ant-calendar-last-month-cell):not(.ant-calendar-next-month-btn-day) {
+  .ant-calendar-date:hover {
+    color: @white;
+  }
 }
 
-.ant-calendar-disabled-cell.ant-calendar-selected-day
-  .ant-calendar-date::before {
+.ant-calendar-disabled-cell.ant-calendar-selected-day .ant-calendar-date::before {
   content: none;
 }
