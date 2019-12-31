@@ -4,7 +4,7 @@ import { Row, Form, message, Button } from 'antd'
 import type { Moment } from 'moment'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
-import SelectDate from './SelectDate'
+import DateInput from './DateInput'
 import SelectUsers from './SelectUsers'
 import SelectRules from './SelectRules'
 import ExtraInfoInputs from './ExtraInfoInputs'
@@ -251,7 +251,7 @@ export const SanctionForm = ({
         updateSanction={updateSanction}
         usersComparedToRules={getUsersComparedToRules()}
       />
-      <SelectDate
+      <DateInput
         date={sanctionsDate}
         updateDate={updateSanctionsDate}
         disabled={!isAdmin}

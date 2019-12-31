@@ -4,7 +4,7 @@ import moment, { type Moment } from 'moment'
 
 import DatePicker from '@Components/common/DatePicker/DatePicker'
 
-const SelectDate = ({
+const DateInput = ({
   date,
   updateDate,
   disabled
@@ -29,4 +29,4 @@ const SelectDate = ({
   )
 }
 
-export default SelectDate
+export default DateInput
