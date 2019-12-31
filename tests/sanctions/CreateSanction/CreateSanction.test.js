@@ -4,16 +4,19 @@ import {
   render,
   fireEvent,
   type AllByBoundAttribute,
-  waitForElement,
   within,
-  prettyDOM
+  waitForElementToBeRemoved
 } from '@testing-library/react'
+import moment from 'moment'
 
 import { SanctionForm } from '@Sanctions/CreateSanction/CreateSanction'
 
 import { DEFAULT_TEAM, DEFAULT_USER } from '../../utils/default'
 
-const selectFirstOption = (select: HTMLElement, getAllByRole: AllByBoundAttribute) => {
+const selectFirstOption = (
+  select: HTMLElement,
+  getAllByRole: AllByBoundAttribute
+) => {
   fireEvent.click(select)
 
   const firstOption = getAllByRole('option')[0]
@@ -26,10 +29,17 @@ describe('SanctionForm', () => {
 
   it('Disables fields when not admin', () => {
     const { getAllByRole } = render(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin={false} createSanctions={jest.fn()} />
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={[DEFAULT_USER]}
+        isAdmin={false}
+        createSanctions={jest.fn()}
+      />
     )
 
-    const fields = getAllByRole((content, element) => element.tagName.toLowerCase() === 'input')
+    const fields = getAllByRole(
+      (content, element) => element.tagName.toLowerCase() === 'input'
+    )
 
     fields.forEach(field => {
       expect(field).toBeDisabled()
@@ -38,19 +48,31 @@ describe('SanctionForm', () => {
 
   it('Enables fields when admin', () => {
     const { getAllByRole } = render(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
-    const fields = getAllByRole((content, element) => element.tagName.toLowerCase() === 'input')
+    const fields = getAllByRole(
+      (content, element) => element.tagName.toLowerCase() === 'input'
+    )
 
     fields.forEach(field => {
       expect(field).toBeEnabled()
     })
   })
 
-  it('Disables save button when fields are empty', () => {
+  it('Disables save button when required fields are empty', () => {
     const { getByRole } = render(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const saveButton = getByRole('button')
@@ -58,9 +80,14 @@ describe('SanctionForm', () => {
     expect(saveButton).toBeDisabled()
   })
 
-  it('Enables save button when fields are filled', () => {
+  it('Enables save button when required fields are filled', () => {
     const { getAllByRole, getByRole } = render(
-      <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const saveButton = getByRole('button')
@@ -85,7 +112,12 @@ describe('SanctionForm', () => {
     users.push(new_user)
 
     const { getAllByRole, getByRole, getByText } = render(
-      <SanctionForm team={DEFAULT_TEAM} users={users} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={users}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const [selectUsers, multipleSelect] = getAllByRole('combobox')
@@ -112,7 +144,12 @@ describe('SanctionForm', () => {
     }
 
     const { getAllByRole, getByRole, getByText } = render(
-      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={team}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const [multipleSelect, selectRules] = getAllByRole('combobox')
@@ -143,7 +180,12 @@ describe('SanctionForm', () => {
     }
 
     const { queryByTestId, getAllByRole, getByTestId } = render(
-      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={team}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     expect(queryByTestId('extra-info-input')).not.toBeInTheDocument()
@@ -184,8 +226,18 @@ describe('SanctionForm', () => {
       rules: [...DEFAULT_TEAM.rules, new_rule_1, new_rule_2]
     }
 
-    const { getAllByRole, queryAllByTestId, getAllByTestId, getByText } = render(
-      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+    const {
+      getAllByRole,
+      queryAllByTestId,
+      getAllByTestId,
+      getByText
+    } = render(
+      <SanctionForm
+        team={team}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const [selectUsers, selectRules] = getAllByRole('combobox')
@@ -243,8 +295,18 @@ describe('SanctionForm', () => {
       ]
     }
 
-    const { getAllByRole, queryAllByTestId, getAllByTestId, getByText } = render(
-      <SanctionForm team={team} users={users} isAdmin createSanctions={jest.fn()} />
+    const {
+      getAllByRole,
+      queryAllByTestId,
+      getAllByTestId,
+      getByText
+    } = render(
+      <SanctionForm
+        team={team}
+        users={users}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const [selectUsers, selectRules] = getAllByRole('combobox')
@@ -290,7 +352,12 @@ describe('SanctionForm', () => {
     }
 
     const { getAllByRole } = render(
-      <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />
+      <SanctionForm
+        team={team}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={jest.fn()}
+      />
     )
 
     const selectRules = getAllByRole('combobox')[1]
@@ -301,5 +368,81 @@ describe('SanctionForm', () => {
 
     expect(options).toHaveLength(1)
     expect(options[0]).toHaveTextContent(team.rules[0].name)
+  })
+
+  it('Sends sanctions without date if none has been selected', () => {
+    const createSanctionsMock = jest.fn()
+
+    const { getAllByRole, getByRole } = render(
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={createSanctionsMock}
+      />
+    )
+
+    const [selectUsers, selectRules] = getAllByRole('combobox')
+
+    selectFirstOption(selectUsers, getAllByRole)
+
+    selectFirstOption(selectRules, getAllByRole)
+
+    const saveButton = getByRole('button')
+
+    fireEvent.click(saveButton)
+
+    expect(createSanctionsMock).toHaveBeenCalled()
+    expect(createSanctionsMock.mock.calls[0][0][0]['created_at']).toBe(
+      undefined
+    )
+  })
+
+  it('Sends sanctions without date if none has been selected', async () => {
+    const createSanctionsMock = jest.fn()
+
+    const {
+      getAllByRole,
+      getByRole,
+      getByTestId,
+      getByPlaceholderText,
+      getByText
+    } = render(
+      <SanctionForm
+        team={DEFAULT_TEAM}
+        users={[DEFAULT_USER]}
+        isAdmin
+        createSanctions={createSanctionsMock}
+      />
+    )
+
+    const [selectUsers, selectRules] = getAllByRole('combobox')
+
+    selectFirstOption(selectUsers, getAllByRole)
+
+    selectFirstOption(selectRules, getAllByRole)
+
+    const dateInput = within(getByTestId('date-input')).getByRole(
+      (content, element) => element.tagName.toLowerCase() === 'input'
+    )
+
+    fireEvent.click(dateInput)
+
+    const dateCell = getAllByRole('gridcell')[0]
+
+    fireEvent.click(dateCell)
+
+    const date = moment(dateInput.value, 'dddd D MMMM')
+
+    await waitForElementToBeRemoved(() => getAllByRole('gridcell'))
+
+    const saveButton = getByRole('button')
+
+    fireEvent.click(saveButton)
+
+    expect(createSanctionsMock).toHaveBeenCalled()
+    expect(createSanctionsMock.mock.calls[0][0][0]['created_at']).toBe(
+      date.format('YYYY-MM-DD')
+    )
   })
 })
