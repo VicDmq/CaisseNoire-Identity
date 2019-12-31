@@ -1,8 +1,10 @@
 // @flow
 import React, { useState } from 'react'
 import { Row, Form, message, Button } from 'antd'
+import type { Moment } from 'moment'
 
 import withConnect, { type Reason } from '@Components/utils/Connect'
+import DateInput from './DateInput'
 import SelectUsers from './SelectUsers'
 import SelectRules from './SelectRules'
 import ExtraInfoInputs from './ExtraInfoInputs'
@@ -15,7 +17,11 @@ type DataProps = {
 }
 
 type OtherProps = {
-  createSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
+  createSanctions: (
+    CreateSanction[],
+    (Sanction[]) => void,
+    (Reason) => void
+  ) => void,
   isAdmin: boolean
 }
 
@@ -29,15 +35,24 @@ export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   SAME: 'SAME'
 }
 
-export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSanctionProps) => {
+const API_DATE_FORMAT = 'YYYY-MM-DD'
+
+export const SanctionForm = ({
+  team,
+  users,
+  createSanctions,
+  isAdmin
+}: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([])
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([])
+  const [sanctionsDate, setSanctionsDate] = useState<?Moment>(undefined)
   const [state, setState] = useState<[User, Rule, CreateSanction][]>([])
   const [creatingSanctions, setCreatingSanctions] = useState<boolean>(false)
 
   const resetForm = () => {
     setSelectedUsers([])
     setSelectedRules([])
+    setSanctionsDate(undefined)
     setState([])
     setCreatingSanctions(false)
   }
@@ -55,15 +70,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
   }
 
   const getSanction = (user_id: Uuid, rule_id: Uuid): ?CreateSanction => {
-    let sanctionToReturn
+    const result = state.find(
+      ([user, rule, sanction]) => user_id === user.id && rule_id === rule.id
+    )
 
-    state.forEach(([user, rule, sanction]) => {
-      if (user_id === user.id && rule_id === rule.id) {
-        sanctionToReturn = sanction
-      }
-    })
-
-    return sanctionToReturn
+    return result ? result[2] : undefined
   }
 
   const getUsersComparedToRules = (): ComparisonResult => {
@@ -95,7 +106,10 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
       sanction_info: {
         associated_rule: rule.id,
         extra_info: initializeExtraInfo(rule)
-      }
+      },
+      created_at: sanctionsDate
+        ? sanctionsDate.format(API_DATE_FORMAT)
+        : undefined
     }
   }
 
@@ -125,7 +139,8 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
       }
 
       if (user && rule) {
-        const sanction = getSanction(user.id, rule.id) || initializeSanction(user, rule)
+        const sanction =
+          getSanction(user.id, rule.id) || initializeSanction(user, rule)
         newState.push([user, rule, sanction])
       }
     }
@@ -150,6 +165,17 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
     stateCopy[index][2].sanction_info.extra_info = extraInfo
 
     setState(stateCopy)
+  }
+
+  const updateSanctionsDate = (value: ?Moment) => {
+    let stateCopy = [...state]
+    stateCopy.forEach(
+      element =>
+        (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value)
+    )
+
+    setState(stateCopy)
+    setSanctionsDate(value)
   }
 
   const getSuccessAlertText = (sanctions: Sanction[]): any => {
@@ -224,6 +250,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
         formState={state}
         updateSanction={updateSanction}
         usersComparedToRules={getUsersComparedToRules()}
+      />
+      <DateInput
+        date={sanctionsDate}
+        updateDate={updateSanctionsDate}
+        disabled={!isAdmin}
       />
       <Row type='flex' justify='center'>
         <Button

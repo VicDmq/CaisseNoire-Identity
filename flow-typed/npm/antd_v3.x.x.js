@@ -4,9 +4,19 @@
 declare module 'antd' {
   import type { Node, Component } from 'react'
 
-  declare type ModalReference = { destroy: () => void, update: (args: modalFnArguments) => void, ... }
+  declare export class ConfigProvider extends React$Component<{}> {}
 
-  declare type messageFn<TReturn> = (content: React$Node, duration?: number, onClose?: () => mixed) => TReturn
+  declare type ModalReference = {
+    destroy: () => void,
+    update: (args: modalFnArguments) => void,
+    ...
+  }
+
+  declare type messageFn<TReturn> = (
+    content: React$Node,
+    duration?: number,
+    onClose?: () => mixed
+  ) => TReturn
 
   declare type modalFnArguments = {
     title?: string,
@@ -57,7 +67,9 @@ declare module 'antd' {
     ...
   }
 
-  declare export class AutoComplete<T = SelectValue> extends React$Component<AutoCompleteProps<T>> {
+  declare export class AutoComplete<T = SelectValue> extends React$Component<
+    AutoCompleteProps<T>
+  > {
     static Option: typeof SelectOption;
     static OptGroup: typeof SelectOptGroup;
   }
@@ -203,7 +215,13 @@ declare module 'antd' {
     required?: boolean,
     transform?: (value: mixed) => mixed,
     type?: string,
-    validator?: (rule: mixed, value: mixed, callback: mixed, source?: mixed, options?: mixed) => mixed,
+    validator?: (
+      rule: mixed,
+      value: mixed,
+      callback: mixed,
+      source?: mixed,
+      options?: mixed
+    ) => mixed,
     whitespace?: boolean,
     ...
   }
@@ -222,7 +240,10 @@ declare module 'antd' {
   }
 
   declare export type WrappedFormUtils = {
-    getFieldDecorator(id: string, options?: GetFieldDecoratorOptions): (node: React$Node) => React$Node,
+    getFieldDecorator(
+      id: string,
+      options?: GetFieldDecoratorOptions
+    ): (node: React$Node) => React$Node,
     getFieldError(name: string): mixed[],
     getFieldsError(names?: Array<string>): mixed,
     getFieldsValue(fieldNames?: Array<string>): mixed,
@@ -234,13 +255,30 @@ declare module 'antd' {
     setFields(obj: Object): void,
     setFieldsValue(obj: Object): void,
     validateFields(callback: ValidateCallback): mixed,
-    validateFields(fieldNames: Array<string>, callback: ValidateCallback): mixed,
-    validateFields(fieldNames: Array<string>, options: Object, callback: ValidateCallback): mixed,
+    validateFields(
+      fieldNames: Array<string>,
+      callback: ValidateCallback
+    ): mixed,
+    validateFields(
+      fieldNames: Array<string>,
+      options: Object,
+      callback: ValidateCallback
+    ): mixed,
     validateFields(options: Object, callback: ValidateCallback): mixed,
-    validateFieldsAndScroll(fieldNames?: Array<string>, options?: Object, callback?: ValidateCallback): void,
+    validateFieldsAndScroll(
+      fieldNames?: Array<string>,
+      options?: Object,
+      callback?: ValidateCallback
+    ): void,
     validateFieldsAndScroll(callback?: ValidateCallback): void,
-    validateFieldsAndScroll(fieldNames?: Array<string>, callback?: ValidateCallback): void,
-    validateFieldsAndScroll(options?: Object, callback?: ValidateCallback): void,
+    validateFieldsAndScroll(
+      fieldNames?: Array<string>,
+      callback?: ValidateCallback
+    ): void,
+    validateFieldsAndScroll(
+      options?: Object,
+      callback?: ValidateCallback
+    ): void,
     ...
   }
 
@@ -401,7 +439,11 @@ declare module 'antd' {
     defaultCurrent?: number,
     defaultPageSize?: number,
     hideOnSinglePage?: boolean,
-    itemRender?: (page: number, type: 'page' | 'prev' | 'next', originalElement: React$Node) => React$Node,
+    itemRender?: (
+      page: number,
+      type: 'page' | 'prev' | 'next',
+      originalElement: React$Node
+    ) => React$Node,
     pageSize?: number,
     pageSizeOptions?: string[],
     showQuickJumper?: boolean,
@@ -535,7 +577,9 @@ declare module 'antd' {
     ...
   }
 
-  declare export class Select<T = SelectValue> extends React$Component<SelectProps<T>> {
+  declare export class Select<T = SelectValue> extends React$Component<
+    SelectProps<T>
+  > {
     static Option: typeof SelectOption;
     static OptGroup: typeof SelectOptGroup;
     blur: () => void;
@@ -616,7 +660,10 @@ declare module 'antd' {
 
   declare export class Tag extends React$Component<{ ... }> {}
 
-  declare export type TooltipProps = { title: React$Node | (() => React$Node), ... } & TooltipSharedProps
+  declare export type TooltipProps = {
+    title: React$Node | (() => React$Node),
+    ...
+  } & TooltipSharedProps
 
   declare export class Tooltip extends React$Component<TooltipProps> {}
 
@@ -632,7 +679,11 @@ declare module 'antd' {
 
   declare export class UploadDragger extends React$Component<{ ... }> {}
 
-  declare export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight'
+  declare export type NotificationPlacement =
+    | 'topLeft'
+    | 'topRight'
+    | 'bottomLeft'
+    | 'bottomRight'
 
   declare export type NotificationConfigProps = {
     top?: number,

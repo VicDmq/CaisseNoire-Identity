@@ -15,30 +15,38 @@ type LabelProps = {
 
 const Label = (props: LabelProps) => {
   const cx = classNames.bind(STYLES)
-  return <span className={cx({ labelError: props.error, labelDisabled: props.disabled })}>{props.label}</span>
+  return (
+    <span
+      className={cx({ labelError: props.error, labelDisabled: props.disabled })}
+    >
+      {props.label}
+    </span>
+  )
 }
 
 type FormItemProps = {
   label: string,
+  children: Node,
   error?: boolean,
   reason?: string,
-  children: Node,
   disabled?: boolean
 }
 
 const FormItem = (props: FormItemProps) => {
-  const getFormItemProps = () => {
-    return props.error
-      ? {
-        validateStatus: 'error',
-        help: props.reason
-      }
-      : {}
-  }
+  const formItemProps = props.error
+    ? { validateStatus: 'error', help: props.reason }
+    : {}
+
   return (
     <Item
-      label={<Label label={props.label} error={props.error} disabled={props.disabled} />}
-      {...getFormItemProps()}
+      label={
+        <Label
+          label={props.label}
+          error={props.error}
+          disabled={props.disabled}
+        />
+      }
+      {...formItemProps}
       hasFeedback
     >
       {props.children}
