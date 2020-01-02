@@ -20,7 +20,7 @@ const SelectUsers = ({
 }) => {
   const commonProps: CommonSelectProps = {
     label: `Joueur${isMultiple ? '(s)' : ''} sanctionné${isMultiple ? '(s)' : ''}`,
-    options: users.map(user => ({
+    options: users.map((user) => ({
       value: user.id,
       label: user.firstname + ' ' + user.lastname,
     })),
@@ -33,7 +33,7 @@ const SelectUsers = ({
   ) : (
     <SingleSelect
       value={selectedUsers[0] || undefined}
-      onChange={user => updateSelectedUsers(user ? [user] : [])}
+      onChange={(user) => updateSelectedUsers(user ? [user] : [])}
       {...commonProps}
     />
   );

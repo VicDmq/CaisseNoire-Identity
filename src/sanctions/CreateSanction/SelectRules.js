@@ -22,8 +22,8 @@ const SelectRules = ({
   const commonProps: CommonSelectProps = {
     label: `Sanction${isMultiple ? '(s)' : ''} à appliquer`,
     options: rules
-      .filter(rule => rule.kind.type !== 'MONTHLY')
-      .map(rule => ({
+      .filter((rule) => rule.kind.type !== 'MONTHLY')
+      .map((rule) => ({
         value: rule.id,
         label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
       })),
@@ -36,7 +36,7 @@ const SelectRules = ({
   ) : (
     <SingleSelect
       value={selectedRules[0] || undefined}
-      onChange={rule => updateSelectedRules(rule ? [rule] : [])}
+      onChange={(rule) => updateSelectedRules(rule ? [rule] : [])}
       {...commonProps}
     />
   );

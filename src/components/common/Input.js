@@ -7,7 +7,7 @@ import FormItem from './FormItem/FormItem';
 type InputProps = {
   label: string,
   value: string,
-  onChange: string => void,
+  onChange: (string) => void,
   disabled?: boolean,
   password?: boolean,
   testId?: string,

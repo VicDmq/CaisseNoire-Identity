@@ -35,15 +35,15 @@ const Sanctions = ({
       <TabPane
         tab={
           <span>
-            <Icon type="plus-circle" theme="filled" />
+            <Icon type='plus-circle' theme='filled' />
             Créer
           </span>
         }
-        key="1"
+        key='1'
       >
         <Row>
           <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
-            <Row type="flex" justify="center" align="middle" className={STYLES.formContainer}>
+            <Row type='flex' justify='center' align='middle' className={STYLES.formContainer}>
               <CreateSanctionForm
                 response={PromiseState.all([teamFetch, usersFetch])}
                 mapResponseToProps={([team, users]) => ({
@@ -60,15 +60,15 @@ const Sanctions = ({
       <TabPane
         tab={
           <span>
-            <Icon type="unordered-list" />
+            <Icon type='unordered-list' />
             Liste
           </span>
         }
-        key="2"
+        key='2'
       >
         <Row>
           <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
-            <Row type="flex" justify="center" align="middle">
+            <Row type='flex' justify='center' align='middle'>
               <SanctionList
                 response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch || { refreshing: true }])}
                 mapResponseToProps={([team, users, sanctions]) => ({
@@ -98,14 +98,14 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
         sanctionsFetch: sanctionsUrl,
       }),
     },
-    postSanctions: (sanctions: CreateSanction[], cb: (Sanction[]) => void, errCb: Reason => void) => ({
+    postSanctions: (sanctions: CreateSanction[], cb: (Sanction[]) => void, errCb: (Reason) => void) => ({
       createdSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions`,
         method: 'POST',
         force: true,
         body: JSON.stringify(sanctions),
-        then: sanctions => cb(sanctions),
-        catch: reason => errCb(reason),
+        then: (sanctions) => cb(sanctions),
+        catch: (reason) => errCb(reason),
         andThen: () => ({
           sanctionsFetch: {
             url: sanctionsUrl,
@@ -120,7 +120,7 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
         url: `${rootUrl}/teams/${teamId}/sanctions/${sanction_id}`,
         method: 'DELETE',
         then: () => cb(),
-        catch: reason => errCb(),
+        catch: (reason) => errCb(),
         andThen: () => ({
           sanctionsFetch: {
             url: sanctionsUrl,

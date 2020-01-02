@@ -17,7 +17,7 @@ const ExtraInfoInput = ({
   user: User,
   rule: Rule,
   extraInfo: ExtraInfo,
-  updateExtraInfo: ExtraInfo => void,
+  updateExtraInfo: (ExtraInfo) => void,
   usersComparedToRules: ComparisonResult,
 }) => {
   if (extraInfo.type === 'MULTIPLICATION') {
@@ -39,7 +39,7 @@ const ExtraInfoInput = ({
       <NumericInput
         label={label}
         value={extraInfo.factor}
-        onChange={factor =>
+        onChange={(factor) =>
           updateExtraInfo({
             type: 'MULTIPLICATION',
             factor,
@@ -48,7 +48,7 @@ const ExtraInfoInput = ({
         suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
         min={1}
         fullWidth
-        testId="extra-info-input"
+        testId='extra-info-input'
       />
     );
   }
@@ -71,7 +71,7 @@ const ExtraInfoInputs = ({
       user={user}
       rule={rule}
       extraInfo={sanction.sanction_info.extra_info}
-      updateExtraInfo={extraInfo => updateSanction(i, extraInfo)}
+      updateExtraInfo={(extraInfo) => updateSanction(i, extraInfo)}
       usersComparedToRules={usersComparedToRules}
     />
   )): Element<typeof ExtraInfoInput>[]);

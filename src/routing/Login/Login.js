@@ -16,7 +16,7 @@ const Login = (props: LoginProps) => {
   const history = useHistory();
 
   const tryToLogIn = (credentials: LoginRequest) => {
-    props.login(credentials, response => onSuccess(response));
+    props.login(credentials, (response) => onSuccess(response));
   };
 
   const onSuccess = (response: LoginResponse) => {
@@ -30,13 +30,13 @@ const Login = (props: LoginProps) => {
 
 export default connect(({ rootUrl }: { rootUrl: string }) => {
   return {
-    login: (request: LoginRequest, cb: LoginResponse => void) => ({
+    login: (request: LoginRequest, cb: (LoginResponse) => void) => ({
       loginResponse: {
         url: `${rootUrl}/login`,
         method: 'POST',
         force: true,
         body: JSON.stringify(request),
-        then: response => cb(response),
+        then: (response) => cb(response),
       },
     }),
   };

@@ -60,12 +60,12 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
       .sort((item1, item2) => {
         return new Date(item2.created_at) - new Date(item1.created_at);
       })
-      .forEach(sanction => {
-        const user = users.find(user => user.id === sanction.user_id);
+      .forEach((sanction) => {
+        const user = users.find((user) => user.id === sanction.user_id);
 
         if (user) {
           props.push({
-            rule: team.rules.find(rule => rule.id === sanction.sanction_info.associated_rule),
+            rule: team.rules.find((rule) => rule.id === sanction.sanction_info.associated_rule),
             user,
             sanction,
             showDeleteConfirm,
@@ -78,7 +78,11 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
   };
 
   return (
-    <List dataSource={getDataSource()} renderItem={props => <SanctionListItem {...props} />} className={STYLES.list} />
+    <List
+      dataSource={getDataSource()}
+      renderItem={(props) => <SanctionListItem {...props} />}
+      className={STYLES.list}
+    />
   );
 };
 

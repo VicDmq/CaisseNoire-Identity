@@ -24,13 +24,13 @@ const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
   return (
     <Header className={STYLES.header}>
       <div className={STYLES.title}>Caisse Noire</div>
-      <Divider className={STYLES.divider} type="vertical" />
-      <Menu mode="horizontal" selectedKeys={selectedKey} onSelect={selectItem}>
-        <Item key="sanction">
-          <Link to="/sanctions">Sanctions</Link>
+      <Divider className={STYLES.divider} type='vertical' />
+      <Menu mode='horizontal' selectedKeys={selectedKey} onSelect={selectItem}>
+        <Item key='sanction'>
+          <Link to='/sanctions'>Sanctions</Link>
         </Item>
       </Menu>
-      <Button type="primary" className={STYLES.logoutButton} icon="logout" onClick={signOut} />
+      <Button type='primary' className={STYLES.logoutButton} icon='logout' onClick={signOut} />
     </Header>
   );
 };

@@ -36,7 +36,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
     return false;
   };
 
-  const shouldBeHidden = option => {
+  const shouldBeHidden = (option) => {
     if (
       (Array.isArray(props.value) && props.value.includes(option.value)) ||
       (props.value && props.value === option.value)
@@ -65,7 +65,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
         allowClear
         showSearch
         filterOption
-        optionFilterProp="children"
+        optionFilterProp='children'
       >
         {mapOptions()}
       </Select>

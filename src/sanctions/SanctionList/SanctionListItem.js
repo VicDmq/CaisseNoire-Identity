@@ -10,7 +10,7 @@ export type ListItemProps = {
   rule: ?Rule,
   user: User,
   sanction: Sanction,
-  showDeleteConfirm: Uuid => void,
+  showDeleteConfirm: (Uuid) => void,
   isAdmin: boolean,
 };
 
@@ -18,12 +18,12 @@ export const SanctionListItem = (props: ListItemProps) => {
   const [isExtended, setisExtended] = useState<boolean>(false);
 
   return (
-    <div className={STYLES.listItemContainer} test-id="sanction-list-item">
+    <div className={STYLES.listItemContainer} test-id='sanction-list-item'>
       <div className={isExtended ? STYLES.listItemExtended : STYLES.listItem}>
         <Icon
-          test-id="expand-icon"
+          test-id='expand-icon'
           className={STYLES.expandIcon}
-          theme="filled"
+          theme='filled'
           type={isExtended ? 'down-circle' : 'right-circle'}
           onClick={() => setisExtended(!isExtended)}
         />
@@ -42,14 +42,14 @@ export const SanctionListItem = (props: ListItemProps) => {
           <Button
             className={STYLES.deleteButton}
             disabled={!props.isAdmin}
-            type="danger"
+            type='danger'
             onClick={() => props.showDeleteConfirm(props.sanction.id)}
           >
-            <Icon theme="filled" type="delete" />
+            <Icon theme='filled' type='delete' />
           </Button>
         </div>
       </div>
-      <div test-id="extraDescription" className={isExtended ? STYLES.extended : STYLES.collapsed}>
+      <div test-id='extraDescription' className={isExtended ? STYLES.extended : STYLES.collapsed}>
         <div className={STYLES.categoryAndDate}>
           {props.rule ? (
             <div className={STYLES.categoryTag}>

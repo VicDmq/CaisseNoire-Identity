@@ -11,7 +11,7 @@ type DatePickerProps = {
   label: string,
   value: ?Moment,
   onChange: (?Moment) => void,
-  disableDates?: any => boolean,
+  disableDates?: (any) => boolean,
   disabled?: boolean,
   testId?: string,
 };

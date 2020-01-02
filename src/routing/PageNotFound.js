@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
   return (
-    <Row type="flex" align="middle" justify="center" style={{ height: '100%' }}>
+    <Row type='flex' align='middle' justify='center' style={{ height: '100%' }}>
       <Result
-        status="warning"
+        status='warning'
         title="Cette page n'existe pas"
-        subTitle="Cliquez sur le bouton ci-dessous pour être redirigé"
+        subTitle='Cliquez sur le bouton ci-dessous pour être redirigé'
         extra={
-          <Link to="/sanctions">
-            <Button type="primary" icon="home" size="large" shape="circle" />
+          <Link to='/sanctions'>
+            <Button type='primary' icon='home' size='large' shape='circle' />
           </Link>
         }
       />

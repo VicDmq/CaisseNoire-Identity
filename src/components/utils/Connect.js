@@ -33,8 +33,8 @@ const withConnect = <Props, OtherProps>(
     if (response.rejected) {
       return (
         <Result
-          status="error"
-          title="Échec du chargement"
+          status='error'
+          title='Échec du chargement'
           subTitle="Une erreur s'est produite pendant le chargement des données"
         />
       );

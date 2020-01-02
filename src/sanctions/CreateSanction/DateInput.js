@@ -19,7 +19,7 @@ const DateInput = ({
 
   return (
     <DatePicker
-      label="Date"
+      label='Date'
       value={date}
       onChange={updateDate}
       disableDates={disableDates}

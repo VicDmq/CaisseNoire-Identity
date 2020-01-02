@@ -8,7 +8,7 @@ import type { Response, Reason } from '@Components/utils/Connect';
 import STYLES from './styles.less';
 
 type LoginFormProps = {
-  signIn: LoginRequest => void,
+  signIn: (LoginRequest) => void,
   response: ?Response<LoginResponse>,
 };
 
@@ -69,45 +69,45 @@ const LoginForm = (props: LoginFormProps) => {
     loading || state.credentials.name === '' || (state.adminMode && !state.credentials.admin_password);
 
   return (
-    <Row type="flex" justify="center" align="middle" className={STYLES.row}>
+    <Row type='flex' justify='center' align='middle' className={STYLES.row}>
       <Col xs={{ span: 18 }} lg={{ span: 8 }} className={STYLES.formContainer}>
         <Form colon={false}>
           <Input
             label="Nom de l'équipe"
             value={state.credentials.name}
-            onChange={value =>
+            onChange={(value) =>
               updateCredentials({
                 ...state.credentials,
                 name: value,
               })
             }
-            testId="team-name-input"
+            testId='team-name-input'
           />
           <Input
-            label="Mot de passe"
+            label='Mot de passe'
             disabled={!state.adminMode}
             value={state.credentials.admin_password}
-            onChange={value =>
+            onChange={(value) =>
               updateCredentials({
                 ...state.credentials,
                 admin_password: value === '' ? undefined : value,
               })
             }
             password
-            testId="password-input"
+            testId='password-input'
           />
           <Checkbox checked={state.adminMode} onChange={updateAdminMode} className={STYLES.checkbox}>
             Mode administrateur
           </Checkbox>
           {props.response && props.response.rejected && !state.hideError && (
-            <div className={STYLES.errorMessage} test-id="error-message">
-              <Icon type="exclamation-circle" theme="filled" />
+            <div className={STYLES.errorMessage} test-id='error-message'>
+              <Icon type='exclamation-circle' theme='filled' />
               {getError(props.response.reason)}
             </div>
           )}
-          <Row type="flex" justify="center">
+          <Row type='flex' justify='center'>
             <Button
-              type="primary"
+              type='primary'
               onClick={signIn}
               disabled={saveDisabled}
               loading={loading}

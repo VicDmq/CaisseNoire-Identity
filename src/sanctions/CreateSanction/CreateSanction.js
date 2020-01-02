@@ -49,11 +49,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
   };
 
   const getUser = (id: Uuid): ?User => {
-    return users.find(user => user.id === id);
+    return users.find((user) => user.id === id);
   };
 
   const getRule = (id: Uuid): ?Rule => {
-    return team.rules.find(rule => rule.id === id);
+    return team.rules.find((rule) => rule.id === id);
   };
 
   const getSanctions = (): CreateSanction[] => {
@@ -155,7 +155,7 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
 
   const updateSanctionsDate = (value: ?Moment) => {
     let stateCopy = [...state];
-    stateCopy.forEach(element => (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value));
+    stateCopy.forEach((element) => (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value));
 
     setState(stateCopy);
     setSanctionsDate(value);
@@ -165,7 +165,7 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
     return (
       <div>
         {sanctions.map((sanction, i) => {
-          const user = users.find(user => user.id === sanction.user_id);
+          const user = users.find((user) => user.id === sanction.user_id);
 
           if (user) {
             return (
@@ -200,11 +200,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
 
     createSanctions(
       getSanctions(),
-      sanctions => {
+      (sanctions) => {
         message.success(getSuccessAlertText(sanctions));
         resetForm();
       },
-      reason => {
+      (reason) => {
         message.error(getErrorAlertText(reason.cause));
         setCreatingSanctions(false);
       },
@@ -235,9 +235,9 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
         usersComparedToRules={getUsersComparedToRules()}
       />
       <DateInput date={sanctionsDate} updateDate={updateSanctionsDate} disabled={!isAdmin} />
-      <Row type="flex" justify="center">
+      <Row type='flex' justify='center'>
         <Button
-          type="primary"
+          type='primary'
           onClick={saveSanction}
           disabled={buttonIsDisabled}
           loading={creatingSanctions}

@@ -30,7 +30,7 @@ const Router = ({ rootUrl }: { rootUrl: string }) => {
 
   return (
     <Switch>
-      <Route exact path="/">
+      <Route exact path='/'>
         <Login rootUrl={rootUrl} setSession={setSession} />
       </Route>
       {routes.map((route, i) => (
@@ -51,7 +51,7 @@ const Router = ({ rootUrl }: { rootUrl: string }) => {
           }
         />
       ))}
-      <Route path="*">
+      <Route path='*'>
         <PageNotFound />
       </Route>
     </Switch>

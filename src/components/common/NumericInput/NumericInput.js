@@ -10,7 +10,7 @@ import STYLES from './styles.less';
 type NumericInputProps = {
   label: string,
   value: ?number,
-  onChange: number => void,
+  onChange: (number) => void,
   fullWidth?: boolean,
   suffix?: string,
   min?: number,
