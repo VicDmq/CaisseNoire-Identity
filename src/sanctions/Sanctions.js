@@ -1,15 +1,15 @@
 // @flow
-import React, { useState } from "react";
-import { connect, PromiseState } from "react-refetch";
-import { useCookies } from "react-cookie";
-import { Row, Col, Tabs, Icon } from "antd";
+import React, { useState } from 'react';
+import { connect, PromiseState } from 'react-refetch';
+import { useCookies } from 'react-cookie';
+import { Row, Col, Tabs, Icon } from 'antd';
 
-import type { Response, Reason } from "@Components/utils/Connect";
-import CreateSanctionForm from "./CreateSanction/CreateSanction";
-import SanctionList from "./SanctionList/SanctionList";
-import type { ApiProps } from "../routing/routes";
+import type { Response, Reason } from '@Components/utils/Connect';
+import CreateSanctionForm from './CreateSanction/CreateSanction';
+import SanctionList from './SanctionList/SanctionList';
+import type { ApiProps } from '../routing/routes';
 
-import STYLES from "./styles.less";
+import STYLES from './styles.less';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
@@ -21,21 +21,17 @@ const Sanctions = ({
   sanctionsFetch,
   postSanctions,
   deleteSanction,
-  isAdmin
+  isAdmin,
 }: {
   teamFetch: Response<Team>,
   usersFetch: Response<User[]>,
   sanctionsFetch: ?Response<Sanction[]>,
-  postSanctions: (
-    CreateSanction[],
-    (Sanction[]) => void,
-    (Reason) => void
-  ) => void,
+  postSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
   deleteSanction: (Uuid, () => void, (Reason) => void) => void,
-  isAdmin: boolean
+  isAdmin: boolean,
 }) => {
   return (
-    <Tabs tabBarStyle={{ display: "flex", justifyContent: "center" }}>
+    <Tabs tabBarStyle={{ display: 'flex', justifyContent: 'center' }}>
       <TabPane
         tab={
           <span>
@@ -47,17 +43,12 @@ const Sanctions = ({
       >
         <Row>
           <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
-            <Row
-              type="flex"
-              justify="center"
-              align="middle"
-              className={STYLES.formContainer}
-            >
+            <Row type="flex" justify="center" align="middle" className={STYLES.formContainer}>
               <CreateSanctionForm
                 response={PromiseState.all([teamFetch, usersFetch])}
                 mapResponseToProps={([team, users]) => ({
                   team,
-                  users
+                  users,
                 })}
                 createSanctions={postSanctions}
                 isAdmin={isAdmin}
@@ -79,15 +70,11 @@ const Sanctions = ({
           <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
             <Row type="flex" justify="center" align="middle">
               <SanctionList
-                response={PromiseState.all([
-                  teamFetch,
-                  usersFetch,
-                  sanctionsFetch || { refreshing: true }
-                ])}
+                response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch || { refreshing: true }])}
                 mapResponseToProps={([team, users, sanctions]) => ({
                   team,
                   users,
-                  sanctions
+                  sanctions,
                 })}
                 deleteSanction={deleteSanction}
                 isAdmin={isAdmin}
@@ -108,17 +95,13 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
     usersFetch: {
       url: `${rootUrl}/teams/${teamId}/users`,
       andThen: () => ({
-        sanctionsFetch: sanctionsUrl
-      })
+        sanctionsFetch: sanctionsUrl,
+      }),
     },
-    postSanctions: (
-      sanctions: CreateSanction[],
-      cb: (Sanction[]) => void,
-      errCb: Reason => void
-    ) => ({
+    postSanctions: (sanctions: CreateSanction[], cb: (Sanction[]) => void, errCb: Reason => void) => ({
       createdSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions`,
-        method: "POST",
+        method: 'POST',
         force: true,
         body: JSON.stringify(sanctions),
         then: sanctions => cb(sanctions),
@@ -127,25 +110,25 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
           sanctionsFetch: {
             url: sanctionsUrl,
             refreshing: true,
-            force: true
-          }
-        })
-      }
+            force: true,
+          },
+        }),
+      },
     }),
     deleteSanction: (sanction_id: Uuid, cb: () => void, errCb: () => void) => ({
       deletedSanction: {
         url: `${rootUrl}/teams/${teamId}/sanctions/${sanction_id}`,
-        method: "DELETE",
+        method: 'DELETE',
         then: () => cb(),
         catch: reason => errCb(),
         andThen: () => ({
           sanctionsFetch: {
             url: sanctionsUrl,
             refreshing: true,
-            force: true
-          }
-        })
-      }
-    })
+            force: true,
+          },
+        }),
+      },
+    }),
   };
 })(Sanctions);

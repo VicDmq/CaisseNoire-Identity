@@ -1,15 +1,15 @@
 // @flow
-import React, { useState } from "react";
-import { Button, Divider, Layout, Menu, Icon } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { Button, Divider, Layout, Menu, Icon } from 'antd';
+import { Link, useHistory } from 'react-router-dom';
 
-import STYLES from "./header.less";
+import STYLES from './header.less';
 
 const { Header } = Layout;
 const { Item } = Menu;
 
 const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
-  const [selectedKey, setSelectedKey] = useState<string>("sanctions");
+  const [selectedKey, setSelectedKey] = useState<string>('sanctions');
   const history = useHistory();
 
   const selectItem = ({ key }: { key: string }) => {
@@ -18,7 +18,7 @@ const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
 
   const signOut = () => {
     deleteSession();
-    history.push({ pathname: "/" });
+    history.push({ pathname: '/' });
   };
 
   return (
@@ -30,12 +30,7 @@ const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
           <Link to="/sanctions">Sanctions</Link>
         </Item>
       </Menu>
-      <Button
-        type="primary"
-        className={STYLES.logoutButton}
-        icon="logout"
-        onClick={signOut}
-      />
+      <Button type="primary" className={STYLES.logoutButton} icon="logout" onClick={signOut} />
     </Header>
   );
 };

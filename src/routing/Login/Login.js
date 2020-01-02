@@ -1,15 +1,15 @@
 // @flow
-import React from "react";
-import { connect } from "react-refetch";
-import { useHistory } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-refetch';
+import { useHistory } from 'react-router-dom';
 
-import type { Response } from "@Components/utils/Connect";
-import LoginForm from "./LoginForm";
+import type { Response } from '@Components/utils/Connect';
+import LoginForm from './LoginForm';
 
 type LoginProps = {
   setSession: (Uuid, boolean) => void,
   login: (LoginRequest, (LoginResponse) => void) => void,
-  loginResponse: ?Response<LoginResponse>
+  loginResponse: ?Response<LoginResponse>,
 };
 
 const Login = (props: LoginProps) => {
@@ -21,7 +21,7 @@ const Login = (props: LoginProps) => {
 
   const onSuccess = (response: LoginResponse) => {
     props.setSession(response.id, !!response.admin_password);
-    let { from } = history.location.state || { from: "/sanctions" };
+    let { from } = history.location.state || { from: '/sanctions' };
     history.push({ pathname: from });
   };
 
@@ -33,11 +33,11 @@ export default connect(({ rootUrl }: { rootUrl: string }) => {
     login: (request: LoginRequest, cb: LoginResponse => void) => ({
       loginResponse: {
         url: `${rootUrl}/login`,
-        method: "POST",
+        method: 'POST',
         force: true,
         body: JSON.stringify(request),
-        then: response => cb(response)
-      }
-    })
+        then: response => cb(response),
+      },
+    }),
   };
 })(Login);

@@ -1,12 +1,12 @@
 // @flow
-import React from "react";
+import React from 'react';
 
-import CommonSelect, { type CommonSelectProps } from "./CommonSelect";
+import CommonSelect, { type CommonSelectProps } from './CommonSelect';
 
 type SingleSelectProps = {
   value: ?Uuid,
   onChange: (?Uuid) => void,
-  ...CommonSelectProps
+  ...CommonSelectProps,
 };
 
 const SingleSelect = ({ onChange, ...otherProps }: SingleSelectProps) => {

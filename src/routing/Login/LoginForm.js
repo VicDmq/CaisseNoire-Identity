@@ -1,49 +1,47 @@
 // @flow
-import React, { useState } from "react";
-import { Row, Col, Form, Button, Checkbox, Icon } from "antd";
+import React, { useState } from 'react';
+import { Row, Col, Form, Button, Checkbox, Icon } from 'antd';
 
-import Input from "@Components/common/Input";
-import type { Response, Reason } from "@Components/utils/Connect";
+import Input from '@Components/common/Input';
+import type { Response, Reason } from '@Components/utils/Connect';
 
-import STYLES from "./styles.less";
+import STYLES from './styles.less';
 
 type LoginFormProps = {
   signIn: LoginRequest => void,
-  response: ?Response<LoginResponse>
+  response: ?Response<LoginResponse>,
 };
 
 type LoginFormState = {
   credentials: LoginRequest,
   adminMode: boolean,
-  hideError: boolean
+  hideError: boolean,
 };
 
 const LoginForm = (props: LoginFormProps) => {
   const [state, setState] = useState<LoginFormState>({
-    credentials: { name: "" },
+    credentials: { name: '' },
     adminMode: false,
-    hideError: false
+    hideError: false,
   });
 
   const resetForm = () => {
-    setState({ ...state, credentials: { name: "" }, hideError: false });
+    setState({ ...state, credentials: { name: '' }, hideError: false });
   };
 
   const updateCredentials = (credentials: LoginRequest) => {
     setState({
       ...state,
       credentials,
-      hideError: true
+      hideError: true,
     });
   };
 
   const updateAdminMode = () => {
     setState({
-      credentials: state.adminMode
-        ? { name: state.credentials.name }
-        : state.credentials,
+      credentials: state.adminMode ? { name: state.credentials.name } : state.credentials,
       adminMode: !state.adminMode,
-      hideError: true
+      hideError: true,
     });
   };
 
@@ -57,23 +55,18 @@ const LoginForm = (props: LoginFormProps) => {
 
     if (reason.cause) {
       switch (reason.cause.kind) {
-        case "NOT_FOUND":
-          error = `Nom d'équipe ${
-            state.adminMode ? "ou mot de passe" : ""
-          } incorrect`;
+        case 'NOT_FOUND':
+          error = `Nom d'équipe ${state.adminMode ? 'ou mot de passe' : ''} incorrect`;
       }
     }
 
     return error;
   };
 
-  const loading =
-    !!props.response && !!props.response.pending && props.response.pending;
+  const loading = !!props.response && !!props.response.pending && props.response.pending;
 
   const saveDisabled =
-    loading ||
-    state.credentials.name === "" ||
-    (state.adminMode && !state.credentials.admin_password);
+    loading || state.credentials.name === '' || (state.adminMode && !state.credentials.admin_password);
 
   return (
     <Row type="flex" justify="center" align="middle" className={STYLES.row}>
@@ -85,7 +78,7 @@ const LoginForm = (props: LoginFormProps) => {
             onChange={value =>
               updateCredentials({
                 ...state.credentials,
-                name: value
+                name: value,
               })
             }
             testId="team-name-input"
@@ -97,17 +90,13 @@ const LoginForm = (props: LoginFormProps) => {
             onChange={value =>
               updateCredentials({
                 ...state.credentials,
-                admin_password: value === "" ? undefined : value
+                admin_password: value === '' ? undefined : value,
               })
             }
             password
             testId="password-input"
           />
-          <Checkbox
-            checked={state.adminMode}
-            onChange={updateAdminMode}
-            className={STYLES.checkbox}
-          >
+          <Checkbox checked={state.adminMode} onChange={updateAdminMode} className={STYLES.checkbox}>
             Mode administrateur
           </Checkbox>
           {props.response && props.response.rejected && !state.hideError && (
@@ -124,7 +113,7 @@ const LoginForm = (props: LoginFormProps) => {
               loading={loading}
               className={STYLES.saveButton}
             >
-              {loading ? "" : "Connexion"}
+              {loading ? '' : 'Connexion'}
             </Button>
           </Row>
         </Form>

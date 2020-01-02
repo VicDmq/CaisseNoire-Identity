@@ -1,8 +1,8 @@
 // @flow
-import React from "react";
-import { Input } from "antd";
+import React from 'react';
+import { Input } from 'antd';
 
-import FormItem from "./FormItem/FormItem";
+import FormItem from './FormItem/FormItem';
 
 type InputProps = {
   label: string,
@@ -10,7 +10,7 @@ type InputProps = {
   onChange: string => void,
   disabled?: boolean,
   password?: boolean,
-  testId?: string
+  testId?: string,
 };
 
 const CustomInput = (props: any) => {
@@ -21,9 +21,7 @@ const CustomInput = (props: any) => {
       <InputType
         disabled={props.disabled}
         value={props.value}
-        onChange={(e: { target: { value: string } }) =>
-          props.onChange(e.target.value)
-        }
+        onChange={(e: { target: { value: string } }) => props.onChange(e.target.value)}
         test-id={props.testId}
       />
     </FormItem>

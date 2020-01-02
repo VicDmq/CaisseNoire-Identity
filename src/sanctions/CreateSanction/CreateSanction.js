@@ -1,48 +1,39 @@
 // @flow
-import React, { useState } from "react";
-import { Row, Form, message, Button } from "antd";
-import type { Moment } from "moment";
+import React, { useState } from 'react';
+import { Row, Form, message, Button } from 'antd';
+import type { Moment } from 'moment';
 
-import withConnect, { type Reason } from "@Components/utils/Connect";
-import DateInput from "./DateInput";
-import SelectUsers from "./SelectUsers";
-import SelectRules from "./SelectRules";
-import ExtraInfoInputs from "./ExtraInfoInputs";
+import withConnect, { type Reason } from '@Components/utils/Connect';
+import DateInput from './DateInput';
+import SelectUsers from './SelectUsers';
+import SelectRules from './SelectRules';
+import ExtraInfoInputs from './ExtraInfoInputs';
 
-import STYLES from "./styles.less";
+import STYLES from './styles.less';
 
 type DataProps = {
   team: Team,
-  users: User[]
+  users: User[],
 };
 
 type OtherProps = {
-  createSanctions: (
-    CreateSanction[],
-    (Sanction[]) => void,
-    (Reason) => void
-  ) => void,
-  isAdmin: boolean
+  createSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
+  isAdmin: boolean,
 };
 
 type CreateSanctionProps = DataProps & OtherProps;
 
-export type ComparisonResult = "LESS" | "MORE" | "SAME";
+export type ComparisonResult = 'LESS' | 'MORE' | 'SAME';
 
 export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
-  MORE: "MORE",
-  LESS: "LESS",
-  SAME: "SAME"
+  MORE: 'MORE',
+  LESS: 'LESS',
+  SAME: 'SAME',
 };
 
-const API_DATE_FORMAT = "YYYY-MM-DD";
+const API_DATE_FORMAT = 'YYYY-MM-DD';
 
-export const SanctionForm = ({
-  team,
-  users,
-  createSanctions,
-  isAdmin
-}: CreateSanctionProps) => {
+export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([]);
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([]);
   const [sanctionsDate, setSanctionsDate] = useState<?Moment>(undefined);
@@ -70,9 +61,7 @@ export const SanctionForm = ({
   };
 
   const getSanction = (user_id: Uuid, rule_id: Uuid): ?CreateSanction => {
-    const result = state.find(
-      ([user, rule, sanction]) => user_id === user.id && rule_id === rule.id
-    );
+    const result = state.find(([user, rule, sanction]) => user_id === user.id && rule_id === rule.id);
 
     return result ? result[2] : undefined;
   };
@@ -91,12 +80,12 @@ export const SanctionForm = ({
 
   const initializeExtraInfo = (rule: Rule): ExtraInfo => {
     switch (rule.kind.type) {
-      case "MULTIPLICATION":
-      case "TIME_MULTIPLICATION":
-        return { type: "MULTIPLICATION", factor: 1 };
+      case 'MULTIPLICATION':
+      case 'TIME_MULTIPLICATION':
+        return { type: 'MULTIPLICATION', factor: 1 };
 
       default:
-        return { type: "NONE" };
+        return { type: 'NONE' };
     }
   };
 
@@ -105,11 +94,9 @@ export const SanctionForm = ({
       user_id: user.id,
       sanction_info: {
         associated_rule: rule.id,
-        extra_info: initializeExtraInfo(rule)
+        extra_info: initializeExtraInfo(rule),
       },
-      created_at: sanctionsDate
-        ? sanctionsDate.format(API_DATE_FORMAT)
-        : undefined
+      created_at: sanctionsDate ? sanctionsDate.format(API_DATE_FORMAT) : undefined,
     };
   };
 
@@ -139,8 +126,7 @@ export const SanctionForm = ({
       }
 
       if (user && rule) {
-        const sanction =
-          getSanction(user.id, rule.id) || initializeSanction(user, rule);
+        const sanction = getSanction(user.id, rule.id) || initializeSanction(user, rule);
         newState.push([user, rule, sanction]);
       }
     }
@@ -169,10 +155,7 @@ export const SanctionForm = ({
 
   const updateSanctionsDate = (value: ?Moment) => {
     let stateCopy = [...state];
-    stateCopy.forEach(
-      element =>
-        (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value)
-    );
+    stateCopy.forEach(element => (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value));
 
     setState(stateCopy);
     setSanctionsDate(value);
@@ -199,8 +182,8 @@ export const SanctionForm = ({
   const getErrorAlertText = (error: ?ApiError): string => {
     if (error) {
       switch (error.kind) {
-        case "NOT_FOUND":
-        case "BAD_REFERENCE": {
+        case 'NOT_FOUND':
+        case 'BAD_REFERENCE': {
           return "Une des ressources utilisées n'existe pas : rechargez la page ";
         }
         default: {
@@ -224,7 +207,7 @@ export const SanctionForm = ({
       reason => {
         message.error(getErrorAlertText(reason.cause));
         setCreatingSanctions(false);
-      }
+      },
     );
   };
 
@@ -251,11 +234,7 @@ export const SanctionForm = ({
         updateSanction={updateSanction}
         usersComparedToRules={getUsersComparedToRules()}
       />
-      <DateInput
-        date={sanctionsDate}
-        updateDate={updateSanctionsDate}
-        disabled={!isAdmin}
-      />
+      <DateInput date={sanctionsDate} updateDate={updateSanctionsDate} disabled={!isAdmin} />
       <Row type="flex" justify="center">
         <Button
           type="primary"
@@ -264,7 +243,7 @@ export const SanctionForm = ({
           loading={creatingSanctions}
           className={STYLES.saveButton}
         >
-          {creatingSanctions ? "" : "Ça paye !"}
+          {creatingSanctions ? '' : 'Ça paye !'}
         </Button>
       </Row>
     </Form>
