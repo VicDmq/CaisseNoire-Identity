@@ -1,9 +1,20 @@
 {
-  "extends": ["prettier"],
-  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": ["prettier", "eslint:recommended", "plugin:react/recommended", "plugin:flowtype/recommended"],
+  "plugins": ["prettier", "react", "flowtype"],
   "parser": "babel-eslint",
   "rules": {
     "prettier/prettier": ["error"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect",
+      "flowVersion": "0.109.0"
+    }
   }
 }
 // module.exports = {
