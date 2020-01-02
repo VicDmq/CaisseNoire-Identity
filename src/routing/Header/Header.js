@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from 'react';
-import { Button, Divider, Layout, Menu, Icon } from 'antd';
+import { Button, Divider, Layout, Menu } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 
 import STYLES from './header.less';

@@ -6,14 +6,14 @@ import FormItem from './FormItem/FormItem';
 
 type InputProps = {
   label: string,
-  value: string,
+  value: ?string,
   onChange: (string) => void,
   disabled?: boolean,
   password?: boolean,
   testId?: string,
 };
 
-const CustomInput = (props: any) => {
+const CustomInput = (props: InputProps) => {
   const InputType = props.password ? Input.Password : Input;
 
   return (

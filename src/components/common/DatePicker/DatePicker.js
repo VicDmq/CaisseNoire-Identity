@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { DatePicker } from 'antd';
-import moment, { type Moment } from 'moment';
+import { type Moment } from 'moment';
 
 import FormItem from '../FormItem/FormItem';
 
