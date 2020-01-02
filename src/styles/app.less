@@ -1,5 +1,5 @@
-@import '~antd/dist/antd.less';
-@import './variables.less';
+@import "~antd/dist/antd.less";
+@import "./variables.less";
 
 #app {
   height: 100%;
@@ -65,7 +65,8 @@
 }
 
 // Override DatePicker Style
-.ant-calendar-selected-day:not(.ant-calendar-selected-date):not(.ant-calendar-disabled-cell) .ant-calendar-date {
+.ant-calendar-selected-day:not(.ant-calendar-selected-date):not(.ant-calendar-disabled-cell)
+  .ant-calendar-date {
   background-color: @white;
 }
 
@@ -79,6 +80,7 @@ td:not(.ant-calendar-disabled-cell):not(.ant-calendar-last-month-cell):not(.ant-
   }
 }
 
-.ant-calendar-disabled-cell.ant-calendar-selected-day .ant-calendar-date::before {
+.ant-calendar-disabled-cell.ant-calendar-selected-day
+  .ant-calendar-date::before {
   content: none;
 }

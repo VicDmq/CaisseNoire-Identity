@@ -1,11 +1,11 @@
 // @flow
-import React, { type Element } from 'react'
+import React, { type Element } from "react";
 
-import { Row } from 'antd'
+import { Row } from "antd";
 
-import NumericInput from '@Components/common/NumericInput/NumericInput'
-import { TimeUnitText } from '@Text/rule'
-import { type ComparisonResult } from './CreateSanction'
+import NumericInput from "@Components/common/NumericInput/NumericInput";
+import { TimeUnitText } from "@Text/rule";
+import { type ComparisonResult } from "./CreateSanction";
 
 const ExtraInfoInput = ({
   user,
@@ -20,19 +20,20 @@ const ExtraInfoInput = ({
   updateExtraInfo: ExtraInfo => void,
   usersComparedToRules: ComparisonResult
 }) => {
-  if (extraInfo.type === 'MULTIPLICATION') {
-    let label = ''
+  if (extraInfo.type === "MULTIPLICATION") {
+    let label = "";
 
     switch (usersComparedToRules) {
-      case 'MORE':
-        label = `Détails (${user.nickname || user.firstname + ' ' + user.lastname[0]})`
-        break
-      case 'LESS':
-        label = `Détails (${rule.name})`
-        break
-      case 'SAME':
-        label = 'Détails supplémentaires'
-        break
+      case "MORE":
+        label = `Détails (${user.nickname ||
+          user.firstname + " " + user.lastname[0]})`;
+        break;
+      case "LESS":
+        label = `Détails (${rule.name})`;
+        break;
+      case "SAME":
+        label = "Détails supplémentaires";
+        break;
     }
 
     return (
@@ -41,20 +42,24 @@ const ExtraInfoInput = ({
         value={extraInfo.factor}
         onChange={factor =>
           updateExtraInfo({
-            type: 'MULTIPLICATION',
+            type: "MULTIPLICATION",
             factor
           })
         }
-        suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
+        suffix={
+          rule.kind.type === "TIME_MULTIPLICATION"
+            ? TimeUnitText[rule.kind.time_unit]
+            : undefined
+        }
         min={1}
         fullWidth
-        testId='extra-info-input'
+        testId="extra-info-input"
       />
-    )
+    );
   }
 
-  return null
-}
+  return null;
+};
 
 const ExtraInfoInputs = ({
   formState,
@@ -74,7 +79,7 @@ const ExtraInfoInputs = ({
       updateExtraInfo={extraInfo => updateSanction(i, extraInfo)}
       usersComparedToRules={usersComparedToRules}
     />
-  )): Element<typeof ExtraInfoInput>[])
-}
+  )): Element<typeof ExtraInfoInput>[]);
+};
 
-export default ExtraInfoInputs
+export default ExtraInfoInputs;

@@ -1,8 +1,8 @@
 // @flow
-import React from 'react'
-import moment, { type Moment } from 'moment'
+import React from "react";
+import moment, { type Moment } from "moment";
 
-import DatePicker from '@Components/common/DatePicker/DatePicker'
+import DatePicker from "@Components/common/DatePicker/DatePicker";
 
 const DateInput = ({
   date,
@@ -14,19 +14,19 @@ const DateInput = ({
   disabled: boolean
 }) => {
   const disableDates = (date): boolean => {
-    return date.isAfter(moment(), 'day')
-  }
+    return date.isAfter(moment(), "day");
+  };
 
   return (
     <DatePicker
-      label='Date'
+      label="Date"
       value={date}
       onChange={updateDate}
       disableDates={disableDates}
       disabled={disabled}
-      testId={'date-input'}
+      testId={"date-input"}
     />
-  )
-}
+  );
+};
 
-export default DateInput
+export default DateInput;

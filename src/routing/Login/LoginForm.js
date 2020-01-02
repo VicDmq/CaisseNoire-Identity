@@ -1,71 +1,82 @@
 // @flow
-import React, { useState } from 'react'
-import { Row, Col, Form, Button, Checkbox, Icon } from 'antd'
+import React, { useState } from "react";
+import { Row, Col, Form, Button, Checkbox, Icon } from "antd";
 
-import Input from '@Components/common/Input'
-import type { Response, Reason } from '@Components/utils/Connect'
+import Input from "@Components/common/Input";
+import type { Response, Reason } from "@Components/utils/Connect";
 
-import STYLES from './styles.less'
+import STYLES from "./styles.less";
 
 type LoginFormProps = {
   signIn: LoginRequest => void,
   response: ?Response<LoginResponse>
-}
+};
 
 type LoginFormState = {
   credentials: LoginRequest,
   adminMode: boolean,
   hideError: boolean
-}
+};
 
 const LoginForm = (props: LoginFormProps) => {
-  const [state, setState] = useState<LoginFormState>({ credentials: { name: '' }, adminMode: false, hideError: false })
+  const [state, setState] = useState<LoginFormState>({
+    credentials: { name: "" },
+    adminMode: false,
+    hideError: false
+  });
 
   const resetForm = () => {
-    setState({ ...state, credentials: { name: '' }, hideError: false })
-  }
+    setState({ ...state, credentials: { name: "" }, hideError: false });
+  };
 
   const updateCredentials = (credentials: LoginRequest) => {
     setState({
       ...state,
       credentials,
       hideError: true
-    })
-  }
+    });
+  };
 
   const updateAdminMode = () => {
     setState({
-      credentials: state.adminMode ? { name: state.credentials.name } : state.credentials,
+      credentials: state.adminMode
+        ? { name: state.credentials.name }
+        : state.credentials,
       adminMode: !state.adminMode,
       hideError: true
-    })
-  }
+    });
+  };
 
   const signIn = () => {
-    props.signIn(state.credentials)
-    resetForm()
-  }
+    props.signIn(state.credentials);
+    resetForm();
+  };
 
   const getError = (reason: Reason): string => {
-    let error = "Une erreur s'est produite lors de la connexion"
+    let error = "Une erreur s'est produite lors de la connexion";
 
     if (reason.cause) {
       switch (reason.cause.kind) {
-        case 'NOT_FOUND':
-          error = `Nom d'équipe ${state.adminMode ? 'ou mot de passe' : ''} incorrect`
+        case "NOT_FOUND":
+          error = `Nom d'équipe ${
+            state.adminMode ? "ou mot de passe" : ""
+          } incorrect`;
       }
     }
 
-    return error
-  }
+    return error;
+  };
 
-  const loading = !!props.response && !!props.response.pending && props.response.pending
+  const loading =
+    !!props.response && !!props.response.pending && props.response.pending;
 
   const saveDisabled =
-    loading || state.credentials.name === '' || (state.adminMode && !state.credentials.admin_password)
+    loading ||
+    state.credentials.name === "" ||
+    (state.adminMode && !state.credentials.admin_password);
 
   return (
-    <Row type='flex' justify='center' align='middle' className={STYLES.row}>
+    <Row type="flex" justify="center" align="middle" className={STYLES.row}>
       <Col xs={{ span: 18 }} lg={{ span: 8 }} className={STYLES.formContainer}>
         <Form colon={false}>
           <Input
@@ -77,45 +88,49 @@ const LoginForm = (props: LoginFormProps) => {
                 name: value
               })
             }
-            testId='team-name-input'
+            testId="team-name-input"
           />
           <Input
-            label='Mot de passe'
+            label="Mot de passe"
             disabled={!state.adminMode}
             value={state.credentials.admin_password}
             onChange={value =>
               updateCredentials({
                 ...state.credentials,
-                admin_password: value === '' ? undefined : value
+                admin_password: value === "" ? undefined : value
               })
             }
             password
-            testId='password-input'
+            testId="password-input"
           />
-          <Checkbox checked={state.adminMode} onChange={updateAdminMode} className={STYLES.checkbox}>
+          <Checkbox
+            checked={state.adminMode}
+            onChange={updateAdminMode}
+            className={STYLES.checkbox}
+          >
             Mode administrateur
           </Checkbox>
           {props.response && props.response.rejected && !state.hideError && (
-            <div className={STYLES.errorMessage} test-id='error-message'>
-              <Icon type='exclamation-circle' theme='filled' />
+            <div className={STYLES.errorMessage} test-id="error-message">
+              <Icon type="exclamation-circle" theme="filled" />
               {getError(props.response.reason)}
             </div>
           )}
-          <Row type='flex' justify='center'>
+          <Row type="flex" justify="center">
             <Button
-              type='primary'
+              type="primary"
               onClick={signIn}
               disabled={saveDisabled}
               loading={loading}
               className={STYLES.saveButton}
             >
-              {loading ? '' : 'Connexion'}
+              {loading ? "" : "Connexion"}
             </Button>
           </Row>
         </Form>
       </Col>
     </Row>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
