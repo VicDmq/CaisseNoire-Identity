@@ -7,15 +7,15 @@ export const DEFAULT_RULE: Rule = {
   category: 'TRAINING_DAY',
   kind: {
     type: 'BASIC',
-    price: 2.0
-  }
-}
+    price: 2.0,
+  },
+};
 
 export const DEFAULT_TEAM: Team = {
   id: 'team_id',
   name: 'Dream Team',
-  rules: [DEFAULT_RULE]
-}
+  rules: [DEFAULT_RULE],
+};
 
 export const DEFAULT_USER: User = {
   id: 'user_id',
@@ -23,8 +23,8 @@ export const DEFAULT_USER: User = {
   lastname: 'Snow',
   firstname: 'John',
   nickname: 'King Of the North',
-  email: null
-}
+  email: null,
+};
 
 export const DEFAULT_SANCTION: Sanction = {
   id: 'id',
@@ -33,14 +33,14 @@ export const DEFAULT_SANCTION: Sanction = {
   sanction_info: {
     associated_rule: 'rule_id',
     extra_info: {
-      type: 'NONE'
-    }
+      type: 'NONE',
+    },
   },
   price: 2.0,
-  created_at: '2019-10-28'
-}
+  created_at: '2019-10-28',
+};
 
 export const DEFAULT_NOT_FOUND: ApiError = {
   kind: 'NOT_FOUND',
-  description: 'Not found'
-}
+  description: 'Not found',
+};

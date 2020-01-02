@@ -2,10 +2,18 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
-  "extends": ["prettier", "eslint:recommended", "plugin:react/recommended", "plugin:flowtype/recommended"],
-  "plugins": ["prettier", "react", "flowtype"],
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended",
+    "plugin:testing-library/recommended",
+    "plugin:jest-dom/recommended"
+  ],
+  "plugins": ["prettier", "react", "flowtype", "testing-library", "jest-dom"],
   "parser": "babel-eslint",
   "rules": {
     "prettier/prettier": ["error"]
