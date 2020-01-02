@@ -1,8 +1,8 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 import { List, Modal, message } from 'antd';
 
-import withConnect, { type Reason } from '@Components/utils/Connect';
+import withConnect from '@Components/utils/Connect';
 import { SanctionListItem, type ListItemProps } from './SanctionListItem';
 
 import STYLES from './styles.less';
@@ -54,7 +54,7 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
   };
 
   const getDataSource = (): ListItemProps[] => {
-    let props: ListItemProps[] = [];
+    let dataSource: ListItemProps[] = [];
 
     sanctions
       .sort((item1, item2) => {
@@ -64,7 +64,7 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
         const user = users.find((user) => user.id === sanction.user_id);
 
         if (user) {
-          props.push({
+          dataSource.push({
             rule: team.rules.find((rule) => rule.id === sanction.sanction_info.associated_rule),
             user,
             sanction,
@@ -74,7 +74,7 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
         }
       });
 
-    return props;
+    return dataSource;
   };
 
   return (

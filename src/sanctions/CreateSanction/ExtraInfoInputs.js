@@ -1,8 +1,6 @@
 // @flow
 import React, { type Element } from 'react';
 
-import { Row } from 'antd';
-
 import NumericInput from '@Components/common/NumericInput/NumericInput';
 import { TimeUnitText } from '@Text/rule';
 import { type ComparisonResult } from './CreateSanction';

@@ -1,7 +1,6 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 import { connect, PromiseState } from 'react-refetch';
-import { useCookies } from 'react-cookie';
 import { Row, Col, Tabs, Icon } from 'antd';
 
 import type { Response, Reason } from '@Components/utils/Connect';
@@ -10,8 +9,6 @@ import SanctionList from './SanctionList/SanctionList';
 import type { ApiProps } from '../routing/routes';
 
 import STYLES from './styles.less';
-
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const { TabPane } = Tabs;
 
@@ -120,7 +117,7 @@ export default connect(({ teamId, rootUrl }: ApiProps) => {
         url: `${rootUrl}/teams/${teamId}/sanctions/${sanction_id}`,
         method: 'DELETE',
         then: () => cb(),
-        catch: (reason) => errCb(),
+        catch: () => errCb(),
         andThen: () => ({
           sanctionsFetch: {
             url: sanctionsUrl,
