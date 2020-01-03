@@ -4,9 +4,10 @@ import { connect, PromiseState } from 'react-refetch';
 import { Row, Col, Tabs, Icon } from 'antd';
 
 import type { Response, Reason } from '@Components/utils/Connect';
+import type { ApiProps } from '../routing/routes';
 import CreateSanctionForm from './CreateSanction/CreateSanction';
 import SanctionList from './SanctionList/SanctionList';
-import type { ApiProps } from '../routing/routes';
+import SanctionTable from './SanctionTable/SanctionTable';
 
 import STYLES from './styles.less';
 
@@ -75,6 +76,26 @@ const Sanctions = ({
                 })}
                 deleteSanction={deleteSanction}
                 isAdmin={isAdmin}
+              />
+            </Row>
+          </Col>
+        </Row>
+      </TabPane>
+      <TabPane
+        tab={
+          <span>
+            <Icon type='unordered-list' />
+            Tableau
+          </span>
+        }
+        key='3'
+      >
+        <Row>
+          <Col xs={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
+            <Row type='flex' justify='center' align='middle'>
+              <SanctionTable
+                response={PromiseState.all([teamFetch, usersFetch, sanctionsFetch || { refreshing: true }])}
+                mapResponseToProps={([team, users, sanctions]) => ({ team, users, sanctions })}
               />
             </Row>
           </Col>
