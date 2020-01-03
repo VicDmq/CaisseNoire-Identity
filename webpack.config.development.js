@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        exclude: /\app.less$/,
+        exclude: /app.less$/,
         loader: [
           'style-loader',
           {
@@ -62,7 +62,7 @@ module.exports = {
         ],
       },
       {
-        test: /\app.less$/,
+        test: /app.less$/,
         loader: [
           'style-loader',
           {

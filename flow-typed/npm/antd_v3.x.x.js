@@ -434,6 +434,7 @@ declare module 'antd' {
     mouseLeaveDelay?: number,
     overlayClassName?: string,
     overlayStyle?: $Shape<CSSStyleDeclaration>,
+    // eslint-disable-next-line flowtype/space-after-type-colon
     placement?:
       | 'top'
       | 'left'
@@ -592,6 +593,7 @@ declare module 'antd' {
     current?: number,
     direction?: 'horizontal' | 'vertical',
     labelPlacement?: 'horizontal' | 'vertical',
+    // eslint-disable-next-line flowtype/space-after-type-colon
     progressDot?:
       | boolean
       | ((

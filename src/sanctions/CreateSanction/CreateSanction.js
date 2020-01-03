@@ -57,11 +57,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
   };
 
   const getSanctions = (): CreateSanction[] => {
-    return state.map(([user, rule, sanction]) => sanction);
+    return state.map(([, , sanction]) => sanction);
   };
 
   const getSanction = (user_id: Uuid, rule_id: Uuid): ?CreateSanction => {
-    const result = state.find(([user, rule, sanction]) => user_id === user.id && rule_id === rule.id);
+    const result = state.find(([user, rule]) => user_id === user.id && rule_id === rule.id);
 
     return result ? result[2] : undefined;
   };

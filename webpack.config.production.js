@@ -38,7 +38,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        exclude: /\app.less$/,
+        exclude: /app.less$/,
         loader: [
           MiniCssExtractPlugin.loader,
           {
@@ -62,7 +62,7 @@ module.exports = {
         ],
       },
       {
-        test: /\app.less$/,
+        test: /app.less$/,
         loader: [
           MiniCssExtractPlugin.loader,
           'css-loader',

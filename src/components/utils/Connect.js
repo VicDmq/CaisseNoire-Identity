@@ -25,11 +25,11 @@ type WithConnect<T> = {
   mapResponseToProps: (any[]) => T,
 };
 
-const withConnect = <Props, OtherProps>(
+function withConnect<Props, OtherProps>(
   WrappedComponent: AbstractComponent<Props & OtherProps>,
-): AbstractComponent<WithConnect<Props> & OtherProps> => {
+): AbstractComponent<WithConnect<Props> & OtherProps> {
   // $FlowFixMe: Should accept (WithConnect<Props> & OtherProps)
-  return ({ response, mapResponseToProps, ...otherProps }: WithConnect<Props> & OtherProps) => {
+  return function WrapperComponent({ response, mapResponseToProps, ...otherProps }: WithConnect<Props> & OtherProps) {
     if (response.rejected) {
       return (
         <Result
@@ -45,6 +45,6 @@ const withConnect = <Props, OtherProps>(
 
     return <Spin size={'large'} />;
   };
-};
+}
 
 export default withConnect;

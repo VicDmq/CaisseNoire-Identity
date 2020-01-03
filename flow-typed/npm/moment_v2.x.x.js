@@ -122,6 +122,7 @@ declare class moment$Moment {
   static ISO_8601: string;
   static (string?: ?string): moment$Moment;
   static (
+    // eslint-disable-next-line flowtype/space-after-type-colon
     initDate:
       | moment$MomentOptions
       | number
