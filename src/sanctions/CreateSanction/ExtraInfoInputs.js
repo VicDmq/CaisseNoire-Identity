@@ -1,48 +1,46 @@
 // @flow
-import React, { type Element } from 'react'
+import React, { type Element } from 'react';
 
-import { Row } from 'antd'
-
-import NumericInput from '@Components/common/NumericInput/NumericInput'
-import { TimeUnitText } from '@Text/rule'
-import { type ComparisonResult } from './CreateSanction'
+import NumericInput from '@Components/common/NumericInput/NumericInput';
+import { TimeUnitText } from '@Text/rule';
+import { type ComparisonResult } from './CreateSanction';
 
 const ExtraInfoInput = ({
   user,
   rule,
   extraInfo,
   updateExtraInfo,
-  usersComparedToRules
+  usersComparedToRules,
 }: {
   user: User,
   rule: Rule,
   extraInfo: ExtraInfo,
-  updateExtraInfo: ExtraInfo => void,
-  usersComparedToRules: ComparisonResult
+  updateExtraInfo: (ExtraInfo) => void,
+  usersComparedToRules: ComparisonResult,
 }) => {
   if (extraInfo.type === 'MULTIPLICATION') {
-    let label = ''
+    let label = '';
 
     switch (usersComparedToRules) {
       case 'MORE':
-        label = `Détails (${user.nickname || user.firstname + ' ' + user.lastname[0]})`
-        break
+        label = `Détails (${user.nickname || user.firstname + ' ' + user.lastname[0]})`;
+        break;
       case 'LESS':
-        label = `Détails (${rule.name})`
-        break
+        label = `Détails (${rule.name})`;
+        break;
       case 'SAME':
-        label = 'Détails supplémentaires'
-        break
+        label = 'Détails supplémentaires';
+        break;
     }
 
     return (
       <NumericInput
         label={label}
         value={extraInfo.factor}
-        onChange={factor =>
+        onChange={(factor) =>
           updateExtraInfo({
             type: 'MULTIPLICATION',
-            factor
+            factor,
           })
         }
         suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
@@ -50,20 +48,20 @@ const ExtraInfoInput = ({
         fullWidth
         testId='extra-info-input'
       />
-    )
+    );
   }
 
-  return null
-}
+  return null;
+};
 
 const ExtraInfoInputs = ({
   formState,
   updateSanction,
-  usersComparedToRules
+  usersComparedToRules,
 }: {
   formState: [User, Rule, CreateSanction][],
   updateSanction: (number, ExtraInfo) => void,
-  usersComparedToRules: ComparisonResult
+  usersComparedToRules: ComparisonResult,
 }) => {
   return (formState.map(([user, rule, sanction], i) => (
     <ExtraInfoInput
@@ -71,10 +69,10 @@ const ExtraInfoInputs = ({
       user={user}
       rule={rule}
       extraInfo={sanction.sanction_info.extra_info}
-      updateExtraInfo={extraInfo => updateSanction(i, extraInfo)}
+      updateExtraInfo={(extraInfo) => updateSanction(i, extraInfo)}
       usersComparedToRules={usersComparedToRules}
     />
-  )): Element<typeof ExtraInfoInput>[])
-}
+  )): Element<typeof ExtraInfoInput>[]);
+};
 
-export default ExtraInfoInputs
+export default ExtraInfoInputs;

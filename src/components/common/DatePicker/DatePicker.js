@@ -1,20 +1,20 @@
 // @flow
-import React from 'react'
-import { DatePicker } from 'antd'
-import moment, { type Moment } from 'moment'
+import React from 'react';
+import { DatePicker } from 'antd';
+import { type Moment } from 'moment';
 
-import FormItem from '../FormItem/FormItem'
+import FormItem from '../FormItem/FormItem';
 
-import STYLES from './styles.less'
+import STYLES from './styles.less';
 
 type DatePickerProps = {
   label: string,
   value: ?Moment,
   onChange: (?Moment) => void,
-  disableDates?: any => boolean,
+  disableDates?: (any) => boolean,
   disabled?: boolean,
-  testId?: string
-}
+  testId?: string,
+};
 
 const CustomDatePicker = (props: DatePickerProps) => {
   return (
@@ -31,7 +31,7 @@ const CustomDatePicker = (props: DatePickerProps) => {
         />
       </div>
     </FormItem>
-  )
-}
+  );
+};
 
-export default CustomDatePicker
+export default CustomDatePicker;

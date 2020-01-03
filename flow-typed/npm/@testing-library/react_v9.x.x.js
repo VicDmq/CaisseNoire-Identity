@@ -1,3 +1,4 @@
+// @flow
 // flow-typed signature: 7444933b9e903ea67a34afedd3c2725f
 // flow-typed version: 452cd002ef/@testing-library/react_v9.x.x/flow_>=v0.104.x
 
@@ -10,14 +11,9 @@ declare module '@testing-library/react' {
   };
   // This type comes from
   // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L116
-  declare type ReactDOMTestUtilsAct = (
-    callback: () => void | ReactDOMTestUtilsThenable
-  ) => ReactDOMTestUtilsThenable;
+  declare type ReactDOMTestUtilsAct = (callback: () => void | ReactDOMTestUtilsThenable) => ReactDOMTestUtilsThenable;
 
-  declare type TextMatch =
-    | string
-    | RegExp
-    | ((content: string, element: HTMLElement) => boolean);
+  declare type TextMatch = string | RegExp | ((content: string, element: HTMLElement) => boolean);
 
   declare type TextMatchOptions = {
     exact?: boolean,
@@ -31,35 +27,17 @@ declare module '@testing-library/react' {
     ...
   } & TextMatchOptions;
 
-  declare type GetByText = (
-    text: TextMatch,
-    options?: SelectorMatchOptions
-  ) => HTMLElement;
+  declare type GetByText = (text: TextMatch, options?: SelectorMatchOptions) => HTMLElement;
 
-  declare type QueryByText = (
-    text: TextMatch,
-    options?: SelectorMatchOptions
-  ) => ?HTMLElement;
+  declare type QueryByText = (text: TextMatch, options?: SelectorMatchOptions) => ?HTMLElement;
 
-  declare type AllByText = (
-    text: TextMatch,
-    options?: SelectorMatchOptions
-  ) => Array<HTMLElement>;
+  declare type AllByText = (text: TextMatch, options?: SelectorMatchOptions) => Array<HTMLElement>;
 
-  declare type GetByBoundAttribute = (
-    text: TextMatch,
-    options?: TextMatchOptions
-  ) => HTMLElement;
+  declare type GetByBoundAttribute = (text: TextMatch, options?: TextMatchOptions) => HTMLElement;
 
-  declare type QueryByBoundAttribute = (
-    text: TextMatch,
-    options?: TextMatchOptions
-  ) => ?HTMLElement;
+  declare type QueryByBoundAttribute = (text: TextMatch, options?: TextMatchOptions) => ?HTMLElement;
 
-  declare type AllByBoundAttribute = (
-    text: TextMatch,
-    options?: TextMatchOptions
-  ) => Array<HTMLElement>;
+  declare type AllByBoundAttribute = (text: TextMatch, options?: TextMatchOptions) => Array<HTMLElement>;
 
   declare type GetsAndQueries = {|
     getByAltText: GetByBoundAttribute,
@@ -113,10 +91,7 @@ declare module '@testing-library/react' {
     queryAllByValue: AllByBoundAttribute,
   |};
 
-  declare type FireEvent<TInit> = (
-    element: HTMLElement,
-    eventProperties?: TInit
-  ) => boolean;
+  declare type FireEvent<TInit> = (element: HTMLElement, eventProperties?: TInit) => boolean;
 
   declare type Queries = { ... };
 
@@ -138,15 +113,9 @@ declare module '@testing-library/react' {
   |};
 
   declare module.exports: {
-    render(
-      ui: React.ReactElement<any>,
-      options?: $Diff<RenderOptions<>, {| queries: any |}>
-    ): RenderResult<>,
+    render(ui: React.ReactElement<any>, options?: $Diff<RenderOptions<>, {| queries: any |}>): RenderResult<>,
 
-    render<Q: Queries>(
-      ui: React.ReactElement<any>,
-      options?: RenderOptions<Q>
-    ): RenderResult<Q>,
+    render<Q: Queries>(ui: React.ReactElement<any>, options?: RenderOptions<Q>): RenderResult<Q>,
 
     act: ReactDOMTestUtilsAct,
     cleanup: () => void,
@@ -156,7 +125,7 @@ declare module '@testing-library/react' {
         timeout?: number,
         interval?: number,
         ...
-      }
+      },
     ) => Promise<void>,
     waitForDomChange: <T>(options?: {
       container?: HTMLElement,
@@ -171,12 +140,18 @@ declare module '@testing-library/react' {
         timeout?: number,
         mutationObserverOptions?: MutationObserverInit,
         ...
-      }
+      },
     ) => Promise<T>,
-    within: (
-      element: HTMLElement,
-      queriesToBind?: GetsAndQueries | Array<GetsAndQueries>
-    ) => GetsAndQueries,
+    waitForElementToBeRemoved: <T>(
+      callback?: () => T,
+      options?: {
+        container?: HTMLElement,
+        timeout?: number,
+        mutationObserverOptions?: MutationObserverInit,
+        ...
+      },
+    ) => Promise<T>,
+    within: (element: HTMLElement, queriesToBind?: GetsAndQueries | Array<GetsAndQueries>) => GetsAndQueries,
     fireEvent: {|
       (element: HTMLElement, event: Event): void,
 
@@ -251,56 +226,24 @@ declare module '@testing-library/react' {
       transitionEnd: FireEvent<Event$Init>,
     |},
     // dom-testing-library re-exports
-    queryByTestId: (
-      container: HTMLElement,
-      id: TextMatch,
-      options?: TextMatchOptions
-    ) => ?HTMLElement,
-    getByTestId: (
-      container: HTMLElement,
-      id: TextMatch,
-      options?: TextMatchOptions
-    ) => HTMLElement,
-    queryByText: (
-      container: HTMLElement,
-      text: TextMatch,
-      options?: TextMatchOptions
-    ) => ?HTMLElement,
+    queryByTestId: (container: HTMLElement, id: TextMatch, options?: TextMatchOptions) => ?HTMLElement,
+    getByTestId: (container: HTMLElement, id: TextMatch, options?: TextMatchOptions) => HTMLElement,
+    queryByText: (container: HTMLElement, text: TextMatch, options?: TextMatchOptions) => ?HTMLElement,
     getByText: (
       container: HTMLElement,
       text: TextMatch,
-      options?: { selector?: string, ... } & TextMatchOptions
+      options?: { selector?: string, ... } & TextMatchOptions,
     ) => HTMLElement,
-    queryByPlaceholderText: (
-      container: HTMLElement,
-      text: TextMatch,
-      options?: TextMatchOptions
-    ) => ?HTMLElement,
-    getByPlaceholderText: (
-      container: HTMLElement,
-      text: TextMatch,
-      options?: TextMatchOptions
-    ) => HTMLElement,
-    queryByLabelText: (
-      container: HTMLElement,
-      text: TextMatch,
-      options?: TextMatchOptions
-    ) => ?HTMLElement,
+    queryByPlaceholderText: (container: HTMLElement, text: TextMatch, options?: TextMatchOptions) => ?HTMLElement,
+    getByPlaceholderText: (container: HTMLElement, text: TextMatch, options?: TextMatchOptions) => HTMLElement,
+    queryByLabelText: (container: HTMLElement, text: TextMatch, options?: TextMatchOptions) => ?HTMLElement,
     getByLabelText: (
       container: HTMLElement,
       text: TextMatch,
-      options?: { selector?: string, ... } & TextMatchOptions
+      options?: { selector?: string, ... } & TextMatchOptions,
     ) => HTMLElement,
-    queryByAltText: (
-      container: HTMLElement,
-      text: TextMatch,
-      options?: TextMatchOptions
-    ) => ?HTMLElement,
-    getByAltText: (
-      container: HTMLElement,
-      text: TextMatch,
-      options?: TextMatchOptions
-    ) => HTMLElement,
+    queryByAltText: (container: HTMLElement, text: TextMatch, options?: TextMatchOptions) => ?HTMLElement,
+    getByAltText: (container: HTMLElement, text: TextMatch, options?: TextMatchOptions) => HTMLElement,
     ...
   };
 }

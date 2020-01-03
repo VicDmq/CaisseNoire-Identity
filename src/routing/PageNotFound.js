@@ -1,7 +1,7 @@
 // @flow
-import React from 'react'
-import { Result, Row, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Result, Row, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
   return (
@@ -17,7 +17,7 @@ const PageNotFound = () => {
         }
       />
     </Row>
-  )
-}
+  );
+};
 
-export default PageNotFound
+export default PageNotFound;

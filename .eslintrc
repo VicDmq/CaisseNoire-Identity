@@ -1,0 +1,32 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+
+  "parser": "babel-eslint",
+
+  "settings": {
+    "react": {
+      "version": "detect",
+      "flowVersion": "0.109.0"
+    }
+  },
+
+  "plugins": ["prettier", "react", "flowtype", "testing-library", "jest-dom"],
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended",
+    "plugin:testing-library/recommended",
+    "plugin:jest-dom/recommended"
+  ],
+
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "error"
+  }
+}
