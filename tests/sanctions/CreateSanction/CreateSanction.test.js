@@ -259,13 +259,13 @@ describe('SanctionForm', () => {
     );
 
     expect(queryAllByTestId('extra-info-input')).toHaveLength(3);
-    getByText(`Détails (${users[0].nickname})`);
-    getByText(`Détails (${users[1].nickname})`);
+    getByText(`Détails (${users[0].nickname || ''})`);
+    getByText(`Détails (${users[1].nickname || ''})`);
     getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`);
 
     fireEvent.click(deleteIcons[0]);
     expect(queryAllByTestId('extra-info-input')).toHaveLength(2);
-    getByText(`Détails (${users[1].nickname})`);
+    getByText(`Détails (${users[1].nickname || ''})`);
     getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`);
 
     fireEvent.click(deleteIcons[1]);
@@ -325,7 +325,7 @@ describe('SanctionForm', () => {
     expect(createSanctionsMock.mock.calls[0][0][0]['created_at']).toBe(undefined);
   });
 
-  it('Sends sanctions without date if none has been selected', async () => {
+  it('Sends sanctions with date if one has been selected', async () => {
     const createSanctionsMock = jest.fn();
 
     const { getAllByRole, getByRole, getByTestId } = render(
@@ -348,8 +348,6 @@ describe('SanctionForm', () => {
 
     fireEvent.click(dateCell);
 
-    const date = moment(dateInput.value, 'dddd D MMMM');
-
     await waitForElementToBeRemoved(() => getAllByRole('gridcell'));
 
     const saveButton = getByRole('button');
@@ -357,6 +355,9 @@ describe('SanctionForm', () => {
     fireEvent.click(saveButton);
 
     expect(createSanctionsMock).toHaveBeenCalled();
-    expect(createSanctionsMock.mock.calls[0][0][0]['created_at']).toBe(date.format('YYYY-MM-DD'));
+
+    const created_at = moment(createSanctionsMock.mock.calls[0][0][0]['created_at'], 'YYYY-MM-DD');
+
+    expect(created_at.format('dddd D MMMM')).toBe(dateInput.getAttribute('value'));
   });
 });

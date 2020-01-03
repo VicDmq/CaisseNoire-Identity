@@ -142,6 +142,15 @@ declare module '@testing-library/react' {
         ...
       },
     ) => Promise<T>,
+    waitForElementToBeRemoved: <T>(
+      callback?: () => T,
+      options?: {
+        container?: HTMLElement,
+        timeout?: number,
+        mutationObserverOptions?: MutationObserverInit,
+        ...
+      },
+    ) => Promise<T>,
     within: (element: HTMLElement, queriesToBind?: GetsAndQueries | Array<GetsAndQueries>) => GetsAndQueries,
     fireEvent: {|
       (element: HTMLElement, event: Event): void,
