@@ -1,21 +1,21 @@
 // @flow
-import React, { useState } from 'react'
-import { Icon, Button } from 'antd'
+import React, { useState } from 'react';
+import { Icon, Button } from 'antd';
 
-import { RuleCategoryText } from '@Text/rule'
-import { formatDate } from '@Text/date'
-import STYLES from './styles.less'
+import { RuleCategoryText } from '@Text/rule';
+import { formatDate } from '@Text/date';
+import STYLES from './styles.less';
 
 export type ListItemProps = {
   rule: ?Rule,
   user: User,
   sanction: Sanction,
-  showDeleteConfirm: Uuid => void,
-  isAdmin: boolean
-}
+  showDeleteConfirm: (Uuid) => void,
+  isAdmin: boolean,
+};
 
 export const SanctionListItem = (props: ListItemProps) => {
-  const [isExtended, setisExtended] = useState<boolean>(false)
+  const [isExtended, setisExtended] = useState<boolean>(false);
 
   return (
     <div className={STYLES.listItemContainer} test-id='sanction-list-item'>
@@ -63,5 +63,5 @@ export const SanctionListItem = (props: ListItemProps) => {
         {props.rule && <div className={STYLES.ruleDescription}>{props.rule.description}</div>}
       </div>
     </div>
-  )
-}
+  );
+};

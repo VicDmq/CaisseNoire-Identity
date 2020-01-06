@@ -1,59 +1,59 @@
 // @flow
-import React from 'react'
-import { Select } from 'antd'
+import React from 'react';
+import { Select } from 'antd';
 
-import FormItem from '../FormItem/FormItem'
+import FormItem from '../FormItem/FormItem';
 
 export type OptionProps = {
   value: Uuid,
-  label: string
-}
+  label: string,
+};
 
 export type CommonSelectProps = {|
   label: string,
   options: OptionProps[],
   required?: boolean,
-  disabled?: boolean
-|}
+  disabled?: boolean,
+|};
 
 type SelectProps<T> = {
   value: ?T,
   onChange: (?T) => void,
   multiple: boolean,
-  ...CommonSelectProps
-}
+  ...CommonSelectProps,
+};
 
-function CommonSelect<T> (props: SelectProps<T>) {
+function CommonSelect<T>(props: SelectProps<T>) {
   const showError = () => {
     if (!props.disabled && props.required) {
       if (props.multiple) {
-        return !props.value || (Array.isArray(props.value) && props.value.length) === 0
+        return !props.value || (Array.isArray(props.value) && props.value.length) === 0;
       } else {
-        return !props.value
+        return !props.value;
       }
     }
 
-    return false
-  }
+    return false;
+  };
 
-  const shouldBeHidden = option => {
+  const shouldBeHidden = (option) => {
     if (
       (Array.isArray(props.value) && props.value.includes(option.value)) ||
       (props.value && props.value === option.value)
     ) {
-      return true
+      return true;
     }
 
-    return false
-  }
+    return false;
+  };
 
   const mapOptions = () => {
     return props.options.map((option, i) => (
       <Select.Option value={option.value} key={i} hidden={shouldBeHidden(option)}>
         {option.label}
       </Select.Option>
-    ))
-  }
+    ));
+  };
 
   return (
     <FormItem label={props.label} error={showError()} disabled={props.disabled}>
@@ -70,7 +70,7 @@ function CommonSelect<T> (props: SelectProps<T>) {
         {mapOptions()}
       </Select>
     </FormItem>
-  )
+  );
 }
 
-export default CommonSelect
+export default CommonSelect;

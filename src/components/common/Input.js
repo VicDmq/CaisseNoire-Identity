@@ -1,20 +1,20 @@
 // @flow
-import React from 'react'
-import { Input } from 'antd'
+import React from 'react';
+import { Input } from 'antd';
 
-import FormItem from './FormItem/FormItem'
+import FormItem from './FormItem/FormItem';
 
 type InputProps = {
   label: string,
-  value: string,
-  onChange: string => void,
+  value: ?string,
+  onChange: (string) => void,
   disabled?: boolean,
   password?: boolean,
-  testId?: string
-}
+  testId?: string,
+};
 
-const CustomInput = (props: any) => {
-  const InputType = props.password ? Input.Password : Input
+const CustomInput = (props: InputProps) => {
+  const InputType = props.password ? Input.Password : Input;
 
   return (
     <FormItem disabled={props.disabled} label={props.label}>
@@ -25,7 +25,7 @@ const CustomInput = (props: any) => {
         test-id={props.testId}
       />
     </FormItem>
-  )
-}
+  );
+};
 
-export default CustomInput
+export default CustomInput;

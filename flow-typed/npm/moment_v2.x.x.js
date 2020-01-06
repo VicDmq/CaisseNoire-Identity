@@ -1,3 +1,4 @@
+// @flow
 // flow-typed signature: 68d2034cfbd1f67c19c3d0adb9e67928
 // flow-typed version: e56c0337dc/moment_v2.x.x/flow_>=v0.104.x
 
@@ -25,7 +26,7 @@ type moment$MomentOptions = {
   millisecond?: number | string,
   milliseconds?: number | string,
   ...
-}
+};
 
 type moment$MomentObject = {
   years: number,
@@ -36,7 +37,7 @@ type moment$MomentObject = {
   seconds: number,
   milliseconds: number,
   ...
-}
+};
 
 type moment$MomentCreationData = {
   input: string,
@@ -45,9 +46,9 @@ type moment$MomentCreationData = {
   isUTC: boolean,
   strict: boolean,
   ...
-}
+};
 
-type moment$CalendarFormat = string | ((moment: moment$Moment) => string)
+type moment$CalendarFormat = string | ((moment: moment$Moment) => string);
 
 type moment$CalendarFormats = {
   sameDay?: moment$CalendarFormat,
@@ -57,9 +58,9 @@ type moment$CalendarFormats = {
   lastWeek?: moment$CalendarFormat,
   sameElse?: moment$CalendarFormat,
   ...
-}
+};
 
-type moment$Inclusivity = '()' | '[)' | '()' | '(]' | '[]'
+type moment$Inclusivity = '()' | '[)' | '()' | '(]' | '[]';
 
 declare class moment$LocaleData {
   months(moment: moment$Moment): string;
@@ -73,20 +74,14 @@ declare class moment$LocaleData {
   isPM(date: string): boolean;
   meridiem(hours: number, minutes: number, isLower: boolean): string;
   calendar(
-    key:
-      | 'sameDay'
-      | 'nextDay'
-      | 'lastDay'
-      | 'nextWeek'
-      | 'prevWeek'
-      | 'sameElse',
-    moment: moment$Moment
+    key: 'sameDay' | 'nextDay' | 'lastDay' | 'nextWeek' | 'prevWeek' | 'sameElse',
+    moment: moment$Moment,
   ): string;
   relativeTime(
     number: number,
     withoutSuffix: boolean,
     key: 's' | 'm' | 'mm' | 'h' | 'hh' | 'd' | 'dd' | 'M' | 'MM' | 'y' | 'yy',
-    isFuture: boolean
+    isFuture: boolean,
   ): string;
   pastFuture(diff: any, relTime: string): string;
   ordinal(number: number): string;
@@ -116,10 +111,7 @@ declare class moment$MomentDuration {
   years(): number;
   asYears(): number;
   add(value: number | moment$MomentDuration | { ... }, unit?: string): this;
-  subtract(
-    value: number | moment$MomentDuration | { ... },
-    unit?: string
-  ): this;
+  subtract(value: number | moment$MomentDuration | { ... }, unit?: string): this;
   as(unit: string): number;
   get(unit: string): number;
   toJSON(): string;
@@ -130,6 +122,7 @@ declare class moment$Moment {
   static ISO_8601: string;
   static (string?: ?string): moment$Moment;
   static (
+    // eslint-disable-next-line flowtype/space-after-type-colon
     initDate:
       | moment$MomentOptions
       | number
@@ -140,79 +133,29 @@ declare class moment$Moment {
       | null
       | void
       | []
-      | { ... }
+      | { ... },
   ): moment$Moment;
   static (array: []): moment$Moment;
   static (object: { ... }): moment$Moment;
   static (string: ?string, format: string | Array<string>): moment$Moment;
-  static (
-    string: ?string,
-    format: string | Array<string>,
-    strict: boolean
-  ): moment$Moment;
-  static (
-    string: ?string,
-    format: string | Array<string>,
-    locale: string
-  ): moment$Moment;
-  static (
-    string: ?string,
-    format: string | Array<string>,
-    locale: string,
-    strict: boolean
-  ): moment$Moment;
+  static (string: ?string, format: string | Array<string>, strict: boolean): moment$Moment;
+  static (string: ?string, format: string | Array<string>, locale: string): moment$Moment;
+  static (string: ?string, format: string | Array<string>, locale: string, strict: boolean): moment$Moment;
   static unix(seconds: number): moment$Moment;
   static utc(): moment$Moment;
   static utc(
-    initDate:
-      | moment$MomentOptions
-      | number
-      | Date
-      | Array<number>
-      | moment$Moment
-      | string
-      | null
-      | void
+    initDate: moment$MomentOptions | number | Date | Array<number> | moment$Moment | string | null | void,
   ): moment$Moment;
   static utc(string: string, format: string | Array<string>): moment$Moment;
-  static utc(
-    string: string,
-    format: string | Array<string>,
-    strict: boolean
-  ): moment$Moment;
-  static utc(
-    string: string,
-    format: string | Array<string>,
-    locale: string
-  ): moment$Moment;
-  static utc(
-    string: string,
-    format: string | Array<string>,
-    locale: string,
-    strict: boolean
-  ): moment$Moment;
+  static utc(string: string, format: string | Array<string>, strict: boolean): moment$Moment;
+  static utc(string: string, format: string | Array<string>, locale: string): moment$Moment;
+  static utc(string: string, format: string | Array<string>, locale: string, strict: boolean): moment$Moment;
   static parseZone(): moment$Moment;
   static parseZone(rawDate: string | null | void): moment$Moment;
-  static parseZone(
-    rawDate: string,
-    format: string | Array<string>
-  ): moment$Moment;
-  static parseZone(
-    rawDate: string,
-    format: string | Array<string>,
-    strict: boolean
-  ): moment$Moment;
-  static parseZone(
-    rawDate: string,
-    format: string | Array<string>,
-    locale: string
-  ): moment$Moment;
-  static parseZone(
-    rawDate: string,
-    format: string | Array<string>,
-    locale: string,
-    strict: boolean
-  ): moment$Moment;
+  static parseZone(rawDate: string, format: string | Array<string>): moment$Moment;
+  static parseZone(rawDate: string, format: string | Array<string>, strict: boolean): moment$Moment;
+  static parseZone(rawDate: string, format: string | Array<string>, locale: string): moment$Moment;
+  static parseZone(rawDate: string, format: string | Array<string>, locale: string, strict: boolean): moment$Moment;
   isValid(): boolean;
   invalidAt(): 0 | 1 | 2 | 3 | 4 | 5 | 6;
   creationData(): moment$MomentCreationData;
@@ -277,41 +220,21 @@ declare class moment$Moment {
   static max(dates: Array<moment$Moment>): moment$Moment;
   static min(...dates: Array<moment$Moment>): moment$Moment;
   static min(dates: Array<moment$Moment>): moment$Moment;
-  add(
-    value: number | moment$MomentDuration | moment$Moment | { ... },
-    unit?: string
-  ): this;
-  subtract(
-    value: number | moment$MomentDuration | moment$Moment | string | { ... },
-    unit?: string
-  ): this;
+  add(value: number | moment$MomentDuration | moment$Moment | { ... }, unit?: string): this;
+  subtract(value: number | moment$MomentDuration | moment$Moment | string | { ... }, unit?: string): this;
   startOf(unit: string): this;
   endOf(unit: string): this;
   local(): this;
   utc(): this;
-  utcOffset(
-    offset: number | string,
-    keepLocalTime?: boolean,
-    keepMinutes?: boolean
-  ): this;
+  utcOffset(offset: number | string, keepLocalTime?: boolean, keepMinutes?: boolean): this;
   utcOffset(): number;
   format(format?: string): string;
   fromNow(removeSuffix?: boolean): string;
-  from(
-    value: moment$Moment | string | number | Date | Array<number>,
-    removePrefix?: boolean
-  ): string;
+  from(value: moment$Moment | string | number | Date | Array<number>, removePrefix?: boolean): string;
   toNow(removePrefix?: boolean): string;
-  to(
-    value: moment$Moment | string | number | Date | Array<number>,
-    removePrefix?: boolean
-  ): string;
+  to(value: moment$Moment | string | number | Date | Array<number>, removePrefix?: boolean): string;
   calendar(refTime?: any, formats?: moment$CalendarFormats): string;
-  diff(
-    date: moment$Moment | string | number | Date | Array<number>,
-    format?: string,
-    floating?: boolean
-  ): number;
+  diff(date: moment$Moment | string | number | Date | Array<number>, format?: string, floating?: boolean): number;
   valueOf(): number;
   unix(): number;
   daysInMonth(): number;
@@ -320,31 +243,16 @@ declare class moment$Moment {
   toJSON(): string;
   toISOString(keepOffset?: boolean): string;
   toObject(): moment$MomentObject;
-  isBefore(
-    date?: moment$Moment | string | number | Date | Array<number>,
-    units?: ?string
-  ): boolean;
-  isSame(
-    date?: moment$Moment | string | number | Date | Array<number>,
-    units?: ?string
-  ): boolean;
-  isAfter(
-    date?: moment$Moment | string | number | Date | Array<number>,
-    units?: ?string
-  ): boolean;
-  isSameOrBefore(
-    date?: moment$Moment | string | number | Date | Array<number>,
-    units?: ?string
-  ): boolean;
-  isSameOrAfter(
-    date?: moment$Moment | string | number | Date | Array<number>,
-    units?: ?string
-  ): boolean;
+  isBefore(date?: moment$Moment | string | number | Date | Array<number>, units?: ?string): boolean;
+  isSame(date?: moment$Moment | string | number | Date | Array<number>, units?: ?string): boolean;
+  isAfter(date?: moment$Moment | string | number | Date | Array<number>, units?: ?string): boolean;
+  isSameOrBefore(date?: moment$Moment | string | number | Date | Array<number>, units?: ?string): boolean;
+  isSameOrAfter(date?: moment$Moment | string | number | Date | Array<number>, units?: ?string): boolean;
   isBetween(
     from: moment$Moment | string | number | Date | Array<number>,
     to: moment$Moment | string | number | Date | Array<number>,
     units?: string,
-    inclusivity?: moment$Inclusivity
+    inclusivity?: moment$Inclusivity,
   ): boolean;
   isDST(): boolean;
   isDSTShifted(): boolean;
@@ -371,17 +279,14 @@ declare class moment$Moment {
   static weekdaysMin(): string;
   static localeData(key?: string): moment$LocaleData;
   localeData(): moment$LocaleData;
-  static duration(
-    value: number | { ... } | string,
-    unit?: string
-  ): moment$MomentDuration;
+  static duration(value: number | { ... } | string, unit?: string): moment$MomentDuration;
   static isDuration(obj: any): boolean;
   static normalizeUnits(unit: string): string;
   static invalid(object: any): moment$Moment;
 }
 
 declare module 'moment' {
-  declare module.exports: Class<moment$Moment>
+  declare module.exports: Class<moment$Moment>;
 
-  declare type Moment = moment$Moment
+  declare type Moment = moment$Moment;
 }

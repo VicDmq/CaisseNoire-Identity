@@ -1,8 +1,9 @@
+// @flow
 // flow-typed signature: 6fec5b4e21c8baf8cacdb478858d70d4
 // flow-typed version: d3e793ba45/antd_v3.x.x/flow_>=v0.104.x
 
 declare module 'antd' {
-  import type { Node, Component } from 'react'
+  import type { Node, Component } from 'react';
 
   declare export class ConfigProvider extends React$Component<{}> {}
 
@@ -10,22 +11,18 @@ declare module 'antd' {
     destroy: () => void,
     update: (args: modalFnArguments) => void,
     ...
-  }
+  };
 
-  declare type messageFn<TReturn> = (
-    content: React$Node,
-    duration?: number,
-    onClose?: () => mixed
-  ) => TReturn
+  declare type messageFn<TReturn> = (content: React$Node, duration?: number, onClose?: () => mixed) => TReturn;
 
   declare type modalFnArguments = {
     title?: string,
     content?: React$Node,
     onOk?: () => mixed,
     ...
-  }
+  };
 
-  declare function modalFn(args: modalFnArguments): ModalReference
+  declare function modalFn(args: modalFnArguments): ModalReference;
 
   declare export class Affix extends React$Component<{ ... }> {}
 
@@ -43,7 +40,7 @@ declare module 'antd' {
         ...
       }
     | React$Element<typeof SelectOption>
-    | React$Element<typeof SelectOptGroup>
+    | React$Element<typeof SelectOptGroup>;
 
   declare export type AutoCompleteProps<T = SelectValue> = {
     allowClear?: boolean,
@@ -65,11 +62,9 @@ declare module 'antd' {
     onSearch?: (value: string) => void,
     onSelect?: (value: T, option: React$Node) => void,
     ...
-  }
+  };
 
-  declare export class AutoComplete<T = SelectValue> extends React$Component<
-    AutoCompleteProps<T>
-  > {
+  declare export class AutoComplete<T = SelectValue> extends React$Component<AutoCompleteProps<T>> {
     static Option: typeof SelectOption;
     static OptGroup: typeof SelectOptGroup;
   }
@@ -90,7 +85,7 @@ declare module 'antd' {
     onClick?: (event: SyntheticEvent<HTMLButtonElement>) => void,
     block?: boolean,
     ...
-  }
+  };
 
   declare export class Button extends React$Component<ButtonProps> {
     static Group: typeof ButtonGroup;
@@ -110,7 +105,7 @@ declare module 'antd' {
 
   declare export class Col extends React$Component<{ ... }> {}
 
-  declare export type DatePickerProps = { ... }
+  declare export type DatePickerProps = { ... };
 
   declare export class DatePicker extends React$Component<DatePickerProps> {
     static RangePicker: typeof DatePicker$RangePicker;
@@ -163,7 +158,7 @@ declare module 'antd' {
     label: string,
     children?: CascaderOption[],
     ...
-  }
+  };
 
   declare export type CascaderProps = {
     allowClear?: boolean,
@@ -183,17 +178,17 @@ declare module 'antd' {
     size?: 'large' | 'default' | 'small',
     value?: string[],
     ...
-  }
+  };
 
   declare export class Cascader extends React$Component<CascaderProps> {}
 
   declare export class Col extends React$Component<{ ... }> {}
 
-  declare export type CollapsePanelProps = { ... }
+  declare export type CollapsePanelProps = { ... };
 
   declare class CollapsePanel extends React$Component<CollapsePanelProps> {}
 
-  declare export type CollapseProps = { ... }
+  declare export type CollapseProps = { ... };
 
   declare export class Collapse extends React$Component<CollapseProps> {
     static Panel: typeof CollapsePanel;
@@ -215,17 +210,11 @@ declare module 'antd' {
     required?: boolean,
     transform?: (value: mixed) => mixed,
     type?: string,
-    validator?: (
-      rule: mixed,
-      value: mixed,
-      callback: mixed,
-      source?: mixed,
-      options?: mixed
-    ) => mixed,
+    validator?: (rule: mixed, value: mixed, callback: mixed, source?: mixed, options?: mixed) => mixed,
     whitespace?: boolean,
     ...
-  }
-  declare type ValidateCallback = (erros: mixed, values: mixed) => void
+  };
+  declare type ValidateCallback = (erros: mixed, values: mixed) => void;
   declare type GetFieldDecoratorOptions = {
     exclusive?: boolean,
     getValueFromEvent?: (...args: mixed[]) => mixed,
@@ -237,13 +226,10 @@ declare module 'antd' {
     validateTrigger?: string | string[],
     valuePropName?: string,
     ...
-  }
+  };
 
   declare export type WrappedFormUtils = {
-    getFieldDecorator(
-      id: string,
-      options?: GetFieldDecoratorOptions
-    ): (node: React$Node) => React$Node,
+    getFieldDecorator(id: string, options?: GetFieldDecoratorOptions): (node: React$Node) => React$Node,
     getFieldError(name: string): mixed[],
     getFieldsError(names?: Array<string>): mixed,
     getFieldsValue(fieldNames?: Array<string>): mixed,
@@ -255,32 +241,15 @@ declare module 'antd' {
     setFields(obj: Object): void,
     setFieldsValue(obj: Object): void,
     validateFields(callback: ValidateCallback): mixed,
-    validateFields(
-      fieldNames: Array<string>,
-      callback: ValidateCallback
-    ): mixed,
-    validateFields(
-      fieldNames: Array<string>,
-      options: Object,
-      callback: ValidateCallback
-    ): mixed,
+    validateFields(fieldNames: Array<string>, callback: ValidateCallback): mixed,
+    validateFields(fieldNames: Array<string>, options: Object, callback: ValidateCallback): mixed,
     validateFields(options: Object, callback: ValidateCallback): mixed,
-    validateFieldsAndScroll(
-      fieldNames?: Array<string>,
-      options?: Object,
-      callback?: ValidateCallback
-    ): void,
+    validateFieldsAndScroll(fieldNames?: Array<string>, options?: Object, callback?: ValidateCallback): void,
     validateFieldsAndScroll(callback?: ValidateCallback): void,
-    validateFieldsAndScroll(
-      fieldNames?: Array<string>,
-      callback?: ValidateCallback
-    ): void,
-    validateFieldsAndScroll(
-      options?: Object,
-      callback?: ValidateCallback
-    ): void,
+    validateFieldsAndScroll(fieldNames?: Array<string>, callback?: ValidateCallback): void,
+    validateFieldsAndScroll(options?: Object, callback?: ValidateCallback): void,
     ...
-  }
+  };
 
   declare interface RcBaseFormProps {
     wrappedComponentRef?: any;
@@ -291,8 +260,8 @@ declare module 'antd' {
   }
 
   declare type FormWrappedProps<T> = <C: React$ComponentType<T>>(
-    component: C
-  ) => React$ComponentType<$Diff<T, { form: *, ... }>>
+    component: C,
+  ) => React$ComponentType<$Diff<T, { form: *, ... }>>;
 
   declare export type FormProps = {
     className?: string,
@@ -306,7 +275,7 @@ declare module 'antd' {
     style?: $Shape<CSSStyleDeclaration>,
     vertical?: boolean,
     ...
-  }
+  };
 
   declare export type FormCreateOption<T> = {
     onFieldsChange?: (props: T, fields: Array<mixed>) => void,
@@ -314,12 +283,12 @@ declare module 'antd' {
     mapPropsToFields?: (props: T) => void,
     withRef?: boolean,
     ...
-  }
+  };
 
   declare export class Form extends React$Component<FormProps> {
     static Item: typeof FormItem;
     static create: <TOwnProps: FormComponentProps>(
-      options?: FormCreateOption<TOwnProps>
+      options?: FormCreateOption<TOwnProps>,
     ) => FormWrappedProps<TOwnProps>;
   }
 
@@ -328,11 +297,11 @@ declare module 'antd' {
     extra?: React$Node,
     validateStatus?: 'success' | 'warning' | 'error' | 'validating' | '',
     ...
-  }
+  };
 
   declare class FormItem extends React$Component<FormItemProps> {}
 
-  declare export type RangePickerProps = { ... }
+  declare export type RangePickerProps = { ... };
 
   declare export class DatePicker$RangePicker extends React$Component<RangePickerProps> {}
 
@@ -344,7 +313,7 @@ declare module 'antd' {
     onBlur?: (event: SyntheticFocusEvent<HTMLInputElement>) => mixed,
     onChange?: (event: any) => mixed,
     ...
-  }
+  };
 
   declare export class Input extends React$Component<InputProps> {
     static Search: typeof InputSearch;
@@ -358,7 +327,7 @@ declare module 'antd' {
 
   declare class InputTextArea extends React$Component<{ ... }> {}
 
-  declare type InputPasswordProps = { visibilityToggle?: boolean, ... }
+  declare type InputPasswordProps = { visibilityToggle?: boolean, ... };
 
   // Added in 3.12.0
   declare class InputPassword extends React$Component<InputPasswordProps> {}
@@ -378,7 +347,7 @@ declare module 'antd' {
 
   declare class LayoutSider extends React$Component<{ ... }> {}
 
-  declare export type ListItemProps = { ... }
+  declare export type ListItemProps = { ... };
 
   declare export class ListItem extends React$Component<ListItemProps> {
     static Meta: typeof Meta;
@@ -399,7 +368,7 @@ declare module 'antd' {
       ...
     }) => mixed,
     ...
-  }
+  };
 
   declare export class Menu extends React$Component<MenuProps> {
     static Item: typeof MenuItem;
@@ -439,11 +408,7 @@ declare module 'antd' {
     defaultCurrent?: number,
     defaultPageSize?: number,
     hideOnSinglePage?: boolean,
-    itemRender?: (
-      page: number,
-      type: 'page' | 'prev' | 'next',
-      originalElement: React$Node
-    ) => React$Node,
+    itemRender?: (page: number, type: 'page' | 'prev' | 'next', originalElement: React$Node) => React$Node,
     pageSize?: number,
     pageSizeOptions?: string[],
     showQuickJumper?: boolean,
@@ -455,7 +420,7 @@ declare module 'antd' {
     onChange?: (page: number, pageSize: number) => void,
     onShowSizeChange?: (current: number, size: number) => void,
     ...
-  }
+  };
 
   declare export class Pagination extends React$Component<PaginationProps> {}
 
@@ -469,6 +434,7 @@ declare module 'antd' {
     mouseLeaveDelay?: number,
     overlayClassName?: string,
     overlayStyle?: $Shape<CSSStyleDeclaration>,
+    // eslint-disable-next-line flowtype/space-after-type-colon
     placement?:
       | 'top'
       | 'left'
@@ -487,7 +453,7 @@ declare module 'antd' {
     onVisibleChange?: (visible: boolean) => void,
     align?: AlignConfig,
     ...
-  }
+  };
 
   // for alignConfig value, antd documentation points to rc-tooltip docs,
   // which poits to https://github.com/yiminghe/dom-align
@@ -498,8 +464,8 @@ declare module 'antd' {
     overflow?: {| adjustX?: boolean, adjustY?: boolean |},
     useCssRight?: boolean,
     useCssBottom?: boolean,
-    useCssTransform: ?boolean
-  |}
+    useCssTransform: ?boolean,
+  |};
 
   declare export type PopconfirmProps = {
     cancelText?: string,
@@ -510,7 +476,7 @@ declare module 'antd' {
     onConfirm?: (event: SyntheticEvent<>) => void,
     icon?: React$Node,
     ...
-  } & TooltipSharedProps
+  } & TooltipSharedProps;
 
   declare export class Popconfirm extends React$Component<PopconfirmProps> {}
 
@@ -518,7 +484,7 @@ declare module 'antd' {
     content?: 'string' | React$Node,
     title?: 'string' | React$Node,
     ...
-  } & TooltipSharedProps
+  } & TooltipSharedProps;
 
   declare export class Popover extends React$Component<PopoverProps> {}
 
@@ -535,7 +501,7 @@ declare module 'antd' {
 
   declare export class Row extends React$Component<{ ... }> {}
 
-  declare export type SelectValue = string | string[] | number | number[]
+  declare export type SelectValue = string | string[] | number | number[];
 
   declare export type SelectProps<T = SelectValue> = {
     allowClear?: boolean,
@@ -575,11 +541,9 @@ declare module 'antd' {
     onSearch?: (value: string) => void,
     onSelect?: (value: T, option: React$Node) => void,
     ...
-  }
+  };
 
-  declare export class Select<T = SelectValue> extends React$Component<
-    SelectProps<T>
-  > {
+  declare export class Select<T = SelectValue> extends React$Component<SelectProps<T>> {
     static Option: typeof SelectOption;
     static OptGroup: typeof SelectOptGroup;
     blur: () => void;
@@ -593,7 +557,7 @@ declare module 'antd' {
     title?: string,
     value?: string | number,
     ...
-  }
+  };
 
   declare class SelectOption extends React$Component<SelectOptionProps> {}
 
@@ -601,7 +565,7 @@ declare module 'antd' {
     key?: string,
     label?: string | React$Node,
     ...
-  }
+  };
 
   declare class SelectOptGroup extends React$Component<SelectOptGroupProps> {}
 
@@ -613,7 +577,7 @@ declare module 'antd' {
     spinning?: boolean,
     tip?: string,
     ...
-  }
+  };
 
   declare export class Spin extends React$Component<SpinProps> {}
 
@@ -629,6 +593,7 @@ declare module 'antd' {
     current?: number,
     direction?: 'horizontal' | 'vertical',
     labelPlacement?: 'horizontal' | 'vertical',
+    // eslint-disable-next-line flowtype/space-after-type-colon
     progressDot?:
       | boolean
       | ((
@@ -639,7 +604,7 @@ declare module 'antd' {
             title: React$Node,
             description: React$Node,
             ...
-          }
+          },
         ) => React$Node),
     size?: 'default' | 'small',
     status?: 'wait' | 'process' | 'finish' | 'error',
@@ -663,7 +628,7 @@ declare module 'antd' {
   declare export type TooltipProps = {
     title: React$Node | (() => React$Node),
     ...
-  } & TooltipSharedProps
+  } & TooltipSharedProps;
 
   declare export class Tooltip extends React$Component<TooltipProps> {}
 
@@ -679,11 +644,7 @@ declare module 'antd' {
 
   declare export class UploadDragger extends React$Component<{ ... }> {}
 
-  declare export type NotificationPlacement =
-    | 'topLeft'
-    | 'topRight'
-    | 'bottomLeft'
-    | 'bottomRight'
+  declare export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
   declare export type NotificationConfigProps = {
     top?: number,
@@ -692,7 +653,7 @@ declare module 'antd' {
     placement?: NotificationPlacement,
     getContainer?: () => HTMLElement,
     ...
-  }
+  };
 
   declare export type NotificationProps = {
     message: React$Node,
@@ -712,7 +673,7 @@ declare module 'antd' {
     bottom?: number,
     getContainer?: () => HTMLElement,
     ...
-  }
+  };
 
   declare export class notification {
     static success: (NotificationProps) => void;

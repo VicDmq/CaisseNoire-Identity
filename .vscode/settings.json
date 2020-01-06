@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "flow.useNPMPackagedFlow": true,
+  "flow.logLevel": "error",
+  "flow.coverageSeverity": "error"
+}

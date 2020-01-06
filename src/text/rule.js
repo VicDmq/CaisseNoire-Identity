@@ -2,8 +2,8 @@
 
 export const RuleCategoryText: { [key: RuleCategory]: string } = {
   TRAINING_DAY: 'Entrainement',
-  GAME_DAY: 'Jour de match'
-}
+  GAME_DAY: 'Jour de match',
+};
 
 export const TimeUnitText: { [key: TimeUnit]: string } = {
   SECOND: 'Seconde',
@@ -12,5 +12,5 @@ export const TimeUnitText: { [key: TimeUnit]: string } = {
   DAY: 'Jour',
   WEEK: 'Semaine',
   MONTH: 'Mois',
-  YEAR: 'Année'
-}
+  YEAR: 'Année',
+};

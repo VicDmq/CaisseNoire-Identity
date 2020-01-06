@@ -1,28 +1,28 @@
 // @flow
-import React, { useState } from 'react'
-import { List, Modal, message } from 'antd'
+import React from 'react';
+import { List, Modal, message } from 'antd';
 
-import withConnect, { type Reason } from '@Components/utils/Connect'
-import { SanctionListItem, type ListItemProps } from './SanctionListItem'
+import withConnect from '@Components/utils/Connect';
+import { SanctionListItem, type ListItemProps } from './SanctionListItem';
 
-import STYLES from './styles.less'
+import STYLES from './styles.less';
 
 type DataProps = {
   team: Team,
   users: User[],
-  sanctions: Sanction[]
-}
+  sanctions: Sanction[],
+};
 
 type OtherProps = {
   deleteSanction: (Uuid, () => void, () => void) => void,
-  isAdmin: boolean
-}
+  isAdmin: boolean,
+};
 
-type SanctionListProps = DataProps & OtherProps
+type SanctionListProps = DataProps & OtherProps;
 
 export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }: SanctionListProps) => {
   const showDeleteConfirm = (sanction_id: Uuid) => {
-    const modal = Modal.confirm({})
+    const modal = Modal.confirm({});
 
     modal.update({
       centered: true,
@@ -32,50 +32,58 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
       okText: 'Oui',
       cancelText: 'Non',
       okType: 'danger',
-      onOk () {
-        return new Promise(function (resolve, reject) {
-          deleteSanction(sanction_id, () => resolve(), () => reject())
+      onOk() {
+        return new Promise(function(resolve, reject) {
+          deleteSanction(
+            sanction_id,
+            () => resolve(),
+            () => reject(),
+          );
         })
           .then(() => {
-            message.success('Sanction supprimée')
+            message.success('Sanction supprimée');
           })
           .catch(() => {
-            message.error('Impossible de supprimer cette sanction')
+            message.error('Impossible de supprimer cette sanction');
           })
           .finally(() => {
-            modal.destroy()
-          })
-      }
-    })
-  }
+            modal.destroy();
+          });
+      },
+    });
+  };
 
   const getDataSource = (): ListItemProps[] => {
-    let props: ListItemProps[] = []
+    let dataSource: ListItemProps[] = [];
 
     sanctions
       .sort((item1, item2) => {
-        return new Date(item2.created_at) - new Date(item1.created_at)
+        return new Date(item2.created_at) - new Date(item1.created_at);
       })
-      .forEach(sanction => {
-        const user = users.find(user => user.id === sanction.user_id)
+      .forEach((sanction) => {
+        const user = users.find((user) => user.id === sanction.user_id);
 
         if (user) {
-          props.push({
-            rule: team.rules.find(rule => rule.id === sanction.sanction_info.associated_rule),
+          dataSource.push({
+            rule: team.rules.find((rule) => rule.id === sanction.sanction_info.associated_rule),
             user,
             sanction,
             showDeleteConfirm,
-            isAdmin
-          })
+            isAdmin,
+          });
         }
-      })
+      });
 
-    return props
-  }
+    return dataSource;
+  };
 
   return (
-    <List dataSource={getDataSource()} renderItem={props => <SanctionListItem {...props} />} className={STYLES.list} />
-  )
-}
+    <List
+      dataSource={getDataSource()}
+      renderItem={(props) => <SanctionListItem {...props} />}
+      className={STYLES.list}
+    />
+  );
+};
 
-export default withConnect<DataProps, OtherProps>(SanctionList)
+export default withConnect<DataProps, OtherProps>(SanctionList);

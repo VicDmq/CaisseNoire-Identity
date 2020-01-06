@@ -1,20 +1,20 @@
 // @flow
-import React from 'react'
-import { Layout } from 'antd'
+import React from 'react';
+import { Layout } from 'antd';
 
-import Header from './Header/Header'
+import Header from './Header/Header';
 
-import type { RouteProps } from './routes'
-import type { SessionProps } from './Router'
+import type { RouteProps } from './routes';
+import type { SessionProps } from './Router';
 
-const { Content } = Layout
+const { Content } = Layout;
 
 type CustomRouteProps = {
   route: RouteProps,
   session: SessionProps,
   rootUrl: string,
-  deleteSession: () => void
-}
+  deleteSession: () => void,
+};
 
 const CustomRoute = ({ route, session, rootUrl, deleteSession }: CustomRouteProps) => {
   return (
@@ -24,7 +24,7 @@ const CustomRoute = ({ route, session, rootUrl, deleteSession }: CustomRouteProp
         <route.component teamId={session.teamId} isAdmin={session.isAdmin} rootUrl={rootUrl} />
       </Content>
     </Layout>
-  )
-}
+  );
+};
 
-export default CustomRoute
+export default CustomRoute;

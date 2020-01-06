@@ -1,72 +1,63 @@
-declare type Uuid = string
+// @flow
 
-declare type CustomDate = string
+declare type Uuid = string;
 
-type ApiError = {
+declare type CustomDate = string;
+
+declare type ApiError = {
   kind: ErrorKind,
-  description: string
-}
+  description: string,
+};
 
-type ErrorKind =
+declare type ErrorKind =
   | 'SERVICE_UNAVAILABLE'
   | 'UNKNOWN'
   | 'NOT_FOUND'
   | 'JSON'
   | 'BAD_REFERENCE'
   | 'DUPLICATED_FIELD'
-  | 'BAD_PARAMETER'
+  | 'BAD_PARAMETER';
 
 declare type Team = {
   id: Uuid,
   name: string,
-  rules: Rule[]
-}
+  rules: Rule[],
+};
 
 declare type Rule = {
   id: Uuid,
   name: string,
   description: string,
   category: RuleCategory,
-  kind: RuleKind
-}
+  kind: RuleKind,
+};
 
-declare type RuleCategory = 'TRAINING_DAY' | 'GAME_DAY'
+declare type RuleCategory = 'TRAINING_DAY' | 'GAME_DAY';
 
-declare type RuleKind =
-  | BasicKind
-  | MultiplicationKind
-  | TimeMultiplicationKind
-  | MonthlyKind
+declare type RuleKind = BasicKind | MultiplicationKind | TimeMultiplicationKind | MonthlyKind;
 
 declare type BasicKind = {
   type: 'BASIC',
-  price: number
-}
+  price: number,
+};
 
 declare type MultiplicationKind = {
   type: 'MULTIPLICATION',
-  price_to_multiply: number
-}
+  price_to_multiply: number,
+};
 
 declare type TimeMultiplicationKind = {
   type: 'TIME_MULTIPLICATION',
   price_per_time_unit: number,
-  time_unit: TimeUnit
-}
+  time_unit: TimeUnit,
+};
 
 declare type MonthlyKind = {
   type: 'MONTHLY',
-  price: number
-}
+  price: number,
+};
 
-declare type TimeUnit =
-  | 'SECOND'
-  | 'MINUTE'
-  | 'HOUR'
-  | 'DAY'
-  | 'WEEK'
-  | 'MONTH'
-  | 'YEAR'
+declare type TimeUnit = 'SECOND' | 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
 
 declare type User = {
   id: Uuid,
@@ -74,8 +65,8 @@ declare type User = {
   lastname: string,
   firstname: string,
   nickname: ?string,
-  email: ?string
-}
+  email: ?string,
+};
 
 declare type Sanction = {
   id: Uuid,
@@ -83,37 +74,37 @@ declare type Sanction = {
   user_id: Uuid,
   sanction_info: SanctionInfo,
   price: number,
-  created_at: CustomDate
-}
+  created_at: CustomDate,
+};
 
 declare type CreateSanction = {
   user_id: Uuid,
   sanction_info: SanctionInfo,
-  created_at: ?CustomDate
-}
+  created_at: ?CustomDate,
+};
 
 declare type SanctionInfo = {
   associated_rule: Uuid,
-  extra_info: ExtraInfo
-}
+  extra_info: ExtraInfo,
+};
 
-declare type ExtraInfo = None | Multiplication
+declare type ExtraInfo = None | Multiplication;
 
 declare type None = {
-  type: 'NONE'
-}
+  type: 'NONE',
+};
 
 declare type Multiplication = {
   type: 'MULTIPLICATION',
-  factor: number
-}
+  factor: number,
+};
 
 declare type LoginRequest = {
   name: string,
-  admin_password?: string
-}
+  admin_password?: string,
+};
 
 declare type LoginResponse = {
   id: Uuid,
-  admin_password?: string
-}
+  admin_password?: string,
+};

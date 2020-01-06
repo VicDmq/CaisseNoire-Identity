@@ -1,46 +1,46 @@
 // @flow
-import React, { useState } from 'react'
-import { render } from '@testing-library/react'
+import React from 'react';
+import { render } from '@testing-library/react';
 
-import NumericInput from '@Components/common/NumericInput/NumericInput'
+import NumericInput from '@Components/common/NumericInput/NumericInput';
 
 describe('NumericInput', () => {
   it('Calls onChange when input is undefined or not a number', () => {
-    const onChange = jest.fn()
+    const onChange = jest.fn();
 
-    let badInput: any = 'badInput'
+    let badInput: any = 'badInput';
 
-    const { rerender } = render(<NumericInput value={badInput} onChange={onChange} label='' />)
+    const { rerender } = render(<NumericInput value={badInput} onChange={onChange} label='' />);
 
-    expect(onChange).toHaveBeenCalled()
+    expect(onChange).toHaveBeenCalled();
 
-    onChange.mockReset()
+    onChange.mockReset();
 
-    badInput = undefined
+    badInput = undefined;
 
-    rerender(<NumericInput value={badInput} onChange={onChange} label='' />)
+    rerender(<NumericInput value={badInput} onChange={onChange} label='' />);
 
-    expect(onChange).toHaveBeenCalled()
-  })
+    expect(onChange).toHaveBeenCalled();
+  });
 
   it('Calls onChange with min (if defined) when input is incorrect', () => {
-    const min = 1
-    const onChange = jest.fn()
+    const min = 1;
+    const onChange = jest.fn();
 
-    const badInput: any = undefined
+    const badInput: any = undefined;
 
-    render(<NumericInput value={badInput} onChange={onChange} label='' min={min} />)
+    render(<NumericInput value={badInput} onChange={onChange} label='' min={min} />);
 
-    expect(onChange).toHaveBeenLastCalledWith(min)
-  })
+    expect(onChange).toHaveBeenLastCalledWith(min);
+  });
 
   it('Calls onChange with 0 when input is incorrect and min is undefined', () => {
-    const onChange = jest.fn()
+    const onChange = jest.fn();
 
-    const badInput: any = undefined
+    const badInput: any = undefined;
 
-    render(<NumericInput value={badInput} onChange={onChange} label='' />)
+    render(<NumericInput value={badInput} onChange={onChange} label='' />);
 
-    expect(onChange).toHaveBeenLastCalledWith(0)
-  })
-})
+    expect(onChange).toHaveBeenLastCalledWith(0);
+  });
+});
