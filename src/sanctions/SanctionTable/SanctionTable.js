@@ -1,9 +1,11 @@
 // @flow
 import React, { useState } from 'react';
-import { Table, DatePicker } from 'antd';
+import { Table } from 'antd';
 import moment, { type Moment } from 'moment';
 
 import withConnect from '@Components/utils/Connect';
+import MonthPicker from '@Components/common/MonthPicker/MonthPicker';
+import columns from './columns';
 
 type DataProps = {
   team: Team,
@@ -11,49 +13,14 @@ type DataProps = {
   sanctions: Sanction[],
 };
 
-const columns = [
-  {
-    title: 'Nom',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Cotisations',
-    dataIndex: 'cotisations',
-    key: 'cotisations',
-    onCell: () => {
-      return {
-        'test-id': 'cotisation',
-      };
-    },
-  },
-  {
-    title: 'Sanctions',
-    dataIndex: 'sanctions',
-    key: 'sanctions',
-    onCell: () => {
-      return {
-        'test-id': 'sanction',
-      };
-    },
-  },
-  {
-    title: 'Total',
-    dataIndex: 'total',
-    key: 'total',
-    onCell: () => {
-      return {
-        'test-id': 'total',
-      };
-    },
-  },
-];
-
-// $FlowFixMe
-const { MonthPicker } = DatePicker;
-
 export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
   const [month, setMonth] = useState<Moment>(moment());
+
+  const changeMonth = (value: ?Moment) => {
+    if (value) {
+      setMonth(value);
+    }
+  };
 
   const getPrice = (userId: Uuid): number => {
     return sanctions
@@ -82,8 +49,8 @@ export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
 
   return (
     <div>
-      <MonthPicker value={month} onChange={setMonth} />
-      <Table dataSource={dataSource} columns={columns} />
+      <MonthPicker value={month} onChange={changeMonth} showClearIcon={false} />
+      <Table dataSource={dataSource} columns={columns} pagination={false} />
     </div>
   );
 };
