@@ -29,7 +29,6 @@ const CustomMonthPicker = (props: MonthPickerProps) => {
     }
   };
 
-  console.log(props.value);
   return (
     <div>
       <Button type='primary' shape='circle' icon='left' onClick={() => handleArrowClick('DECREMENT')} />
