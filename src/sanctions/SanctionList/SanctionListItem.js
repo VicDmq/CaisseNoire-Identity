@@ -1,9 +1,10 @@
 // @flow
 import React, { useState } from 'react';
 import { Icon, Button } from 'antd';
+import moment from 'moment';
 
 import { RuleCategoryText } from '@Text/rule';
-import { formatDate } from '@Text/date';
+
 import STYLES from './styles.less';
 
 export type ListItemProps = {
@@ -58,7 +59,9 @@ export const SanctionListItem = (props: ListItemProps) => {
           ) : (
             ''
           )}
-          <span className={STYLES.creationDate}>Ajouté le {formatDate(props.sanction.created_at)}</span>
+          <span className={STYLES.creationDate}>
+            Ajouté le {moment(props.sanction.created_at, 'YYYY-MM-DD').format('dddd D MMMM')}
+          </span>
         </div>
         {props.rule && <div className={STYLES.ruleDescription}>{props.rule.description}</div>}
       </div>
