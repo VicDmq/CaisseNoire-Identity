@@ -41,9 +41,9 @@ describe('SanctionTable', () => {
     const sanctionPrice = sanctions[0].price;
     const totalPrice = cotisationPrice + sanctionPrice;
 
-    expect(queryByTestId('cotisation')).toHaveTextContent(cotisationPrice.toString());
-    expect(queryByTestId('sanction')).toHaveTextContent(sanctionPrice.toString());
-    expect(queryByTestId('total')).toHaveTextContent(totalPrice.toString());
+    expect(queryByTestId('cotisationPrice')).toHaveTextContent(cotisationPrice.toString());
+    expect(queryByTestId('sanctionsPrice')).toHaveTextContent(sanctionPrice.toString());
+    expect(queryByTestId('totalPrice')).toHaveTextContent(totalPrice.toString());
   });
 
   it('Filters according to the month selected', () => {
@@ -56,6 +56,6 @@ describe('SanctionTable', () => {
       <SanctionTable team={DEFAULT_TEAM} users={[DEFAULT_USER]} sanctions={sanctions} />,
     );
 
-    expect(queryByTestId('sanction')).toHaveTextContent(sanctions[1].price.toString());
+    expect(queryByTestId('sanctionsPrice')).toHaveTextContent(sanctions[1].price.toString());
   });
 });

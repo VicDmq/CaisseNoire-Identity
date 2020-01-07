@@ -7,6 +7,8 @@ import withConnect from '@Components/utils/Connect';
 import MonthPicker from '@Components/common/MonthPicker/MonthPicker';
 import columns from './columns';
 
+import STYLES from './styles.less';
+
 type DataProps = {
   team: Team,
   users: User[],
@@ -22,7 +24,7 @@ export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
     }
   };
 
-  const getPrice = (userId: Uuid): number => {
+  const getSanctionsPrice = (userId: Uuid): number => {
     return sanctions
       .filter(
         (sanction) => sanction.user_id === userId && moment(sanction.created_at, 'YYYY-MM-DD').isSame(month, 'month'),
@@ -30,27 +32,31 @@ export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
       .reduce((total, sanction) => total + sanction.price, 0);
   };
 
-  const cotisations = team.rules.reduce(
+  const cotisationPrice = team.rules.reduce(
     (total, rule) => (rule.kind.type === 'MONTHLY' ? total + rule.kind.price : total),
     0,
   );
 
-  const dataSource = users.map((user, i) => {
-    const sanctions = getPrice(user.id);
+  const rowsData = users.map((user, i) => {
+    const userName = user.nickname || user.firstname + ' ' + user.lastname;
+    const sanctionsPrice = getSanctionsPrice(user.id);
+    const totalPrice = cotisationPrice + sanctionsPrice;
 
     return {
       key: i,
-      name: user.firstname,
-      cotisations,
-      sanctions,
-      total: cotisations + sanctions,
+      userName,
+      cotisationPrice,
+      sanctionsPrice,
+      totalPrice,
     };
   });
 
   return (
-    <div>
-      <MonthPicker value={month} onChange={changeMonth} showClearIcon={false} />
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
+    <div className={STYLES.container}>
+      <div className={STYLES.monthPicker}>
+        <MonthPicker value={month} onChange={changeMonth} showClearIcon={false} />
+      </div>
+      <Table dataSource={rowsData} columns={columns} pagination={false} />
     </div>
   );
 };

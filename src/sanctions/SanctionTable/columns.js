@@ -1,38 +1,31 @@
+// @flow
+
+const appendCurrencySymbol = (price: string): string => {
+  return price + ' €';
+};
+
 const columns = [
   {
     title: 'Nom',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'userName',
   },
   {
-    title: 'Cotisations',
-    dataIndex: 'cotisations',
-    key: 'cotisations',
-    onCell: () => {
-      return {
-        'test-id': 'cotisation',
-      };
-    },
+    title: 'Cotisation',
+    dataIndex: 'cotisationPrice',
+    render: appendCurrencySymbol,
+    onCell: () => ({ 'test-id': 'cotisationPrice' }),
   },
   {
     title: 'Sanctions',
-    dataIndex: 'sanctions',
-    key: 'sanctions',
-    onCell: () => {
-      return {
-        'test-id': 'sanction',
-      };
-    },
+    dataIndex: 'sanctionsPrice',
+    render: appendCurrencySymbol,
+    onCell: () => ({ 'test-id': 'sanctionsPrice' }),
   },
   {
     title: 'Total',
-    dataIndex: 'total',
-    key: 'total',
-    onCell: () => {
-      return {
-        'test-id': 'total',
-      };
-    },
+    dataIndex: 'totalPrice',
+    render: appendCurrencySymbol,
+    onCell: () => ({ 'test-id': 'totalPrice' }),
   },
 ];
 
