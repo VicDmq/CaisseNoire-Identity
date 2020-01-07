@@ -9,7 +9,6 @@ export type OptionProps = {
 
 export type CommonSelectProps = {|
   options: OptionProps[],
-  required?: boolean,
   disabled?: boolean,
 |};
 

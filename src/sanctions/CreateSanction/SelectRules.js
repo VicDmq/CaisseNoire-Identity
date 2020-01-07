@@ -29,7 +29,6 @@ const SelectRules = ({
         value: rule.id,
         label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
       })),
-    required: true,
     disabled,
   };
 

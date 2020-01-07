@@ -26,7 +26,6 @@ const SelectUsers = ({
       value: user.id,
       label: user.firstname + ' ' + user.lastname,
     })),
-    required: true,
     disabled,
   };
 
