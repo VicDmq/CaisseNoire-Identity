@@ -109,6 +109,7 @@ declare module 'antd' {
 
   declare export class DatePicker extends React$Component<DatePickerProps> {
     static RangePicker: typeof DatePicker$RangePicker;
+    static MonthPicker: typeof DatePicker$MonthPicker;
   }
 
   declare export class Dropdown extends React$Component<{ ... }> {}
@@ -193,8 +194,6 @@ declare module 'antd' {
   declare export class Collapse extends React$Component<CollapseProps> {
     static Panel: typeof CollapsePanel;
   }
-
-  declare export class DatePicker extends React$Component<{ ... }> {}
 
   declare export class Dropdown extends React$Component<{ ... }> {}
 
@@ -304,6 +303,10 @@ declare module 'antd' {
   declare export type RangePickerProps = { ... };
 
   declare export class DatePicker$RangePicker extends React$Component<RangePickerProps> {}
+
+  declare export type MonthPickerProps = { ... };
+
+  declare export class DatePicker$MonthPicker extends React$Component<MonthPickerProps> {}
 
   declare export class Icon extends React$Component<{ ... }> {}
 
