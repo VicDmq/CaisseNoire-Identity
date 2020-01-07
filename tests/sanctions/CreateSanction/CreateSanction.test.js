@@ -147,7 +147,7 @@ describe('SanctionForm', () => {
       <SanctionForm team={team} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />,
     );
 
-    expect(queryByTestId('extra-info-input')).not.toBeInTheDocument();
+    expect(queryByTestId('numeric-input')).not.toBeInTheDocument();
 
     const [selectUsers, selectRules] = getAllByRole('combobox');
 
@@ -155,7 +155,7 @@ describe('SanctionForm', () => {
 
     selectFirstOption(selectRules, getAllByRole);
 
-    expect(queryByTestId('extra-info-input')).toBeInTheDocument();
+    expect(queryByTestId('numeric-input')).toBeInTheDocument();
   });
 
   it('Removes associated ExtraInfoInput when multiple rules are selected', async () => {
@@ -200,16 +200,16 @@ describe('SanctionForm', () => {
     );
 
     fireEvent.click(deleteIcons[0]);
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(2);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(2);
     getByText(`Détails (${team.rules[1].name})`);
     getByText(`Détails (${team.rules[2].name})`);
 
     fireEvent.click(deleteIcons[1]);
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(1);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(1);
     getByText('Détails supplémentaires');
 
     fireEvent.click(deleteIcons[2]);
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(0);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(0);
   });
 
   it('Removes associated ExtraInfoInput when multiple users are selected', async () => {
@@ -258,22 +258,22 @@ describe('SanctionForm', () => {
       within(userPresentation).getByLabelText('icon: close'),
     );
 
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(3);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(3);
     getByText(`Détails (${users[0].nickname || ''})`);
     getByText(`Détails (${users[1].nickname || ''})`);
     getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`);
 
     fireEvent.click(deleteIcons[0]);
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(2);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(2);
     getByText(`Détails (${users[1].nickname || ''})`);
     getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`);
 
     fireEvent.click(deleteIcons[1]);
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(1);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(1);
     getByText(`Détails supplémentaires`);
 
     fireEvent.click(deleteIcons[2]);
-    expect(queryAllByTestId('extra-info-input')).toHaveLength(0);
+    expect(queryAllByTestId('numeric-input')).toHaveLength(0);
   });
 
   it('Filters out rules with monthly kind', () => {

@@ -3,6 +3,7 @@ import React from 'react';
 import moment, { type Moment } from 'moment';
 
 import DatePicker from '@Components/common/DatePicker/DatePicker';
+import FormItem from '@Components/common/FormItem/FormItem';
 
 const DateInput = ({
   date,
@@ -18,14 +19,9 @@ const DateInput = ({
   };
 
   return (
-    <DatePicker
-      label='Date'
-      value={date}
-      onChange={updateDate}
-      disableDates={disableDates}
-      disabled={disabled}
-      testId={'date-input'}
-    />
+    <FormItem label='Date' disabled={disabled}>
+      <DatePicker value={date} onChange={updateDate} disableDates={disableDates} disabled={disabled} />
+    </FormItem>
   );
 };
 

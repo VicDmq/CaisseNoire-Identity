@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 
+import FormItem from '@Components/common/FormItem/FormItem';
 import type { CommonSelectProps } from '@Components/common/Select/CommonSelect';
 import SingleSelect from '@Components/common/Select/SingleSelect';
 import MultipleSelect from '@Components/common/Select/MultipleSelect';
@@ -19,8 +20,9 @@ const SelectRules = ({
   disabled: boolean,
   isMultiple: boolean,
 }) => {
+  const label = `Sanction${isMultiple ? '(s)' : ''} à appliquer`;
+
   const commonProps: CommonSelectProps = {
-    label: `Sanction${isMultiple ? '(s)' : ''} à appliquer`,
     options: rules
       .filter((rule) => rule.kind.type !== 'MONTHLY')
       .map((rule) => ({
@@ -31,14 +33,18 @@ const SelectRules = ({
     disabled,
   };
 
-  return isMultiple ? (
-    <MultipleSelect value={selectedRules} onChange={updateSelectedRules} {...commonProps} />
-  ) : (
-    <SingleSelect
-      value={selectedRules[0] || undefined}
-      onChange={(rule) => updateSelectedRules(rule ? [rule] : [])}
-      {...commonProps}
-    />
+  return (
+    <FormItem label={label} disabled={disabled} error={!disabled && !(selectedRules.length > 0)}>
+      {isMultiple ? (
+        <MultipleSelect value={selectedRules} onChange={updateSelectedRules} {...commonProps} />
+      ) : (
+        <SingleSelect
+          value={selectedRules[0] || undefined}
+          onChange={(rule) => updateSelectedRules(rule ? [rule] : [])}
+          {...commonProps}
+        />
+      )}
+    </FormItem>
   );
 };
 

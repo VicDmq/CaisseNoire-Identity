@@ -8,7 +8,8 @@ const { MonthPicker } = DatePicker;
 type MonthPickerProps = {
   value?: Moment,
   onChange: (?Moment) => void,
-  showClearIcon: ?boolean,
+  format: string,
+  showClearIcon: boolean,
 };
 
 const CustomMonthPicker = (props: MonthPickerProps) => {
@@ -36,11 +37,16 @@ const CustomMonthPicker = (props: MonthPickerProps) => {
         value={props.value}
         onChange={props.onChange}
         allowClear={props.showClearIcon}
-        format={'MMMM YYYY'}
+        format={props.format}
       />
       <Button type='primary' shape='circle' icon='right' onClick={() => handleArrowClick('INCREMENT')} />
     </div>
   );
+};
+
+CustomMonthPicker.defaultProps = {
+  showClearIcon: true,
+  format: 'MMMM YYYY',
 };
 
 export default CustomMonthPicker;

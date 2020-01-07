@@ -3,18 +3,15 @@ import React from 'react';
 import { InputNumber } from 'antd';
 import classNames from 'classnames/bind';
 
-import FormItem from '../FormItem/FormItem';
-
 import STYLES from './styles.less';
 
 type NumericInputProps = {
-  label: string,
   value: ?number,
   onChange: (number) => void,
-  fullWidth?: boolean,
+  fullWidth: boolean,
   suffix?: string,
   min?: number,
-  testId?: string,
+  testId: string,
 };
 
 const Suffix = ({ suffix }: { suffix: string }) => {
@@ -30,27 +27,30 @@ const NumericInput = (props: NumericInputProps) => {
   }
 
   return (
-    <FormItem label={props.label}>
-      <div
+    <div
+      className={cx({
+        itemWithSuffix: props.suffix,
+        fullWidth: props.fullWidth,
+      })}
+      test-id={props.testId}
+    >
+      <InputNumber
+        min={props.min}
+        value={props.value}
+        onChange={props.onChange}
         className={cx({
-          itemWithSuffix: props.suffix,
+          inputWithSuffix: props.suffix,
           fullWidth: props.fullWidth,
         })}
-        test-id={props.testId}
-      >
-        <InputNumber
-          min={props.min}
-          value={props.value}
-          onChange={props.onChange}
-          className={cx({
-            inputWithSuffix: props.suffix,
-            fullWidth: props.fullWidth,
-          })}
-        />
-        {props.suffix && <Suffix suffix={props.suffix} />}
-      </div>
-    </FormItem>
+      />
+      {props.suffix && <Suffix suffix={props.suffix} />}
+    </div>
   );
+};
+
+NumericInput.defaultProps = {
+  fullWidth: false,
+  testId: 'numeric-input',
 };
 
 export default NumericInput;

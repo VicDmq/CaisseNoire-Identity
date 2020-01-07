@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 
+import FormItem from '@Components/common/FormItem/FormItem';
 import type { CommonSelectProps } from '@Components/common/Select/CommonSelect';
 import SingleSelect from '@Components/common/Select/SingleSelect';
 import MultipleSelect from '@Components/common/Select/MultipleSelect';
@@ -18,8 +19,9 @@ const SelectUsers = ({
   disabled: boolean,
   isMultiple: boolean,
 }) => {
+  const label = `Joueur${isMultiple ? '(s)' : ''} sanctionné${isMultiple ? '(s)' : ''}`;
+
   const commonProps: CommonSelectProps = {
-    label: `Joueur${isMultiple ? '(s)' : ''} sanctionné${isMultiple ? '(s)' : ''}`,
     options: users.map((user) => ({
       value: user.id,
       label: user.firstname + ' ' + user.lastname,
@@ -28,14 +30,18 @@ const SelectUsers = ({
     disabled,
   };
 
-  return isMultiple ? (
-    <MultipleSelect value={selectedUsers} onChange={updateSelectedUsers} {...commonProps} />
-  ) : (
-    <SingleSelect
-      value={selectedUsers[0] || undefined}
-      onChange={(user) => updateSelectedUsers(user ? [user] : [])}
-      {...commonProps}
-    />
+  return (
+    <FormItem label={label} disabled={disabled} error={!disabled && !(selectedUsers.length > 0)}>
+      {isMultiple ? (
+        <MultipleSelect value={selectedUsers} onChange={updateSelectedUsers} {...commonProps} />
+      ) : (
+        <SingleSelect
+          value={selectedUsers[0] || undefined}
+          onChange={(user) => updateSelectedUsers(user ? [user] : [])}
+          {...commonProps}
+        />
+      )}
+    </FormItem>
   );
 };
 
