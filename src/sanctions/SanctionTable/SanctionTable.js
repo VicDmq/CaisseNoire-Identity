@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Table } from 'antd';
 import moment, { type Moment } from 'moment';
 
+import { API_DATE_FORMAT } from '@Utils/date';
 import withConnect from '@Components/utils/Connect';
 import MonthPicker from '@Components/common/MonthPicker/MonthPicker';
 import columns from './columns';
@@ -27,7 +28,8 @@ export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
   const getSanctionsPrice = (userId: Uuid): number => {
     return sanctions
       .filter(
-        (sanction) => sanction.user_id === userId && moment(sanction.created_at, 'YYYY-MM-DD').isSame(month, 'month'),
+        (sanction) =>
+          sanction.user_id === userId && moment(sanction.created_at, API_DATE_FORMAT).isSame(month, 'month'),
       )
       .reduce((total, sanction) => total + sanction.price, 0);
   };

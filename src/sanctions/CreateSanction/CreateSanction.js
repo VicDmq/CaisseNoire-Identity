@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Row, Form, message, Button } from 'antd';
 import type { Moment } from 'moment';
 
+import format from '@Utils/currency';
+import { API_DATE_FORMAT } from '@Utils/date';
 import withConnect, { type Reason } from '@Components/utils/Connect';
 import DateInput from './DateInput';
 import SelectUsers from './SelectUsers';
@@ -30,8 +32,6 @@ export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   LESS: 'LESS',
   SAME: 'SAME',
 };
-
-const API_DATE_FORMAT = 'YYYY-MM-DD';
 
 export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([]);
@@ -153,12 +153,12 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
     setState(stateCopy);
   };
 
-  const updateSanctionsDate = (value: ?Moment) => {
+  const updateSanctionsDate = (date: ?Moment) => {
     let stateCopy = [...state];
-    stateCopy.forEach((element) => (element[2].created_at = value ? value.format(API_DATE_FORMAT) : value));
+    stateCopy.forEach((element) => (element[2].created_at = date ? date.format(API_DATE_FORMAT) : date));
 
     setState(stateCopy);
-    setSanctionsDate(value);
+    setSanctionsDate(date);
   };
 
   const getSuccessAlertText = (sanctions: Sanction[]): any => {
@@ -170,7 +170,7 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
           if (user) {
             return (
               <div className={STYLES.messageText} key={i}>
-                {user.firstname} {user.lastname} a payé {sanction.price} €
+                {user.firstname} {user.lastname} a payé {format(sanction.price)}
               </div>
             );
           }

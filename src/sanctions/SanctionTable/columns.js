@@ -1,8 +1,5 @@
 // @flow
-
-const appendCurrencySymbol = (price: string): string => {
-  return price + ' €';
-};
+import format from '@Utils/currency';
 
 const columns = [
   {
@@ -12,21 +9,21 @@ const columns = [
   {
     title: 'Cotisation',
     dataIndex: 'cotisationPrice',
-    render: appendCurrencySymbol,
+    render: format,
     onCell: () => ({ 'test-id': 'cotisationPrice' }),
     align: 'center',
   },
   {
     title: 'Sanctions',
     dataIndex: 'sanctionsPrice',
-    render: appendCurrencySymbol,
+    render: format,
     onCell: () => ({ 'test-id': 'sanctionsPrice' }),
     align: 'center',
   },
   {
     title: 'Total',
     dataIndex: 'totalPrice',
-    render: appendCurrencySymbol,
+    render: format,
     onCell: () => ({ 'test-id': 'totalPrice' }),
     align: 'center',
   },
