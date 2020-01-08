@@ -20,7 +20,7 @@ const SelectRules = ({
   disabled: boolean,
   isMultiple: boolean,
 }) => {
-  const label = `Sanction${isMultiple ? '(s)' : ''} à appliquer`;
+  const label = `Sanction${isMultiple ? '(s)' : ''}`;
 
   const commonProps: CommonSelectProps = {
     options: rules
@@ -29,6 +29,7 @@ const SelectRules = ({
         value: rule.id,
         label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
       })),
+    placeholder: `Sélectionner l${isMultiple ? 'es' : 'a'} sanction${isMultiple ? '(s)' : ''} à appliquer`,
     disabled,
   };
 

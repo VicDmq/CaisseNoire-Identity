@@ -11,6 +11,7 @@ export type OptionProps = {
 
 export type CommonSelectProps = {|
   options: OptionProps[],
+  placeholder?: string,
   disabled?: boolean,
 |};
 
@@ -45,6 +46,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
       value={props.value}
       onChange={props.onChange}
       disabled={props.disabled}
+      placeholder={props.placeholder}
       allowClear
       showSearch
       filterOption

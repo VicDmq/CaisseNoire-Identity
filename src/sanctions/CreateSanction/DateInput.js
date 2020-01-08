@@ -20,7 +20,13 @@ const DateInput = ({
 
   return (
     <FormItem label='Date' disabled={disabled}>
-      <DatePicker value={date} onChange={updateDate} disableDates={disableDates} disabled={disabled} />
+      <DatePicker
+        value={date}
+        onChange={updateDate}
+        disableDates={disableDates}
+        disabled={disabled}
+        placeholder='Sélectionner la date des sanctions'
+      />
     </FormItem>
   );
 };

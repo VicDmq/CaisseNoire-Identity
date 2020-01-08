@@ -19,13 +19,14 @@ const SelectUsers = ({
   disabled: boolean,
   isMultiple: boolean,
 }) => {
-  const label = `Joueur${isMultiple ? '(s)' : ''} sanctionné${isMultiple ? '(s)' : ''}`;
+  const label = `Joueur${isMultiple ? '(s)' : ''}`;
 
   const commonProps: CommonSelectProps = {
     options: users.map((user) => ({
       value: user.id,
       label: user.firstname + ' ' + user.lastname,
     })),
+    placeholder: `Sélectionner l${isMultiple ? 'es' : 'e'} joueur${isMultiple ? '(s)' : ''} à sanctionner`,
     disabled,
   };
 
