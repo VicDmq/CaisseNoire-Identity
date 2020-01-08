@@ -25,8 +25,8 @@ const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
     <Header className={STYLES.header}>
       <div className={STYLES.title}>Caisse Noire</div>
       <Divider className={STYLES.divider} type='vertical' />
-      <Menu mode='horizontal' selectedKeys={selectedKey} onSelect={selectItem}>
-        <Item key='sanction'>
+      <Menu mode='horizontal' selectedKeys={selectedKey} onSelect={selectItem} className={STYLES.menu}>
+        <Item key='sanctions'>
           <Link to='/sanctions'>Sanctions</Link>
         </Item>
       </Menu>

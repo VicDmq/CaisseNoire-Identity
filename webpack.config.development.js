@@ -41,14 +41,14 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              sourceMap: true,
+              modules: {
+                localIdentName: '[local]',
+              },
             },
           },
           {
             loader: 'less-loader',
             options: {
-              sourceMap: true,
               javascriptEnabled: true,
             },
           },
@@ -66,14 +66,10 @@ module.exports = {
           'style-loader',
           {
             loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
           },
           {
             loader: 'less-loader',
             options: {
-              sourceMap: true,
               javascriptEnabled: true,
             },
           },
