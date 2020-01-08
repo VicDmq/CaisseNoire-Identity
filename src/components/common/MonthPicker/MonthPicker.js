@@ -3,6 +3,8 @@ import React from 'react';
 import { DatePicker, Button } from 'antd';
 import moment, { type Moment } from 'moment';
 
+import STYLES from './styles.less';
+
 const { MonthPicker } = DatePicker;
 
 type MonthPickerProps = {
@@ -38,6 +40,7 @@ const CustomMonthPicker = (props: MonthPickerProps) => {
         onChange={props.onChange}
         allowClear={props.showClearIcon}
         format={props.format}
+        dropdownClassName={STYLES.dropdownMonthPicker}
       />
       <Button type='primary' shape='circle' icon='right' onClick={() => handleArrowClick('INCREMENT')} />
     </div>

@@ -23,6 +23,7 @@ const CustomDatePicker = (props: DatePickerProps) => {
         disabled={props.disabled}
         disabledDate={props.disableDates}
         className={STYLES.datePicker}
+        dropdownClassName={STYLES.dropdownDatePicker}
         format={props.format}
         showToday={false}
       />

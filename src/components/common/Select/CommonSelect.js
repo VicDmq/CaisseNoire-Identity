@@ -2,6 +2,8 @@
 import React from 'react';
 import { Select } from 'antd';
 
+import STYLES from './styles.less';
+
 export type OptionProps = {
   value: Uuid,
   label: string,
@@ -20,7 +22,7 @@ type SelectProps<T> = {
 };
 
 function CommonSelect<T>(props: SelectProps<T>) {
-  const shouldBeHidden = (option) => {
+  const optionIsHidden = (option) => {
     if (
       (Array.isArray(props.value) && props.value.includes(option.value)) ||
       (props.value && props.value === option.value)
@@ -31,13 +33,11 @@ function CommonSelect<T>(props: SelectProps<T>) {
     return false;
   };
 
-  const mapOptions = () => {
-    return props.options.map((option, i) => (
-      <Select.Option value={option.value} key={i} hidden={shouldBeHidden(option)}>
-        {option.label}
-      </Select.Option>
-    ));
-  };
+  const options = props.options.map((option, i) => (
+    <Select.Option value={option.value} key={i} hidden={optionIsHidden(option)}>
+      {option.label}
+    </Select.Option>
+  ));
 
   return (
     <Select
@@ -49,8 +49,10 @@ function CommonSelect<T>(props: SelectProps<T>) {
       showSearch
       filterOption
       optionFilterProp='children'
+      className={STYLES.select}
+      dropdownClassName={STYLES.dropdown}
     >
-      {mapOptions()}
+      {options}
     </Select>
   );
 }
