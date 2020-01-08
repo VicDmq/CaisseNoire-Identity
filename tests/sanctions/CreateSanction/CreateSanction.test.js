@@ -92,13 +92,13 @@ describe('SanctionForm', () => {
     const [selectUsers, multipleSelect] = getAllByRole('combobox');
 
     expect(multipleSelect).toHaveClass('ant-select-selection--multiple');
-    getByText('Sanction(s) à appliquer');
+    getByText('Sanction(s)');
 
     selectFirstOption(selectUsers, getAllByRole);
     selectFirstOption(selectUsers, getAllByRole);
 
     const singleSelect = getAllByRole('combobox')[1];
-    getByText('Sanction à appliquer');
+    getByText('Sanction');
     expect(singleSelect).toHaveClass('ant-select-selection--single');
   });
 
@@ -119,13 +119,13 @@ describe('SanctionForm', () => {
     const [multipleSelect, selectRules] = getAllByRole('combobox');
 
     expect(multipleSelect).toHaveClass('ant-select-selection--multiple');
-    getByText('Joueur(s) sanctionné(s)');
+    getByText('Joueur(s)');
 
     selectFirstOption(selectRules, getAllByRole);
     selectFirstOption(selectRules, getAllByRole);
 
     const singleSelect = getAllByRole('combobox')[0];
-    getByText('Joueur sanctionné');
+    getByText('Joueur');
     expect(singleSelect).toHaveClass('ant-select-selection--single');
   });
 
@@ -261,12 +261,12 @@ describe('SanctionForm', () => {
     expect(queryAllByTestId('numeric-input')).toHaveLength(3);
     getByText(`Détails (${users[0].nickname || ''})`);
     getByText(`Détails (${users[1].nickname || ''})`);
-    getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`);
+    getByText(`Détails (${users[2].firstname})`);
 
     fireEvent.click(deleteIcons[0]);
     expect(queryAllByTestId('numeric-input')).toHaveLength(2);
     getByText(`Détails (${users[1].nickname || ''})`);
-    getByText(`Détails (${users[2].firstname + ' ' + users[2].lastname[0]})`);
+    getByText(`Détails (${users[2].firstname})`);
 
     fireEvent.click(deleteIcons[1]);
     expect(queryAllByTestId('numeric-input')).toHaveLength(1);
