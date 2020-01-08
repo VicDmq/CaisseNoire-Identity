@@ -1,3 +1,34 @@
 .datePicker {
   width: 100%;
 }
+
+.dropdownDatePicker {
+  .ant-calendar-selected-day:not(.ant-calendar-selected-date):not(.ant-calendar-disabled-cell):not(:hover)
+    .ant-calendar-date {
+    background-color: @white;
+  }
+
+  .ant-calendar-selected-date .ant-calendar-date {
+    color: @white;
+  }
+
+  td:not(.ant-calendar-disabled-cell):not(.ant-calendar-last-month-cell):not(.ant-calendar-next-month-btn-day) {
+    .ant-calendar-date:hover {
+      color: @white;
+    }
+  }
+
+  .ant-calendar-disabled-cell.ant-calendar-selected-day .ant-calendar-date::before {
+    content: none;
+  }
+
+  .ant-calendar-header {
+    .ant-calendar-month-panel-body,
+    .ant-calendar-year-panel-body,
+    .ant-calendar-decade-panel-body {
+      a:hover {
+        color: @white;
+      }
+    }
+  }
+}

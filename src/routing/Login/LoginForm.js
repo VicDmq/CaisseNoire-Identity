@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button, Checkbox, Icon } from 'antd';
 
-import Input from '@Components/common/Input';
+import Input from '@Components/common/Input/Input';
+import FormItem from '@Components/common/FormItem/FormItem';
 import type { Response, Reason } from '@Components/utils/Connect';
 
 import STYLES from './styles.less';
@@ -72,30 +73,32 @@ const LoginForm = (props: LoginFormProps) => {
     <Row type='flex' justify='center' align='middle' className={STYLES.row}>
       <Col xs={{ span: 18 }} lg={{ span: 8 }} className={STYLES.formContainer}>
         <Form colon={false}>
-          <Input
-            label="Nom de l'équipe"
-            value={state.credentials.name}
-            onChange={(value) =>
-              updateCredentials({
-                ...state.credentials,
-                name: value,
-              })
-            }
-            testId='team-name-input'
-          />
-          <Input
-            label='Mot de passe'
-            disabled={!state.adminMode}
-            value={state.credentials.admin_password}
-            onChange={(value) =>
-              updateCredentials({
-                ...state.credentials,
-                admin_password: value === '' ? undefined : value,
-              })
-            }
-            password
-            testId='password-input'
-          />
+          <FormItem label="Nom de l'équipe">
+            <Input
+              value={state.credentials.name}
+              onChange={(value) =>
+                updateCredentials({
+                  ...state.credentials,
+                  name: value,
+                })
+              }
+              testId='team-name-input'
+            />
+          </FormItem>
+          <FormItem label='Mot de passe' disabled={!state.adminMode}>
+            <Input
+              disabled={!state.adminMode}
+              value={state.credentials.admin_password}
+              onChange={(value) =>
+                updateCredentials({
+                  ...state.credentials,
+                  admin_password: value === '' ? undefined : value,
+                })
+              }
+              password
+              testId='password-input'
+            />
+          </FormItem>
           <Checkbox checked={state.adminMode} onChange={updateAdminMode} className={STYLES.checkbox}>
             Mode administrateur
           </Checkbox>
