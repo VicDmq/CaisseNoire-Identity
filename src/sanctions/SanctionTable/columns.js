@@ -1,7 +1,8 @@
 // @flow
+import format from '@Utils/currency';
 
 const appendCurrencySymbol = (price: string): string => {
-  return price + ' €';
+  return format(price);
 };
 
 const columns = [

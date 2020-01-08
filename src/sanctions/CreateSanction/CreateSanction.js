@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Row, Form, message, Button } from 'antd';
 import type { Moment } from 'moment';
 
+import format from '@Utils/currency';
 import withConnect, { type Reason } from '@Components/utils/Connect';
 import DateInput from './DateInput';
 import SelectUsers from './SelectUsers';
@@ -170,7 +171,7 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
           if (user) {
             return (
               <div className={STYLES.messageText} key={i}>
-                {user.firstname} {user.lastname} a payé {sanction.price} €
+                {user.firstname} {user.lastname} a payé {format(sanction.price)}
               </div>
             );
           }

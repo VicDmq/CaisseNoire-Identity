@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { Icon, Button } from 'antd';
 import moment from 'moment';
 
-import { RuleCategoryText } from '@Text/rule';
+import { RuleCategoryText } from '@Utils/text';
+import format from '@Utils/currency';
 
 import STYLES from './styles.less';
 
@@ -39,7 +40,7 @@ export const SanctionListItem = (props: ListItemProps) => {
           )}
         </div>
         <div className={STYLES.tagAndButtonContainer}>
-          <span className={STYLES.priceTag}>{props.sanction.price} €</span>
+          <span className={STYLES.priceTag}>{format(props.sanction.price)}</span>
           <Button
             className={STYLES.deleteButton}
             disabled={!props.isAdmin}
