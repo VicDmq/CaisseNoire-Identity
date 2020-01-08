@@ -53,7 +53,7 @@ export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
 
   return (
     <div className={STYLES.container}>
-      <div className={STYLES.monthPicker}>
+      <div className={STYLES.monthPickerContainer}>
         <MonthPicker value={month} onChange={changeMonth} showClearIcon={false} />
       </div>
       <Table dataSource={rowsData} columns={columns} pagination={false} />

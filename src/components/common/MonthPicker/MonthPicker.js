@@ -33,16 +33,22 @@ const CustomMonthPicker = (props: MonthPickerProps) => {
   };
 
   return (
-    <div>
-      <Button type='primary' shape='circle' icon='left' onClick={() => handleArrowClick('DECREMENT')} />
+    <div className={STYLES.customMonthPicker}>
+      <Button type='default' icon='left' onClick={() => handleArrowClick('DECREMENT')} className={STYLES.leftButton} />
       <MonthPicker
         value={props.value}
         onChange={props.onChange}
         allowClear={props.showClearIcon}
         format={props.format}
+        className={STYLES.monthPicker}
         dropdownClassName={STYLES.dropdownMonthPicker}
       />
-      <Button type='primary' shape='circle' icon='right' onClick={() => handleArrowClick('INCREMENT')} />
+      <Button
+        type='default'
+        icon='right'
+        onClick={() => handleArrowClick('INCREMENT')}
+        className={STYLES.rightButton}
+      />
     </div>
   );
 };
