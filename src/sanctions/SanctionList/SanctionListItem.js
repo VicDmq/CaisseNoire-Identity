@@ -1,10 +1,10 @@
 // @flow
 import React, { useState } from 'react';
 import { Icon, Button } from 'antd';
-import moment from 'moment';
 
 import { RuleCategoryText } from '@Utils/text';
-import format from '@Utils/currency';
+import formatCurrency from '@Utils/currency';
+import formatDate from '@Utils/date';
 
 import STYLES from './styles.less';
 
@@ -40,7 +40,7 @@ export const SanctionListItem = (props: ListItemProps) => {
           )}
         </div>
         <div className={STYLES.tagAndButtonContainer}>
-          <span className={STYLES.priceTag}>{format(props.sanction.price)}</span>
+          <span className={STYLES.priceTag}>{formatCurrency(props.sanction.price)}</span>
           <Button
             className={STYLES.deleteButton}
             disabled={!props.isAdmin}
@@ -60,9 +60,7 @@ export const SanctionListItem = (props: ListItemProps) => {
           ) : (
             ''
           )}
-          <span className={STYLES.creationDate}>
-            Ajouté le {moment(props.sanction.created_at, 'YYYY-MM-DD').format('dddd D MMMM')}
-          </span>
+          <span className={STYLES.creationDate}>Ajouté le {formatDate(props.sanction.created_at)}</span>
         </div>
         {props.rule && <div className={STYLES.ruleDescription}>{props.rule.description}</div>}
       </div>
