@@ -1,3 +1,27 @@
+.customMonthPicker {
+  .monthPicker {
+    input {
+      border-radius: 0px;
+    }
+  }
+
+  .leftButton {
+    &:not(:hover):not(:focus) {
+      border-right: 0px;
+    }
+
+    border-radius: @border-radius-base 0 0 @border-radius-base;
+  }
+
+  .rightButton {
+    &:not(:hover):not(:focus) {
+      border-left: 0px;
+    }
+
+    border-radius: 0 @border-radius-base @border-radius-base 0;
+  }
+}
+
 .dropdownMonthPicker {
   .ant-calendar-header {
     .ant-calendar-month-panel-body,
