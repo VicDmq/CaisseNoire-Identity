@@ -5,55 +5,6 @@
   height: 100%;
 }
 
-// Override Menu Style
-.ant-menu-horizontal {
-  border: 0;
-
-  .ant-menu-item:hover,
-  .ant-menu-item-selected {
-    font-weight: 600;
-    border-bottom: 2px solid @white;
-  }
-
-  .ant-menu-item {
-    padding: unset;
-    min-width: 100px;
-    text-align: center;
-  }
-}
-
-// Override Select Style
-.ant-select-dropdown-menu-vertical {
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
-  color: @white;
-  font-weight: 600;
-}
-
-.ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
-  color: @white;
-}
-
-// Override MultiSelect Style
-.ant-select-selection--multiple {
-  .ant-select-selection__choice {
-    background-color: @select-item-active-bg;
-    color: @white;
-    border: none;
-
-    .ant-select-selection__choice__remove {
-      color: inherit;
-    }
-  }
-}
-
-.ant-select-dropdown--multiple .ant-select-dropdown-menu-item i {
-  display: none;
-}
-
 // Override Message Style
 .ant-message-custom-content {
   display: flex;
@@ -62,23 +13,4 @@
     display: flex;
     align-items: center;
   }
-}
-
-// Override DatePicker Style
-.ant-calendar-selected-day:not(.ant-calendar-selected-date):not(.ant-calendar-disabled-cell) .ant-calendar-date {
-  background-color: @white;
-}
-
-.ant-calendar-selected-date .ant-calendar-date {
-  color: @white;
-}
-
-td:not(.ant-calendar-disabled-cell):not(.ant-calendar-last-month-cell):not(.ant-calendar-next-month-btn-day) {
-  .ant-calendar-date:hover {
-    color: @white;
-  }
-}
-
-.ant-calendar-disabled-cell.ant-calendar-selected-day .ant-calendar-date::before {
-  content: none;
 }

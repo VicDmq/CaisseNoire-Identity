@@ -2,6 +2,7 @@
 import React, { type Element } from 'react';
 
 import NumericInput from '@Components/common/NumericInput/NumericInput';
+import FormItem from '@Components/common/FormItem/FormItem';
 import { TimeUnitText } from '@Text/rule';
 import { type ComparisonResult } from './CreateSanction';
 
@@ -34,20 +35,20 @@ const ExtraInfoInput = ({
     }
 
     return (
-      <NumericInput
-        label={label}
-        value={extraInfo.factor}
-        onChange={(factor) =>
-          updateExtraInfo({
-            type: 'MULTIPLICATION',
-            factor,
-          })
-        }
-        suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
-        min={1}
-        fullWidth
-        testId='extra-info-input'
-      />
+      <FormItem label={label}>
+        <NumericInput
+          value={extraInfo.factor}
+          onChange={(factor) =>
+            updateExtraInfo({
+              type: 'MULTIPLICATION',
+              factor,
+            })
+          }
+          suffix={rule.kind.type === 'TIME_MULTIPLICATION' ? TimeUnitText[rule.kind.time_unit] : undefined}
+          min={1}
+          fullWidth
+        />
+      </FormItem>
     );
   }
 

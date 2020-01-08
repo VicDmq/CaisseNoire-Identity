@@ -9,8 +9,8 @@ const { Item } = Form;
 
 type LabelProps = {
   label: string,
-  error?: boolean,
-  disabled?: boolean,
+  error: boolean,
+  disabled: boolean,
 };
 
 const Label = (props: LabelProps) => {
@@ -21,23 +21,28 @@ const Label = (props: LabelProps) => {
 type FormItemProps = {
   label: string,
   children: Node,
-  error?: boolean,
+  error: boolean,
   reason?: string,
-  disabled?: boolean,
+  disabled: boolean,
 };
 
 const FormItem = (props: FormItemProps) => {
-  const formItemProps = props.error ? { validateStatus: 'error', help: props.reason } : {};
+  const validationProps = props.error ? { validateStatus: 'error', help: props.reason } : {};
 
   return (
     <Item
       label={<Label label={props.label} error={props.error} disabled={props.disabled} />}
-      {...formItemProps}
+      {...validationProps}
       hasFeedback
     >
       {props.children}
     </Item>
   );
+};
+
+FormItem.defaultProps = {
+  error: false,
+  disabled: false,
 };
 
 export default FormItem;

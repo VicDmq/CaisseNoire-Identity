@@ -1,6 +1,5 @@
 const Dotenv = require('dotenv-webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const FlowWebpackPlugin = require('flow-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -23,7 +22,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.html$/,
@@ -42,14 +41,14 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              sourceMap: true,
+              modules: {
+                localIdentName: '[local]',
+              },
             },
           },
           {
             loader: 'less-loader',
             options: {
-              sourceMap: true,
               javascriptEnabled: true,
             },
           },
@@ -67,14 +66,10 @@ module.exports = {
           'style-loader',
           {
             loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
           },
           {
             loader: 'less-loader',
             options: {
-              sourceMap: true,
               javascriptEnabled: true,
             },
           },
@@ -93,7 +88,6 @@ module.exports = {
       template: './template/index.html',
       filename: './index.html',
     }),
-    new FlowWebpackPlugin(),
     new Dotenv(),
   ],
 };

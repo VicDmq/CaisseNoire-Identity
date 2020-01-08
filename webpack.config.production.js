@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const FlowWebpackPlugin = require('flow-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -25,7 +24,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.html$/,
@@ -44,7 +43,9 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[local]',
+              },
             },
           },
           {
@@ -85,7 +86,6 @@ module.exports = {
       filename: './css/style.[hash].css',
     }),
     new CleanWebpackPlugin({}),
-    new FlowWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL),
