@@ -5,7 +5,7 @@ import FormItem from '@Components/common/FormItem/FormItem';
 import type { CommonSelectProps } from '@Components/common/Select/CommonSelect';
 import SingleSelect from '@Components/common/Select/SingleSelect';
 import MultipleSelect from '@Components/common/Select/MultipleSelect';
-import { RuleCategoryText } from '@Text/rule';
+import { RuleCategoryText } from '@Utils/text';
 
 const SelectRules = ({
   rules,

@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     alias: {
       '@Components': path.resolve(__dirname, 'src/components'),
-      '@Text': path.resolve(__dirname, 'src/text'),
+      '@Utils': path.resolve(__dirname, 'src/utils'),
     },
   },
   module: {

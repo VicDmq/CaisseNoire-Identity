@@ -5,7 +5,7 @@ module.exports = {
     '^@Routing(.*)$': '<rootDir>/src/routing$1',
     '^@Sanctions(.*)$': '<rootDir>/src/sanctions$1',
     '^@Components(.*)$': '<rootDir>/src/components$1',
-    '^@Text(.*)$': '<rootDir>/src/text$1',
+    '^@Utils(.*)$': '<rootDir>/src/utils$1',
     '\\.(css|less)$': 'identity-obj-proxy',
   },
 };
