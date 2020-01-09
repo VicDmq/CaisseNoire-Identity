@@ -15,7 +15,7 @@ export type OptionGroupProps = {
 };
 
 export type CommonSelectProps = {|
-  options: { type: 'OPTION', options: OptionProps[] } | { type: 'GROUP', groups: OptionGroupProps[] },
+  values: { type: 'OPTION', options: OptionProps[] } | { type: 'GROUP', groups: OptionGroupProps[] },
   placeholder?: string,
   disabled?: boolean,
 |};
@@ -44,16 +44,16 @@ function CommonSelect<T>(props: SelectProps<T>) {
   let options = [];
 
   // props.options.map((option, i) => {
-  switch (props.options.type) {
+  switch (props.values.type) {
     case 'OPTION':
-      options = props.options.options.map((option, i) => (
+      options = props.values.options.map((option, i) => (
         <Option value={option.value} key={i} hidden={optionIsHidden(option)}>
           {option.label}
         </Option>
       ));
       break;
     case 'GROUP':
-      options = props.options.groups.map((group, i) => (
+      options = props.values.groups.map((group, i) => (
         <OptGroup label={group.label} key={i}>
           {group.options.map((option, i) => (
             <Option value={option.value} key={i} hidden={optionIsHidden(option)}>

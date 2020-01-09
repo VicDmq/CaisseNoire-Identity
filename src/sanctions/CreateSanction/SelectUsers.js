@@ -22,7 +22,7 @@ const SelectUsers = ({
   const label = `Joueur${isMultiple ? '(s)' : ''}`;
 
   const commonProps: CommonSelectProps = {
-    options: {
+    values: {
       type: 'OPTION',
       options: users.map((user) => ({
         value: user.id,

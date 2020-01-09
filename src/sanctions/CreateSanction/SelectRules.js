@@ -5,7 +5,6 @@ import FormItem from '@Components/common/FormItem/FormItem';
 import type { CommonSelectProps } from '@Components/common/Select/CommonSelect';
 import SingleSelect from '@Components/common/Select/SingleSelect';
 import MultipleSelect from '@Components/common/Select/MultipleSelect';
-import { RuleCategoryText } from '@Utils/text';
 
 const SelectRules = ({
   rules,
@@ -23,7 +22,7 @@ const SelectRules = ({
   const label = `Sanction${isMultiple ? '(s)' : ''}`;
 
   const commonProps: CommonSelectProps = {
-    options: {
+    values: {
       type: 'GROUP',
       groups: [
         {
@@ -32,7 +31,7 @@ const SelectRules = ({
             .filter((rule) => rule.kind.type !== 'MONTHLY' && rule.category === 'TRAINING_DAY')
             .map((rule) => ({
               value: rule.id,
-              label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
+              label: rule.name,
             })),
         },
         {
@@ -41,7 +40,7 @@ const SelectRules = ({
             .filter((rule) => rule.kind.type !== 'MONTHLY' && rule.category === 'GAME_DAY')
             .map((rule) => ({
               value: rule.id,
-              label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
+              label: rule.name,
             })),
         },
       ],
