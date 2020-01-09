@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { type Element } from 'react';
 import { Select } from 'antd';
 
 import STYLES from './styles.less';
@@ -9,13 +9,13 @@ export type OptionProps = {
   label: string,
 };
 
-export type OptionGroupProps = {
+export type OptGroupProps = {
   label: string,
   options: OptionProps[],
 };
 
 export type CommonSelectProps = {|
-  values: { type: 'OPTION', options: OptionProps[] } | { type: 'GROUP', groups: OptionGroupProps[] },
+  values: { type: 'OPTION', options: OptionProps[] } | { type: 'GROUP', groups: OptGroupProps[] },
   placeholder?: string,
   disabled?: boolean,
 |};
@@ -41,28 +41,32 @@ function CommonSelect<T>(props: SelectProps<T>) {
     return false;
   };
 
-  let options = [];
+  const mapValues = (): Element<typeof Option>[] | Element<typeof OptGroup>[] => {
+    switch (props.values.type) {
+      case 'OPTION':
+        return mapOptions(props.values.options);
+      case 'GROUP':
+        return mapGroups(props.values.groups);
+    }
 
-  // props.options.map((option, i) => {
-  switch (props.values.type) {
-    case 'OPTION':
-      options = props.values.options.map((option, i) => (
-        <Option value={option.value} key={i} hidden={optionIsHidden(option)}>
-          {option.label}
-        </Option>
-      ));
-      break;
-    case 'GROUP':
-      options = props.values.groups.map((group, i) => (
-        <OptGroup label={group.label} key={i}>
-          {group.options.map((option, i) => (
-            <Option value={option.value} key={i} hidden={optionIsHidden(option)}>
-              {option.label}
-            </Option>
-          ))}
-        </OptGroup>
-      ));
-  }
+    return ([]: any[]);
+  };
+
+  const mapGroups = (groups: OptGroupProps[]): Element<typeof OptGroup>[] => {
+    return groups.map((group, i) => (
+      <OptGroup label={group.label} key={i}>
+        {mapOptions(group.options)}
+      </OptGroup>
+    ));
+  };
+
+  const mapOptions = (options: OptionProps[]): Element<typeof Option>[] => {
+    return options.map((option, i) => (
+      <Option value={option.value} key={i} hidden={optionIsHidden(option)}>
+        {option.label}
+      </Option>
+    ));
+  };
 
   return (
     <Select
@@ -78,7 +82,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
       className={STYLES.select}
       dropdownClassName={STYLES.dropdown}
     >
-      {options}
+      {mapValues()}
     </Select>
   );
 }
