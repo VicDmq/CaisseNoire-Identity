@@ -1,5 +1,5 @@
 // @flow
-import React, { type Element } from 'react';
+import React, { type Element, type Node } from 'react';
 import { Select } from 'antd';
 
 import STYLES from './styles.less';
@@ -7,6 +7,7 @@ import STYLES from './styles.less';
 export type OptionProps = {
   value: Uuid,
   label: string,
+  optionNode?: Node,
 };
 
 export type OptGroupProps = {
@@ -30,17 +31,6 @@ type SelectProps<T> = {
 const { Option, OptGroup } = Select;
 
 function CommonSelect<T>(props: SelectProps<T>) {
-  const optionIsHidden = (option) => {
-    if (
-      (Array.isArray(props.value) && props.value.includes(option.value)) ||
-      (props.value && props.value === option.value)
-    ) {
-      return true;
-    }
-
-    return false;
-  };
-
   const mapValues = (): Element<typeof Option>[] | Element<typeof OptGroup>[] => {
     switch (props.values.type) {
       case 'OPTION':
@@ -52,18 +42,39 @@ function CommonSelect<T>(props: SelectProps<T>) {
     return ([]: any[]);
   };
 
-  const mapGroups = (groups: OptGroupProps[]): Element<typeof OptGroup>[] => {
+  const groupIsHidden = (group: OptGroupProps): boolean => {
+    return group.options.every((option) => {
+      if (Array.isArray(props.value)) {
+        return props.value.includes(option.value);
+      } else {
+        return option.value === props.value;
+      }
+    });
+  };
+
+  const mapGroups = (groups: OptGroupProps[]): (?Element<typeof OptGroup>)[] => {
     return groups.map((group, i) => (
-      <OptGroup label={group.label} key={i}>
+      <OptGroup label={group.label} key={i} hidden={groupIsHidden(group)}>
         {mapOptions(group.options)}
       </OptGroup>
     ));
   };
 
+  const optionIsHidden = (option: OptionProps): boolean => {
+    if (
+      (Array.isArray(props.value) && props.value.includes(option.value)) ||
+      (props.value && props.value === option.value)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const mapOptions = (options: OptionProps[]): Element<typeof Option>[] => {
-    return options.map((option, i) => (
-      <Option value={option.value} key={i} hidden={optionIsHidden(option)}>
-        {option.label}
+    return options.map((option) => (
+      <Option label={option.label} key={option.value} value={option.value} hidden={optionIsHidden(option)}>
+        {option.optionNode || option.label}
       </Option>
     ));
   };
@@ -78,7 +89,8 @@ function CommonSelect<T>(props: SelectProps<T>) {
       allowClear
       showSearch
       filterOption
-      optionFilterProp='children'
+      optionLabelProp='label'
+      optionFilterProp='label'
       className={STYLES.select}
       dropdownClassName={STYLES.dropdown}
     >

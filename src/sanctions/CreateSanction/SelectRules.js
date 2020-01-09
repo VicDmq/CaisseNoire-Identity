@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Tooltip, Icon } from 'antd';
 import _ from 'lodash';
 
 import { RuleCategoryText } from '@Utils/text';
@@ -7,6 +8,25 @@ import FormItem from '@Components/common/FormItem/FormItem';
 import type { CommonSelectProps, OptGroupProps } from '@Components/common/Select/CommonSelect';
 import SingleSelect from '@Components/common/Select/SingleSelect';
 import MultipleSelect from '@Components/common/Select/MultipleSelect';
+
+import STYLES from './styles.less';
+
+const OptionNode = ({ rule }: { rule: Rule }) => {
+  const handleIconClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <div className={STYLES.optionNode}>
+      <span className={STYLES.ruleName}>{rule.name}</span>
+      <Tooltip title={rule.description}>
+        <span className={STYLES.tooltipIcon} onClick={handleIconClick}>
+          <Icon type='question-circle' theme='filled' />
+        </span>
+      </Tooltip>
+    </div>
+  );
+};
 
 const SelectRules = ({
   rules,
@@ -36,6 +56,7 @@ const SelectRules = ({
       options: rules.map((rule) => ({
         value: rule.id,
         label: rule.name,
+        optionNode: <OptionNode rule={rule} />,
       })),
     }));
   };
