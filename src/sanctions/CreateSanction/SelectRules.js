@@ -23,12 +23,29 @@ const SelectRules = ({
   const label = `Sanction${isMultiple ? '(s)' : ''}`;
 
   const commonProps: CommonSelectProps = {
-    options: rules
-      .filter((rule) => rule.kind.type !== 'MONTHLY')
-      .map((rule) => ({
-        value: rule.id,
-        label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
-      })),
+    options: {
+      type: 'GROUP',
+      groups: [
+        {
+          label: 'Entrainement',
+          options: rules
+            .filter((rule) => rule.kind.type !== 'MONTHLY' && rule.category === 'TRAINING_DAY')
+            .map((rule) => ({
+              value: rule.id,
+              label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
+            })),
+        },
+        {
+          label: 'Jour de match',
+          options: rules
+            .filter((rule) => rule.kind.type !== 'MONTHLY' && rule.category === 'GAME_DAY')
+            .map((rule) => ({
+              value: rule.id,
+              label: rule.name + ' (' + RuleCategoryText[rule.category] + ')',
+            })),
+        },
+      ],
+    },
     placeholder: `Sélectionner l${isMultiple ? 'es' : 'a'} sanction${isMultiple ? '(s)' : ''} à appliquer`,
     disabled,
   };
