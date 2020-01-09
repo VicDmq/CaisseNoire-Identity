@@ -52,7 +52,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
     });
   };
 
-  const mapGroups = (groups: OptGroupProps[]): (?Element<typeof OptGroup>)[] => {
+  const mapGroups = (groups: OptGroupProps[]): Element<typeof OptGroup>[] => {
     return groups.map((group, i) => (
       <OptGroup label={group.label} key={i} hidden={groupIsHidden(group)}>
         {mapOptions(group.options)}
@@ -73,7 +73,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
 
   const mapOptions = (options: OptionProps[]): Element<typeof Option>[] => {
     return options.map((option) => (
-      <Option label={option.label} key={option.value} value={option.value} hidden={optionIsHidden(option)}>
+      <Option label={option.label} key={option.value} hidden={optionIsHidden(option)}>
         {option.optionNode || option.label}
       </Option>
     ));
