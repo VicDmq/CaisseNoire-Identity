@@ -24,7 +24,12 @@ const DEFAULT_OPTIONS: OptionProps[] = [
 describe('SingleSelect', () => {
   it('Hides selected value', () => {
     const { getAllByRole, getByRole } = render(
-      <SingleSelect label='Select' value={DEFAULT_OPTIONS[0].value} onChange={jest.fn()} options={DEFAULT_OPTIONS} />,
+      <SingleSelect
+        label='Select'
+        value={DEFAULT_OPTIONS[0].value}
+        onChange={jest.fn()}
+        values={{ type: 'OPTION', options: DEFAULT_OPTIONS }}
+      />,
     );
 
     const select = getByRole('combobox');
@@ -52,7 +57,7 @@ describe('MultiSelect', () => {
         label='Select'
         value={DEFAULT_OPTIONS.slice(0, 2).map((option) => option.value)}
         onChange={jest.fn()}
-        options={DEFAULT_OPTIONS}
+        values={{ type: 'OPTION', options: DEFAULT_OPTIONS }}
       />,
     );
 
@@ -75,7 +80,12 @@ describe('MultiSelect', () => {
   it('Returns an empty array instead of undefined when input is cleared', () => {
     const onChange = jest.fn();
     const Component = (
-      <MultipleSelect label='Select' value={[DEFAULT_OPTIONS[0].value]} onChange={onChange} options={DEFAULT_OPTIONS} />
+      <MultipleSelect
+        label='Select'
+        value={[DEFAULT_OPTIONS[0].value]}
+        onChange={onChange}
+        values={{ type: 'OPTION', options: DEFAULT_OPTIONS }}
+      />
     );
 
     const { getByLabelText, rerender } = render(Component);

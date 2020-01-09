@@ -24,7 +24,7 @@ const ExtraInfoInput = ({
 
     switch (usersComparedToRules) {
       case 'MORE':
-        label = `Détails (${user.nickname || user.firstname + ' ' + user.lastname[0]})`;
+        label = `Détails (${user.nickname || user.firstname})`;
         break;
       case 'LESS':
         label = `Détails (${rule.name})`;

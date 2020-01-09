@@ -9,6 +9,7 @@ type DatePickerProps = {
   value: ?Moment,
   onChange: (?Moment) => void,
   disableDates?: (any) => boolean,
+  placeholder?: string,
   disabled: boolean,
   format: string,
   testId: string,
@@ -22,6 +23,7 @@ const CustomDatePicker = (props: DatePickerProps) => {
         onChange={props.onChange}
         disabled={props.disabled}
         disabledDate={props.disableDates}
+        placeholder={props.placeholder}
         className={STYLES.datePicker}
         dropdownClassName={STYLES.dropdownDatePicker}
         format={props.format}
