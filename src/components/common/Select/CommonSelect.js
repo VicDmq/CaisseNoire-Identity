@@ -54,6 +54,7 @@ function CommonSelect<T>(props: SelectProps<T>) {
 
   const mapGroups = (groups: OptGroupProps[]): Element<typeof OptGroup>[] => {
     return groups.map((group, i) => (
+      //Hidden doesn't work : To fix
       <OptGroup label={group.label} key={i} hidden={groupIsHidden(group)}>
         {mapOptions(group.options)}
       </OptGroup>
