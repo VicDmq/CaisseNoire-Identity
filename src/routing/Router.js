@@ -4,9 +4,9 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 import { routes } from './routes';
-import CustomRoute from './Route';
-import Login from './Login/Login';
-import PageNotFound from './PageNotFound';
+import PageLayout from './components/PageLayout';
+import Login from './components/Login/Login';
+import PageNotFound from './components/PageNotFound';
 
 type CookieProps = {
   session: SessionProps,
@@ -33,24 +33,26 @@ const Router = ({ rootUrl }: { rootUrl: string }) => {
       <Route exact path='/'>
         <Login rootUrl={rootUrl} setSession={setSession} />
       </Route>
-      {routes.map((route, i) => (
-        <Route
-          key={i}
-          path={route.path}
-          render={() =>
-            !cookies.session ? (
-              <Redirect
-                to={{
-                  pathname: '/',
-                  state: { from: route.path },
-                }}
-              />
-            ) : (
-              <CustomRoute route={route} session={cookies.session} rootUrl={rootUrl} deleteSession={deleteSession} />
-            )
-          }
-        />
-      ))}
+      <PageLayout deleteSession={deleteSession}>
+        {routes.map((route, i) => (
+          <Route
+            key={i}
+            path={route.path}
+            render={() =>
+              !cookies.session ? (
+                <Redirect
+                  to={{
+                    pathname: '/',
+                    state: { from: route.path },
+                  }}
+                />
+              ) : (
+                <route.component teamId={cookies.session.teamId} isAdmin={cookies.session.isAdmin} rootUrl={rootUrl} />
+              )
+            }
+          />
+        ))}
+      </PageLayout>
       <Route path='*'>
         <PageNotFound />
       </Route>

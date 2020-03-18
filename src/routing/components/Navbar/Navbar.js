@@ -1,14 +1,13 @@
 // @flow
 import React, { useState } from 'react';
-import { Button, Divider, Layout, Menu } from 'antd';
+import { Button, Divider, Menu } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 
-import STYLES from './header.less';
+import STYLES from './navbar.less';
 
-const { Header } = Layout;
 const { Item } = Menu;
 
-const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
+const Navbar = ({ deleteSession }: { deleteSession: () => void }) => {
   const [selectedKey, setSelectedKey] = useState<string>('sanctions');
   const history = useHistory();
 
@@ -22,7 +21,7 @@ const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
   };
 
   return (
-    <Header className={STYLES.header}>
+    <div className={STYLES.navbar}>
       <div className={STYLES.title}>Caisse Noire</div>
       <Divider className={STYLES.divider} type='vertical' />
       <Menu mode='horizontal' selectedKeys={selectedKey} onSelect={selectItem} className={STYLES.menu}>
@@ -31,8 +30,8 @@ const CustomHeader = ({ deleteSession }: { deleteSession: () => void }) => {
         </Item>
       </Menu>
       <Button type='primary' className={STYLES.logoutButton} icon='logout' onClick={signOut} />
-    </Header>
+    </div>
   );
 };
 
-export default CustomHeader;
+export default Navbar;
