@@ -14,6 +14,7 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
+    mainFiles: ['index'],
     alias: {
       '@Components': path.resolve(__dirname, 'src/components'),
       '@Utils': path.resolve(__dirname, 'src/utils'),
