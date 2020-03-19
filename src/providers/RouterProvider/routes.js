@@ -1,6 +1,7 @@
 // @flow
 import type { ComponentType } from 'react';
-import Sanctions from '../sanctions/Sanctions';
+import Sanctions from '../../sanctions/Sanctions';
+import NotFound from '@Pages/NotFound';
 
 export type ApiProps = {
   teamId: Uuid,
@@ -13,9 +14,15 @@ export type RouteProps = {
   component: ComponentType<ApiProps>,
 };
 
-export const routes: RouteProps[] = [
+const routes: RouteProps[] = [
   {
     path: '/sanctions',
     component: Sanctions,
   },
+  {
+    path: '*',
+    component: NotFound,
+  },
 ];
+
+export default routes;

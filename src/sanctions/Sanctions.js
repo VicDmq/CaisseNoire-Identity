@@ -4,7 +4,7 @@ import { connect, PromiseState } from 'react-refetch';
 import { Row, Col, Tabs, Icon } from 'antd';
 
 import type { Response, Reason } from '@Components/utils/Connect';
-import type { ApiProps } from '../routing/routes';
+import type { ApiProps } from '../providers/RouterProvider/routes';
 import CreateSanctionForm from './CreateSanction/CreateSanction';
 import SanctionList from './SanctionList/SanctionList';
 import SanctionTable from './SanctionTable/SanctionTable';

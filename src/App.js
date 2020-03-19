@@ -1,12 +1,14 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
-import { ConfigProvider } from 'antd';
-import locale from 'antd/es/locale/fr_FR';
-
-import Router from './routing/Router';
+import {
+  CookiesProvider,
+  BrowserRouter,
+  AntdProvider,
+  AuthProvider,
+  LayoutProvider,
+  RouterProvider,
+} from './providers';
 
 import './styles/app.less';
 
@@ -16,9 +18,13 @@ const App = () => {
   return (
     <CookiesProvider>
       <BrowserRouter>
-        <ConfigProvider locale={locale}>
-          <Router rootUrl={REACT_APP_API_URL} />
-        </ConfigProvider>
+        <AntdProvider>
+          <AuthProvider rootUrl={REACT_APP_API_URL}>
+            <LayoutProvider>
+              <RouterProvider rootUrl={REACT_APP_API_URL} />
+            </LayoutProvider>
+          </AuthProvider>
+        </AntdProvider>
       </BrowserRouter>
     </CookiesProvider>
   );

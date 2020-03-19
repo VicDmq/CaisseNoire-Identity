@@ -2,12 +2,15 @@
 import React, { useState } from 'react';
 import { Button, Divider, Menu } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 import STYLES from './navbar.less';
 
 const { Item } = Menu;
 
-const Navbar = ({ deleteSession }: { deleteSession: () => void }) => {
+const Navbar = () => {
+  const [, , removeCookie] = useCookies<CookieProps, SessionProps>(['session']);
+
   const [selectedKey, setSelectedKey] = useState<string>('sanctions');
   const history = useHistory();
 
@@ -16,7 +19,7 @@ const Navbar = ({ deleteSession }: { deleteSession: () => void }) => {
   };
 
   const signOut = () => {
-    deleteSession();
+    removeCookie('session', {});
     history.push({ pathname: '/' });
   };
 

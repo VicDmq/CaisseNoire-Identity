@@ -8,15 +8,14 @@ import Navbar from './Navbar/Navbar';
 const { Header, Content } = LayoutComponent;
 
 type PageLayoutProps = {
-  deleteSession: () => void,
   children: ChildrenArray<typeof Route>,
 };
 
-const PageLayout = ({ deleteSession, children }: PageLayoutProps) => {
+const PageLayout = ({ children }: PageLayoutProps) => {
   return (
     <LayoutComponent>
       <Header>
-        <Navbar deleteSession={deleteSession} />
+        <Navbar />
       </Header>
       <Content>{children}</Content>
     </LayoutComponent>
