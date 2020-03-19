@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-refetch';
 import { useHistory } from 'react-router-dom';
 
 import type { Response } from '@Components/utils/Connect';
@@ -28,16 +27,4 @@ const Login = (props: LoginProps) => {
   return <LoginForm signIn={tryToLogIn} response={props.loginResponse} />;
 };
 
-export default connect(({ rootUrl }: { rootUrl: string }) => {
-  return {
-    login: (request: LoginRequest, cb: (LoginResponse) => void) => ({
-      loginResponse: {
-        url: `${rootUrl}/login`,
-        method: 'POST',
-        force: true,
-        body: JSON.stringify(request),
-        then: (response) => cb(response),
-      },
-    }),
-  };
-})(Login);
+export default Login;

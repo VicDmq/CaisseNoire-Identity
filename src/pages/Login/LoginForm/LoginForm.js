@@ -6,7 +6,7 @@ import Input from '@Components/common/Input/Input';
 import FormItem from '@Components/common/FormItem/FormItem';
 import type { Response, Reason } from '@Components/utils/Connect';
 
-import STYLES from './styles.less';
+import STYLES from './LoginForm.less';
 
 type LoginFormProps = {
   signIn: (LoginRequest) => void,

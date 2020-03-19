@@ -5,7 +5,7 @@ import moment, { type Moment } from 'moment';
 
 import { API_DATE_FORMAT } from '@Utils/date';
 import withConnect from '@Components/utils/Connect';
-import MonthPicker from '@Components/common/MonthPicker/MonthPicker';
+import MonthPicker from '@Components/common/MonthPicker';
 import columns from './columns';
 
 import STYLES from './styles.less';

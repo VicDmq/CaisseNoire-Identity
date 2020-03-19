@@ -9,6 +9,7 @@
 [options]
 module.name_mapper='^@Routing' ->'<PROJECT_ROOT>/src/routing'
 module.name_mapper='^@Sanctions' ->'<PROJECT_ROOT>/src/sanctions'
+module.name_mapper='^@Pages' ->'<PROJECT_ROOT>/src/pages'
 module.name_mapper='^@Components' ->'<PROJECT_ROOT>/src/components'
 module.name_mapper='^@Utils' ->'<PROJECT_ROOT>/src/utils'
 module.name_mapper.extension='less' -> '<PROJECT_ROOT>/flow/less_module.js.flow'
