@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import LoginForm from '@Routing/Login/LoginForm';
+import LoginForm from '@Pages/Login/LoginForm';
 
 import { DEFAULT_NOT_FOUND } from '../../utils/default';
 

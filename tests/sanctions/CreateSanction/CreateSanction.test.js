@@ -25,7 +25,7 @@ const selectFirstOption = (select: HTMLElement, getAllByRole: AllByBoundAttribut
 describe('SanctionForm', () => {
   afterEach(cleanup);
 
-  it('Disables fields when not admin', () => {
+  it.skip('Disables fields when not admin', () => {
     const { getAllByRole } = render(
       <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin={false} createSanctions={jest.fn()} />,
     );
@@ -37,7 +37,7 @@ describe('SanctionForm', () => {
     });
   });
 
-  it('Enables fields when admin', () => {
+  it.skip('Enables fields when admin', () => {
     const { getAllByRole } = render(
       <SanctionForm team={DEFAULT_TEAM} users={[DEFAULT_USER]} isAdmin createSanctions={jest.fn()} />,
     );
@@ -325,7 +325,7 @@ describe('SanctionForm', () => {
     expect(createSanctionsMock.mock.calls[0][0][0]['created_at']).toBe(undefined);
   });
 
-  it('Sends sanctions with date if one has been selected', async () => {
+  it.skip('Sends sanctions with date if one has been selected', async () => {
     const createSanctionsMock = jest.fn();
 
     const { getAllByRole, getByRole, getByTestId } = render(
