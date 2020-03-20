@@ -1,3 +1,4 @@
+// @flow
 declare type CookieProps = {
   session: SessionProps,
 };
