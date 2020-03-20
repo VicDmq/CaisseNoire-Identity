@@ -10,6 +10,7 @@ type SingleSelectProps = {
 };
 
 const SingleSelect = ({ onChange, ...otherProps }: SingleSelectProps) => {
+  // $FlowFixMe: Should accept otherProps
   return <CommonSelect multiple={false} onChange={onChange} {...otherProps} />;
 };
 

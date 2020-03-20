@@ -14,6 +14,7 @@ const MultipleSelect = ({ onChange, ...otherProps }: MultipleSelectProps) => {
     onChange(value || []);
   };
 
+  // $FlowFixMe: Should accept otherProps
   return <CommonSelect onChange={handleChange} multiple {...otherProps} />;
 };
 

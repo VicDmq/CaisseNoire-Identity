@@ -28,7 +28,6 @@ type WithConnect<T> = {
 function withConnect<Props, OtherProps>(
   WrappedComponent: AbstractComponent<Props & OtherProps>,
 ): AbstractComponent<WithConnect<Props> & OtherProps> {
-  // $FlowFixMe: Should accept (WithConnect<Props> & OtherProps)
   return function WrapperComponent({ response, mapResponseToProps, ...otherProps }: WithConnect<Props> & OtherProps) {
     if (response.rejected) {
       return (
@@ -40,6 +39,7 @@ function withConnect<Props, OtherProps>(
       );
     }
     if (response.fulfilled) {
+      // $FlowFixMe: Should accept (WithConnect<Props> & OtherProps)
       return <WrappedComponent {...mapResponseToProps(response.value)} {...otherProps} />;
     }
 
