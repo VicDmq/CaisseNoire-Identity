@@ -12,16 +12,14 @@ import {
 
 import './styles/app.less';
 
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL || '';
-
 const App = () => {
   return (
     <CookiesProvider>
       <BrowserRouter>
         <AntdProvider>
-          <AuthProvider rootUrl={REACT_APP_API_URL}>
+          <AuthProvider>
             <LayoutProvider>
-              <RouterProvider rootUrl={REACT_APP_API_URL} />
+              <RouterProvider />
             </LayoutProvider>
           </AuthProvider>
         </AntdProvider>

@@ -14,11 +14,10 @@ type SessionProps = {
 };
 
 type AuthProviderProps = {
-  rootUrl: string,
   children: ComponentType<{ rootUrl: string }>,
 };
 
-const AuthProvider = ({ rootUrl, children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const [cookies, setCookie] = useCookies<CookieProps, SessionProps>(['session']);
 
   const setSession = (teamId: Uuid, isAdmin: boolean) => {
@@ -26,7 +25,7 @@ const AuthProvider = ({ rootUrl, children }: AuthProviderProps) => {
   };
 
   if (!cookies.session) {
-    return <Login rootUrl={rootUrl} setSession={setSession} />;
+    return <Login setSession={setSession} />;
   } else {
     return children;
   }

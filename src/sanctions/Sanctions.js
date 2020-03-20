@@ -3,6 +3,7 @@ import React from 'react';
 import { connect, PromiseState } from 'react-refetch';
 import { Row, Col, Tabs, Icon } from 'antd';
 
+import env from '@Utils/env';
 import type { Response, Reason } from '@Components/utils/Connect';
 import type { ApiProps } from '../providers/RouterProvider/routes';
 import CreateSanctionForm from './CreateSanction/CreateSanction';
@@ -105,7 +106,8 @@ const Sanctions = ({
   );
 };
 
-export default connect(({ teamId, rootUrl }: ApiProps) => {
+export default connect(({ teamId }: ApiProps) => {
+  const rootUrl = env.getApiUrl();
   const sanctionsUrl = `${rootUrl}/teams/${teamId}/sanctions`;
 
   return {

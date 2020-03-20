@@ -1,11 +1,13 @@
 // @flow
-import Login from './Login';
 import { connect } from 'react-refetch';
 
-const requests = ({ rootUrl }: { rootUrl: string }) => ({
+import Login from './Login';
+import env from '@Utils/env';
+
+const requests = () => ({
   login: (request: LoginRequest, cb: (LoginResponse) => void) => ({
     loginResponse: {
-      url: `${rootUrl}/login`,
+      url: `${env.getApiUrl()}/login`,
       method: 'POST',
       force: true,
       body: JSON.stringify(request),

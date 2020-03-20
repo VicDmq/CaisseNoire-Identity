@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 
 import { type RouteProps } from './routes';
 
-const Router = ({ rootUrl, routes }: { rootUrl: string, routes: RouteProps[] }) => {
+const Router = ({ routes }: { routes: RouteProps[] }) => {
   const [cookies] = useCookies<CookieProps, SessionProps>(['session']);
 
   return (
@@ -15,9 +15,7 @@ const Router = ({ rootUrl, routes }: { rootUrl: string, routes: RouteProps[] }) 
           key={i}
           exact
           path={route.path}
-          render={() => (
-            <route.component teamId={cookies.session.teamId} isAdmin={cookies.session.isAdmin} rootUrl={rootUrl} />
-          )}
+          render={() => <route.component teamId={cookies.session.teamId} isAdmin={cookies.session.isAdmin} />}
         />
       ))}
     </Switch>

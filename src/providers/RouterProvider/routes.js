@@ -6,7 +6,6 @@ import NotFound from '@Pages/NotFound';
 export type ApiProps = {
   teamId: Uuid,
   isAdmin: boolean,
-  rootUrl: string,
 };
 
 export type RouteProps = {
