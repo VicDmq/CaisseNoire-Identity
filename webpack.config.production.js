@@ -7,7 +7,7 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    filename: './src/App.js',
+    filename: './src/index.js',
   },
   output: {
     filename: './js/bundle.[hash].js',
