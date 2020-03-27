@@ -7,7 +7,7 @@
 [lints]
 
 [options]
-module.name_mapper='^@Routing' ->'<PROJECT_ROOT>/src/routing'
+module.name_mapper='^@HOC' ->'<PROJECT_ROOT>/src/hoc'
 module.name_mapper='^@Sanctions' ->'<PROJECT_ROOT>/src/sanctions'
 module.name_mapper='^@Pages' ->'<PROJECT_ROOT>/src/pages'
 module.name_mapper='^@Components' ->'<PROJECT_ROOT>/src/components'

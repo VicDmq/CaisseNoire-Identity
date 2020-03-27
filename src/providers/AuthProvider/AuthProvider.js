@@ -1,5 +1,5 @@
 // @flow
-import React, { type ComponentType } from 'react';
+import React, { type Node } from 'react';
 import { useCookies } from 'react-cookie';
 
 import Login from '@Pages/Login';
@@ -14,7 +14,7 @@ type SessionProps = {
 };
 
 type AuthProviderProps = {
-  children: ComponentType<{ rootUrl: string }>,
+  children: Node,
 };
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
