@@ -5,7 +5,6 @@ import type { Moment } from 'moment';
 
 import format from '@Utils/currency';
 import { API_DATE_FORMAT } from '@Utils/date';
-import withConnect, { type Reason } from '@Components/utils/Connect';
 import DateInput from './DateInput';
 import SelectUsers from './SelectUsers';
 import SelectRules from './SelectRules';
@@ -250,5 +249,4 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
   );
 };
 
-// export default withConnect<DataProps, OtherProps>(SanctionForm);
 export default SanctionForm;

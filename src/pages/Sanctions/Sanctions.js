@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import { Row, Col, Tabs, Icon } from 'antd';
 
 import { TeamContext } from '@Providers';
-import type { Response, Reason } from '@Components/utils/Connect';
 import CreateSanctionForm from './CreateSanction/CreateSanction';
 import SanctionList from './SanctionList/SanctionList';
 import SanctionTable from './SanctionTable/SanctionTable';

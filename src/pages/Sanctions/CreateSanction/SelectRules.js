@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { Tooltip, Icon } from 'antd';
-import _ from 'lodash';
 
 import { RuleCategoryText } from '@Utils/text';
 import FormItem from '@Components/common/FormItem/FormItem';
@@ -44,21 +43,30 @@ const SelectRules = ({
   const label = `Sanction${isMultiple ? '(s)' : ''}`;
 
   const mapGroups = (): OptGroupProps[] => {
-    const rulesFiltered: Rule[] = rules.filter((rule) => rule.kind.type !== 'MONTHLY');
+    return rules
+      .filter((rule) => rule.kind.type !== 'MONTHLY')
+      .reduce((acc, rule) => {
+        const groupedRules = acc.find((o) => o.category === rule.category);
 
-    const rulesGroupedByCategory: { [key: RuleCategory]: Rule[] } = _.groupBy(rulesFiltered, 'category');
+        if (!groupedRules) {
+          acc.push({
+            category: rule.category,
+            rules: [rule],
+          });
+        } else {
+          groupedRules.rules.push(rule);
+        }
 
-    //$FlowIssue: entries(object: any): Array<[string, mixed]>
-    const entries: [RuleCategory, Rule[]][] = Object.entries(rulesGroupedByCategory);
-
-    return entries.map(([category, rules]) => ({
-      label: RuleCategoryText[category],
-      options: rules.map((rule) => ({
-        value: rule.id,
-        label: rule.name,
-        optionNode: <OptionNode rule={rule} />,
-      })),
-    }));
+        return acc;
+      }, [])
+      .map(({ category, rules }) => ({
+        label: RuleCategoryText[category],
+        options: rules.map((rule) => ({
+          value: rule.id,
+          label: rule.name,
+          optionNode: <OptionNode rule={rule} />,
+        })),
+      }));
   };
 
   const commonProps: CommonSelectProps = {

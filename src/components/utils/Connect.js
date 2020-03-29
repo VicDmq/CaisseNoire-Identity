@@ -2,24 +2,6 @@
 import React, { type AbstractComponent } from 'react';
 import { Spin, Result } from 'antd';
 
-export type Response<T> = Success<T> | Failed | Pending;
-
-type Success<T> = {|
-  fulfilled: true,
-  value: T,
-|};
-
-type Failed = {|
-  rejected: true,
-  reason: Reason,
-|};
-
-type Pending = {| pending: true |};
-
-export type Reason = {
-  cause: ?ApiError,
-};
-
 type WithConnect<T> = {
   response: Response<any>,
   mapResponseToProps: (any[]) => T,

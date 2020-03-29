@@ -11,12 +11,17 @@ import columns from './columns';
 import STYLES from './styles.less';
 
 type DataProps = {
-  team: Team,
-  users: User[],
   sanctions: Sanction[],
 };
 
-export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
+type OtherProps = {
+  team: Team,
+  users: User[],
+};
+
+type SanctionTableProps = DataProps & OtherProps;
+
+export const SanctionTable = ({ team, users, sanctions }: SanctionTableProps) => {
   const [month, setMonth] = useState<Moment>(moment());
 
   const changeMonth = (value: ?Moment) => {
@@ -63,4 +68,4 @@ export const SanctionTable = ({ team, users, sanctions }: DataProps) => {
   );
 };
 
-export default withConnect<DataProps, {}>(SanctionTable);
+export default withConnect<DataProps, OtherProps>(SanctionTable);

@@ -2,7 +2,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import type { Response } from '@Components/utils/Connect';
 import LoginForm from './LoginForm';
 
 type LoginProps = {

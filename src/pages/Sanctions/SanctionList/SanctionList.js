@@ -8,12 +8,12 @@ import { SanctionListItem, type ListItemProps } from './SanctionListItem';
 import STYLES from './styles.less';
 
 type DataProps = {
-  team: Team,
-  users: User[],
   sanctions: Sanction[],
 };
 
 type OtherProps = {
+  team: Team,
+  users: User[],
   deleteSanction: (Uuid, () => void, () => void) => void,
   isAdmin: boolean,
 };
