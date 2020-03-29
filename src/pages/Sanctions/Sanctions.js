@@ -15,14 +15,12 @@ const Sanctions = ({
   sanctionsFetch,
   postSanctions,
   deleteSanction,
-  isAdmin,
 }: {
   sanctionsFetch: Response<Sanction[]>,
   postSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
   deleteSanction: (Uuid, () => void, (Reason) => void) => void,
-  isAdmin: boolean,
 }) => {
-  const { team, users } = useContext(TeamContext);
+  const { isAdmin, team, users } = useContext(TeamContext);
 
   return (
     <Tabs tabBarStyle={{ display: 'flex', justifyContent: 'center' }}>

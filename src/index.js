@@ -5,5 +5,10 @@ import App from '@Providers';
 
 import './styles/app.less';
 
-// $FlowFixMe: getElementById can return null
-render(<App />, document.getElementById('app'));
+const app = document.getElementById('app');
+
+if (app) {
+  render(<App />, app);
+} else {
+  throw new Error('#app not defined');
+}

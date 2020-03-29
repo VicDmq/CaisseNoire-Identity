@@ -1,8 +1,10 @@
 // @flow
 import React, { createContext, type Node } from 'react';
 import { PromiseState } from 'react-refetch';
+import { useCookies } from 'react-cookie';
 
 type Context = {
+  isAdmin: boolean,
   team: Team,
   users: User[],
 };
@@ -17,6 +19,7 @@ type ContextProviderProps = {
 };
 
 const ContextProvider = ({ children, teamFetch, usersFetch }: ContextProviderProps) => {
+  const [cookies] = useCookies<CookieProps, SessionProps>(['session']);
   const response: Response<{ team: Team, users: User[] }> = PromiseState.all([teamFetch, usersFetch]);
 
   if (response.pending) return <div>Loading</div>;
@@ -24,8 +27,9 @@ const ContextProvider = ({ children, teamFetch, usersFetch }: ContextProviderPro
   if (response.rejected) return <div>Error</div>;
 
   if (response.fulfilled) {
+    const isAdmin = cookies.session.isAdmin;
     const [team, users] = response.value;
-    return <TeamContext.Provider value={{ team, users }}>{children}</TeamContext.Provider>;
+    return <TeamContext.Provider value={{ isAdmin, team, users }}>{children}</TeamContext.Provider>;
   }
 };
 
