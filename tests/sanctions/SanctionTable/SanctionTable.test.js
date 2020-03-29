@@ -3,7 +3,7 @@ import React from 'react';
 import { render, within } from '@testing-library/react';
 import moment from 'moment';
 
-import { SanctionTable } from '@Sanctions/SanctionTable/SanctionTable';
+import { SanctionTable } from '@Pages/Sanctions/SanctionTable/SanctionTable';
 import { DEFAULT_TEAM, DEFAULT_USER, DEFAULT_RULE, DEFAULT_SANCTION } from '../../utils/default';
 
 describe('SanctionTable', () => {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 
-import { SanctionList } from '@Sanctions/SanctionList/SanctionList';
+import { SanctionList } from '@Pages/Sanctions/SanctionList/SanctionList';
 
 import { DEFAULT_TEAM, DEFAULT_USER, DEFAULT_SANCTION } from '../../utils/default';
 

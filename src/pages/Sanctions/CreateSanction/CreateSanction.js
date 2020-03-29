@@ -250,4 +250,5 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
   );
 };
 
-export default withConnect<DataProps, OtherProps>(SanctionForm);
+// export default withConnect<DataProps, OtherProps>(SanctionForm);
+export default SanctionForm;

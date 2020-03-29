@@ -1,6 +1,6 @@
 // @flow
 import type { ComponentType } from 'react';
-import Sanctions from '../../sanctions/Sanctions';
+import Sanctions from '@Pages/Sanctions';
 import NotFound from '@Pages/NotFound';
 
 export type ApiProps = {

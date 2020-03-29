@@ -9,7 +9,6 @@
 [options]
 module.name_mapper='^@HOC' ->'<PROJECT_ROOT>/src/hoc'
 module.name_mapper='^@Providers' ->'<PROJECT_ROOT>/src/providers'
-module.name_mapper='^@Sanctions' ->'<PROJECT_ROOT>/src/sanctions'
 module.name_mapper='^@Pages' ->'<PROJECT_ROOT>/src/pages'
 module.name_mapper='^@Components' ->'<PROJECT_ROOT>/src/components'
 module.name_mapper='^@Utils' ->'<PROJECT_ROOT>/src/utils'

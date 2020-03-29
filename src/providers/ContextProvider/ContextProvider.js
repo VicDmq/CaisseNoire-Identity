@@ -1,5 +1,6 @@
 // @flow
-import React, { createContext, useContext } from 'react';
+import React, { createContext } from 'react';
+import { PromiseState } from 'react-refetch';
 
 type ContextProviderProps = {
   teamFetch: Response<Team>,
@@ -7,30 +8,22 @@ type ContextProviderProps = {
   children: any,
 };
 
-const env: EnvContext = {
-  rootUrl: process.env.REACT_APP_API_URL || '',
-};
+type Context =
+  | {
+      team: Team,
+      users: User[],
+    }
+  | typeof undefined;
 
-const AppContext = createContext();
+export const TeamContext = createContext<Context>();
 
 const ContextProvider = ({ children, teamFetch, usersFetch }: ContextProviderProps) => {
-  console.log(usersFetch);
-  return (
-    <AppContext.Provider value={{ teamFetch, usersFetch }}>
-      <Test>{children}</Test>
-    </AppContext.Provider>
-  );
-};
+  const { pending, fulfilled, value } = PromiseState.all([teamFetch, usersFetch]);
 
-const Test = ({ children }) => {
-  const context = useContext(AppContext);
-  console.log(context);
-  return (
-    <div>
-      {context.teamFetch && context.teamFetch.refreshing && <div>Je rafraichis</div>}
-      {children}
-    </div>
-  );
+  if (pending) return <div>Loading</div>;
+  if (fulfilled) {
+    return <TeamContext.Provider value={{ team: value[0], users: value[1] }}>{children}</TeamContext.Provider>;
+  }
 };
 
 export default ContextProvider;

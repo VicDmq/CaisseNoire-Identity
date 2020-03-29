@@ -10,7 +10,7 @@ import {
 } from '@testing-library/react';
 import moment from 'moment';
 
-import { SanctionForm } from '@Sanctions/CreateSanction/CreateSanction';
+import { SanctionForm } from '@Pages/Sanctions/CreateSanction/CreateSanction';
 
 import { DEFAULT_TEAM, DEFAULT_USER } from '../../utils/default';
 
