@@ -2,7 +2,7 @@
 import React, { type Element, type Node } from 'react';
 import { Select } from 'antd';
 
-import STYLES from './styles.less';
+import STYLES from './select.less';
 
 export type OptionProps = {
   value: Uuid,

@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
-import { DatePicker } from 'antd';
+import { DatePicker as DatePickerComponent } from 'antd';
 import { type Moment } from 'moment';
 
-import STYLES from './styles.less';
+import STYLES from './datePicker.less';
 
 type DatePickerProps = {
   value: ?Moment,
@@ -15,10 +15,10 @@ type DatePickerProps = {
   testId: string,
 };
 
-const CustomDatePicker = (props: DatePickerProps) => {
+const DatePicker = (props: DatePickerProps) => {
   return (
     <div test-id={props.testId}>
-      <DatePicker
+      <DatePickerComponent
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled}
@@ -33,10 +33,10 @@ const CustomDatePicker = (props: DatePickerProps) => {
   );
 };
 
-CustomDatePicker.defaultProps = {
+DatePicker.defaultProps = {
   disabled: false,
   format: 'dddd D MMMM',
   testId: 'date-input',
 };
 
-export default CustomDatePicker;
+export default DatePicker;

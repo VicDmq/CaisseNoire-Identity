@@ -3,7 +3,7 @@ import React from 'react';
 import { InputNumber } from 'antd';
 import classNames from 'classnames/bind';
 
-import STYLES from './styles.less';
+import STYLES from './numericInput.less';
 
 type NumericInputProps = {
   value: ?number,

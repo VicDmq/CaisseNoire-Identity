@@ -3,7 +3,7 @@ import React, { type Node } from 'react';
 import { Form } from 'antd';
 import classNames from 'classnames/bind';
 
-import STYLES from './styles.less';
+import STYLES from './formItem.less';
 
 const { Item } = Form;
 

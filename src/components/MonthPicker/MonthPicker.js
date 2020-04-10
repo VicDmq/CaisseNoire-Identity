@@ -3,7 +3,7 @@ import React from 'react';
 import { DatePicker, Button } from 'antd';
 import moment, { type Moment } from 'moment';
 
-import STYLES from './styles.less';
+import STYLES from './monthPicker.less';
 
 const { MonthPicker } = DatePicker;
 

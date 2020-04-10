@@ -1,10 +1,8 @@
 // @flow
 import React from 'react';
 
-import FormItem from '@Components/common/FormItem/FormItem';
-import type { CommonSelectProps } from '@Components/common/Select/CommonSelect';
-import SingleSelect from '@Components/common/Select/SingleSelect';
-import MultipleSelect from '@Components/common/Select/MultipleSelect';
+import FormItem from '@Components/FormItem';
+import { SingleSelect, MultipleSelect, type CommonSelectProps } from '@Components/Select';
 
 const SelectUsers = ({
   users,

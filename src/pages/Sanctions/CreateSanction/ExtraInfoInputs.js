@@ -1,8 +1,8 @@
 // @flow
 import React, { type Element } from 'react';
 
-import NumericInput from '@Components/common/NumericInput/NumericInput';
-import FormItem from '@Components/common/FormItem/FormItem';
+import NumericInput from '@Components/NumericInput';
+import FormItem from '@Components/FormItem';
 import { TimeUnitText } from '@Utils/text';
 import { type ComparisonResult } from './CreateSanction';
 

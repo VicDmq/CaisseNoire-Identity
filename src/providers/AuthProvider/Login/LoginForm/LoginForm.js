@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button, Checkbox, Icon } from 'antd';
 
-import Input from '@Components/common/Input/Input';
-import FormItem from '@Components/common/FormItem/FormItem';
+import Input from '@Components/Input';
+import FormItem from '@Components/FormItem';
 
 import STYLES from './loginForm.less';
 

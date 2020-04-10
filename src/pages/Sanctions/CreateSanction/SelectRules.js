@@ -3,10 +3,8 @@ import React from 'react';
 import { Tooltip, Icon } from 'antd';
 
 import { RuleCategoryText } from '@Utils/text';
-import FormItem from '@Components/common/FormItem/FormItem';
-import type { CommonSelectProps, OptGroupProps } from '@Components/common/Select/CommonSelect';
-import SingleSelect from '@Components/common/Select/SingleSelect';
-import MultipleSelect from '@Components/common/Select/MultipleSelect';
+import FormItem from '@Components/FormItem';
+import { SingleSelect, MultipleSelect, type CommonSelectProps, type OptGroupProps } from '@Components/Select';
 
 import STYLES from './styles.less';
 

@@ -2,8 +2,8 @@
 import React from 'react';
 import moment, { type Moment } from 'moment';
 
-import DatePicker from '@Components/common/DatePicker/DatePicker';
-import FormItem from '@Components/common/FormItem/FormItem';
+import DatePicker from '@Components/DatePicker';
+import FormItem from '@Components/FormItem';
 
 const DateInput = ({
   date,
