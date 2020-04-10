@@ -33,7 +33,7 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
       cancelText: 'Non',
       okType: 'danger',
       onOk() {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
           deleteSanction(
             sanction_id,
             () => resolve(),
