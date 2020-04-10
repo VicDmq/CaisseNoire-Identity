@@ -3,7 +3,7 @@ import React from 'react';
 import { Result, Row, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
-const PageNotFound = () => {
+const NotFound = () => {
   return (
     <Row type='flex' align='middle' justify='center' style={{ height: '100%' }}>
       <Result
@@ -20,4 +20,4 @@ const PageNotFound = () => {
   );
 };
 
-export default PageNotFound;
+export default NotFound;

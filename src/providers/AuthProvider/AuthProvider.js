@@ -2,7 +2,7 @@
 import React, { type Node } from 'react';
 import { useCookies } from 'react-cookie';
 
-import Login from '@Pages/Login';
+import Login from './Login';
 
 type CookieProps = {
   session: SessionProps,

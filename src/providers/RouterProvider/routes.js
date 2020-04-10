@@ -1,7 +1,7 @@
 // @flow
 import type { Node } from 'react';
-import Sanctions from '@Pages/Sanctions';
-import NotFound from '@Pages/NotFound';
+import { SanctionsPage } from '@Pages';
+import NotFound from './NotFound';
 
 export type RouteProps = {
   path: string,
@@ -11,7 +11,7 @@ export type RouteProps = {
 const routes: RouteProps[] = [
   {
     path: '/sanctions',
-    component: Sanctions,
+    component: SanctionsPage,
   },
   {
     path: '*',
