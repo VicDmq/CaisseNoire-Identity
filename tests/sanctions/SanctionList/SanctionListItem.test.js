@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import { SanctionListItem } from '@Sanctions/SanctionList/SanctionListItem';
+import { SanctionListItem } from '@Pages/Sanctions/SanctionList/SanctionListItem';
 import { DEFAULT_RULE, DEFAULT_USER, DEFAULT_SANCTION } from '../../utils/default';
 
 describe('SanctionListItem', () => {
