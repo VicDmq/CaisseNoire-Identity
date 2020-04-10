@@ -5,7 +5,7 @@ import { Row, Col, Form, Button, Checkbox, Icon } from 'antd';
 import Input from '@Components/common/Input/Input';
 import FormItem from '@Components/common/FormItem/FormItem';
 
-import STYLES from './LoginForm.less';
+import STYLES from './loginForm.less';
 
 type LoginFormProps = {
   signIn: (LoginRequest) => void,

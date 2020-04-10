@@ -1,11 +1,10 @@
 // @flow
-import type { Node } from 'react';
 import { SanctionsPage } from '@Pages';
-import NotFound from './NotFound';
+import { NotFoundPage } from './NotFound';
 
 export type RouteProps = {
   path: string,
-  component: Node,
+  component: any,
 };
 
 const routes: RouteProps[] = [
@@ -15,7 +14,7 @@ const routes: RouteProps[] = [
   },
   {
     path: '*',
-    component: NotFound,
+    component: NotFoundPage,
   },
 ];
 

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
-import App from '@Providers';
+import App from '@Providers/AppProvider';
 
 import './styles/app.less';
 

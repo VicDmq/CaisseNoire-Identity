@@ -5,6 +5,8 @@ import { Route } from 'react-router-dom';
 
 import Navbar from './Navbar/Navbar';
 
+import STYLES from './layoutProvider.less';
+
 const { Header, Content } = LayoutComponent;
 
 type PageLayoutProps = {
@@ -13,7 +15,7 @@ type PageLayoutProps = {
 
 const PageLayout = ({ children }: PageLayoutProps) => {
   return (
-    <LayoutComponent>
+    <LayoutComponent className={STYLES.layout}>
       <Header>
         <Navbar />
       </Header>

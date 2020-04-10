@@ -1,1 +1,2 @@
-export { default } from './NotFound';
+// @flow
+export { default as NotFoundPage } from './NotFound';
