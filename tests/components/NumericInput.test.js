@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import NumericInput from '@Components/common/NumericInput/NumericInput';
+import NumericInput from '@Components/NumericInput';
 
 describe('NumericInput', () => {
   it('Calls onChange when input is undefined or not a number', () => {

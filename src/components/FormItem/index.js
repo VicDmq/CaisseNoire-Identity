@@ -1,1 +1,2 @@
-export { default } from './formItem.less';
+// @flow
+export { default } from './FormItem';

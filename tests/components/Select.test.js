@@ -2,9 +2,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import type { OptionProps } from '@Components/common/Select/CommonSelect';
-import SingleSelect from '@Components/common/Select/SingleSelect';
-import MultipleSelect from '@Components/common/Select/MultipleSelect';
+import { SingleSelect, MultipleSelect, type OptionProps } from '@Components/Select';
 
 const DEFAULT_OPTIONS: OptionProps[] = [
   {
