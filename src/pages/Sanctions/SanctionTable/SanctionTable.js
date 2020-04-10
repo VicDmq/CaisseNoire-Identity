@@ -4,7 +4,7 @@ import { Table } from 'antd';
 import moment, { type Moment } from 'moment';
 
 import { API_DATE_FORMAT } from '@Utils/date';
-import withConnect from '@Components/utils/Connect';
+import { withConnectHOC } from '@HOC';
 import MonthPicker from '@Components/common/MonthPicker';
 import columns from './columns';
 
@@ -68,4 +68,4 @@ export const SanctionTable = ({ team, users, sanctions }: SanctionTableProps) =>
   );
 };
 
-export default withConnect<DataProps, OtherProps>(SanctionTable);
+export default withConnectHOC<DataProps, OtherProps>(SanctionTable);

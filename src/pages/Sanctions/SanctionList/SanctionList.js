@@ -2,7 +2,7 @@
 import React from 'react';
 import { List, Modal, message } from 'antd';
 
-import withConnect from '@Components/utils/Connect';
+import { withConnectHOC } from '@HOC/';
 import { SanctionListItem, type ListItemProps } from './SanctionListItem';
 
 import STYLES from './styles.less';
@@ -86,4 +86,4 @@ export const SanctionList = ({ team, users, sanctions, deleteSanction, isAdmin }
   );
 };
 
-export default withConnect<DataProps, OtherProps>(SanctionList);
+export default withConnectHOC<DataProps, OtherProps>(SanctionList);
