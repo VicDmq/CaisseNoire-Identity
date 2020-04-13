@@ -1,0 +1,126 @@
+.listItemContainer {
+  margin-bottom: 10px;
+
+  .listItem {
+    border: 1px solid @primary-color;
+    border-radius: @border-radius-base;
+  }
+
+  .listItemExtended {
+    border: 1px solid @primary-color;
+    border-bottom: 0px;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+  }
+
+  .listItem,
+  .listItemExtended {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+
+    .expandIcon {
+      color: @primary-color;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    .infoContainer {
+      width: 50%;
+      margin: 5px 0;
+
+      .playerInfo {
+        font-weight: 700;
+      }
+
+      .ruleInfo,
+      .missingRule {
+        font-style: italic;
+      }
+
+      .missingRule {
+        color: @error-color;
+      }
+    }
+
+    .tagAndButtonContainer {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .priceTag {
+        display: flex;
+        justify-content: center;
+        margin-right: 10px;
+        background-color: @primary-color;
+        color: @white;
+        font-weight: 600;
+        width: 50px;
+        line-height: 30px;
+        border-radius: @border-radius-base;
+      }
+
+      .deleteButton {
+        display: flex;
+        justify-content: center;
+        margin-right: 10px;
+        height: 30px;
+        width: 30px;
+      }
+    }
+  }
+
+  .collapsed,
+  .extended {
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+
+  .collapsed {
+    max-height: 0;
+  }
+
+  .extended {
+    max-height: 150px;
+    width: 100%;
+    border: 1px solid @primary-color;
+    border-top: 0px;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+  }
+
+  .categoryAndDate {
+    display: flex;
+    margin: 5px 0 5px;
+
+    .categoryTag {
+      width: 50%;
+      margin-left: 10px;
+
+      div {
+        display: inline-block;
+        background-color: @primary-color;
+        color: @white;
+        font-weight: 500;
+        padding: 3px 6px;
+        border-radius: @border-radius-base;
+      }
+    }
+
+    .creationDate {
+      width: 50%;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-right: 10px;
+    }
+  }
+
+  .ruleDescription {
+    margin: 5px 0 5px;
+    padding: 0 10px;
+    font-style: italic;
+  }
+}

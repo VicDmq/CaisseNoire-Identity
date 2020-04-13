@@ -5,7 +5,7 @@ import { List, Modal, message } from 'antd';
 import { withConnectHOC } from '@HOC/';
 import { SanctionListItem, type ListItemProps } from './SanctionListItem';
 
-import STYLES from './styles.less';
+import STYLES from './sanctionList.less';
 
 type DataProps = {
   sanctions: Sanction[],

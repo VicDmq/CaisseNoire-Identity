@@ -6,7 +6,7 @@ import { RuleCategoryText } from '@Utils/text';
 import formatCurrency from '@Utils/currency';
 import formatDate from '@Utils/date';
 
-import STYLES from './styles.less';
+import STYLES from './sanctionListItem.less';
 
 export type ListItemProps = {
   rule: ?Rule,
