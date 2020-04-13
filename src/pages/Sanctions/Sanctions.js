@@ -5,7 +5,7 @@ import { Row, Col, Tabs, Icon } from 'antd';
 import { TeamContext } from '@Providers/ContextProvider';
 import CreateSanctionForm from './CreateSanction';
 import SanctionList from './SanctionList';
-import SanctionTable from './SanctionTable/SanctionTable';
+import SanctionTable from './SanctionTable';
 
 import STYLES from './sanctions.less';
 

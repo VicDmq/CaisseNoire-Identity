@@ -8,7 +8,7 @@ import { withConnectHOC } from '@HOC';
 import MonthPicker from '@Components/MonthPicker';
 import columns from './columns';
 
-import STYLES from './styles.less';
+import STYLES from './sanctionTable.less';
 
 type DataProps = {
   sanctions: Sanction[],
