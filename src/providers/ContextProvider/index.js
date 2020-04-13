@@ -4,14 +4,16 @@ import { connect } from 'react-refetch';
 import { withBaseUrlHOC } from '@HOC';
 import ContextProvider from './ContextProvider';
 
+const REFRESH_INTERVAL = 120 * 1000;
+
 const requests = ({ baseUrl }) => ({
   teamFetch: {
     url: baseUrl,
-    refreshInterval: 10000,
+    refreshInterval: REFRESH_INTERVAL,
   },
   usersFetch: {
     url: baseUrl + '/users',
-    refreshInterval: 10000,
+    refreshInterval: REFRESH_INTERVAL,
   },
 });
 

@@ -8,7 +8,7 @@
   "settings": {
     "react": {
       "version": "detect",
-      "flowVersion": "0.109.0"
+      "flowVersion": "0.122.0"
     }
   },
   "plugins": ["prettier", "react", "flowtype", "testing-library", "jest-dom"],
