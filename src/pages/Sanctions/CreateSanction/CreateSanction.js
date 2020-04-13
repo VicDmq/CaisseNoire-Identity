@@ -5,12 +5,9 @@ import type { Moment } from 'moment';
 
 import format from '@Utils/currency';
 import { API_DATE_FORMAT } from '@Utils/date';
-import DateInput from './DateInput';
-import SelectUsers from './SelectUsers';
-import SelectRules from './SelectRules';
-import ExtraInfoInputs from './ExtraInfoInputs';
+import { DateInput, SelectUsers, SelectRules, ExtraInfoInputs, type ComparisonResult } from './components';
 
-import STYLES from './styles.less';
+import STYLES from './createSanction.less';
 
 type DataProps = {
   team: Team,
@@ -23,8 +20,6 @@ type OtherProps = {
 };
 
 type CreateSanctionProps = DataProps & OtherProps;
-
-export type ComparisonResult = 'LESS' | 'MORE' | 'SAME';
 
 export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   MORE: 'MORE',

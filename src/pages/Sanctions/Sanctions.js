@@ -3,11 +3,11 @@ import React, { useContext } from 'react';
 import { Row, Col, Tabs, Icon } from 'antd';
 
 import { TeamContext } from '@Providers/ContextProvider';
-import CreateSanctionForm from './CreateSanction/CreateSanction';
+import CreateSanctionForm from './CreateSanction';
 import SanctionList from './SanctionList/SanctionList';
 import SanctionTable from './SanctionTable/SanctionTable';
 
-import STYLES from './styles.less';
+import STYLES from './sanctions.less';
 
 const { TabPane } = Tabs;
 

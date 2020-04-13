@@ -4,7 +4,8 @@ import React, { type Element } from 'react';
 import NumericInput from '@Components/NumericInput';
 import FormItem from '@Components/FormItem';
 import { TimeUnitText } from '@Utils/text';
-import { type ComparisonResult } from './CreateSanction';
+
+export type ComparisonResult = 'LESS' | 'MORE' | 'SAME';
 
 const ExtraInfoInput = ({
   user,

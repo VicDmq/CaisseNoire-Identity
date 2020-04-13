@@ -6,7 +6,7 @@ import { RuleCategoryText } from '@Utils/text';
 import FormItem from '@Components/FormItem';
 import { SingleSelect, MultipleSelect, type CommonSelectProps, type OptGroupProps } from '@Components/Select';
 
-import STYLES from './styles.less';
+import STYLES from './selectRules.less';
 
 const OptionNode = ({ rule }: { rule: Rule }) => {
   const handleIconClick = (e) => {
