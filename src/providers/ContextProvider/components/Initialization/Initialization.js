@@ -5,24 +5,24 @@ import { Spin } from 'antd';
 import STYLES from './initialization.less';
 
 const Initialization = () => {
-  const [tipIncrement, setTipIncrement] = useState<number>(0);
+  const [nbDot, setNbDot] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTipIncrement(handleTipIncrement);
+      setNbDot(handleDotIncrement);
     }, 500);
 
     return () => clearInterval(interval);
-  }, [tipIncrement]);
+  }, [nbDot]);
 
-  const handleTipIncrement = (current) => {
+  const handleDotIncrement = (current) => {
     if (current === 3) return 0;
     return current + 1;
   };
 
   const getDots = () => {
     let tip = '';
-    for (let i = 0; i < tipIncrement; i++) {
+    for (let i = 0; i < nbDot; i++) {
       tip += '.';
     }
     return tip;

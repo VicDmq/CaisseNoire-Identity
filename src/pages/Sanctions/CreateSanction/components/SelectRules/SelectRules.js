@@ -29,13 +29,11 @@ const SelectRules = ({
   rules,
   selectedRules,
   updateSelectedRules,
-  disabled,
   isMultiple,
 }: {
   rules: Rule[],
   selectedRules: Uuid[],
   updateSelectedRules: (Uuid[]) => void,
-  disabled: boolean,
   isMultiple: boolean,
 }) => {
   const label = `Sanction${isMultiple ? '(s)' : ''}`;
@@ -73,11 +71,10 @@ const SelectRules = ({
       groups: mapGroups(),
     },
     placeholder: `Sélectionner l${isMultiple ? 'es' : 'a'} sanction${isMultiple ? '(s)' : ''} à appliquer`,
-    disabled,
   };
 
   return (
-    <FormItem label={label} disabled={disabled} error={!disabled && !(selectedRules.length > 0)}>
+    <FormItem label={label} error={!(selectedRules.length > 0)}>
       {isMultiple ? (
         <MultipleSelect value={selectedRules} onChange={updateSelectedRules} {...commonProps} />
       ) : (

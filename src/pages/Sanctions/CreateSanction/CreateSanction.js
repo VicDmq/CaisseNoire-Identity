@@ -1,9 +1,8 @@
 // @flow
 import React, { useState } from 'react';
-import { Row, Form, message, Button } from 'antd';
+import { Row, Form, Button } from 'antd';
 import type { Moment } from 'moment';
 
-import format from '@Utils/currency';
 import { API_DATE_FORMAT } from '@Utils/date';
 import { DateInput, SelectUsers, SelectRules, ExtraInfoInputs, type ComparisonResult } from './components';
 
@@ -15,8 +14,7 @@ type DataProps = {
 };
 
 type OtherProps = {
-  createSanctions: (CreateSanction[], (Sanction[]) => void, (Reason) => void) => void,
-  isAdmin: boolean,
+  saveSanctions: (CreateSanction[]) => void,
 };
 
 type CreateSanctionProps = DataProps & OtherProps;
@@ -27,7 +25,7 @@ export const USERS_COMPARED_TO_RULES: { [key: any]: ComparisonResult } = {
   SAME: 'SAME',
 };
 
-export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSanctionProps) => {
+export const SanctionForm = ({ team, users, saveSanctions }: CreateSanctionProps) => {
   const [selectedUsers, setSelectedUsers] = useState<Uuid[]>([]);
   const [selectedRules, setSelectedRules] = useState<Uuid[]>([]);
   const [sanctionsDate, setSanctionsDate] = useState<?Moment>(undefined);
@@ -39,7 +37,6 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
     setSelectedRules([]);
     setSanctionsDate(undefined);
     setState([]);
-    setCreatingSanctions(false);
   };
 
   const getUser = (id: Uuid): ?User => {
@@ -155,72 +152,33 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
     setSanctionsDate(date);
   };
 
-  const getSuccessAlertText = (sanctions: Sanction[]): any => {
-    return (
-      <div>
-        {sanctions.map((sanction, i) => {
-          const user = users.find((user) => user.id === sanction.user_id);
-
-          if (user) {
-            return (
-              <div className={STYLES.messageText} key={i}>
-                {user.firstname} {user.lastname} a payé {format(sanction.price)}
-              </div>
-            );
-          }
-        })}
-      </div>
-    );
-  };
-
-  const getErrorAlertText = (error: ?ApiError): string => {
-    if (error) {
-      switch (error.kind) {
-        case 'NOT_FOUND':
-        case 'BAD_REFERENCE': {
-          return "Une des ressources utilisées n'existe pas : rechargez la page ";
-        }
-        default: {
-          break;
-        }
-      }
-    }
-
-    return "Une erreur inconnue s'est produite lors de la sauvegarde";
-  };
-
-  const saveSanction = () => {
+  const onSave = async () => {
     setCreatingSanctions(true);
 
-    createSanctions(
-      getSanctions(),
-      (sanctions) => {
-        message.success(getSuccessAlertText(sanctions));
-        resetForm();
-      },
-      (reason) => {
-        message.error(getErrorAlertText(reason.cause));
-        setCreatingSanctions(false);
-      },
-    );
+    const sanctions = getSanctions();
+    const isSuccess = await saveSanctions(sanctions);
+
+    if (isSuccess) {
+      resetForm();
+    }
+
+    setCreatingSanctions(false);
   };
 
   const buttonIsDisabled: boolean = state.length === 0;
 
   return (
-    <Form colon={false} className={STYLES.form}>
+    <Form colon={false}>
       <SelectUsers
         users={users}
         selectedUsers={selectedUsers}
         updateSelectedUsers={updateSelectedUsers}
-        disabled={!isAdmin}
         isMultiple={selectedRules.length <= 1}
       />
       <SelectRules
         rules={team.rules}
         selectedRules={selectedRules}
         updateSelectedRules={updateSelectedRules}
-        disabled={!isAdmin}
         isMultiple={selectedUsers.length <= 1}
       />
       <ExtraInfoInputs
@@ -228,11 +186,11 @@ export const SanctionForm = ({ team, users, createSanctions, isAdmin }: CreateSa
         updateSanction={updateSanction}
         usersComparedToRules={getUsersComparedToRules()}
       />
-      <DateInput date={sanctionsDate} updateDate={updateSanctionsDate} disabled={!isAdmin} />
+      <DateInput date={sanctionsDate} updateDate={updateSanctionsDate} />
       <Row type='flex' justify='center'>
         <Button
           type='primary'
-          onClick={saveSanction}
+          onClick={onSave}
           disabled={buttonIsDisabled}
           loading={creatingSanctions}
           className={STYLES.saveButton}
